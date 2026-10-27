@@ -91,3 +91,8 @@ Each reusable item can offer short prompts to copy into Codex, Claude Code, or a
 - [Delegable item template](templates/delegable-item.md)
 - [Supabase Auth example with generic and tutorial prompts](inventory/supabase/auth/README.md)
 
+
+
+## 🧩 Task Composer
+
+BAG items can offer task trees alongside their documentation. Select capabilities, add required prerequisites, and copy a minimal agent prompt. See the [task composition guide](maps-and-guides/task-composer.md), [Supabase Auth task manifest](inventory/supabase/auth/tasks/index.json), and [standalone composer demo](demo/task-composer.html).
