@@ -118,7 +118,7 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
   // Only publish translations reviewed against the current English source revision.
   for (const entry of entries) {
     if (!entry.sourcePath) continue;
-    if (/(^|\\/)(AGENTS|SKILL)\\.md$/i.test(entry.sourcePath)) continue;
+    if (/(^|\/)(AGENTS|SKILL)\.md$/i.test(entry.sourcePath)) continue;
     const translatedPath = `apps/docs/translations/fr/${entry.sourcePath}`;
     const stampPath = `${translatedPath}.source-sha256`;
     if (!trackedFiles.has(translatedPath) || !trackedFiles.has(stampPath)) continue;
@@ -140,8 +140,8 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
       }
       if (node.type === 'html') node.type = 'text';
     });
-    const filename = entry.generatedPath.replace(/\\.md$/, '.fr.md');
-    rendered.set(filename, `---\\n${yaml({ ...frontmatter, title, description })}---\\n\\n${serialize(tree)}`);
+    const filename = entry.generatedPath.replace(/\.md$/, '.fr.md');
+    rendered.set(filename, `---\n${yaml({ ...frontmatter, title, description })}---\n\\n${serialize(tree)}`);
   }
   // Small authored navigation page, with source links resolved like repository pages.
   const zonesFile = 'apps/docs/content/docs/zones.mdx';
