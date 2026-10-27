@@ -20,6 +20,20 @@ It's not just a bookmark collection. It's a **searchable, reusable, AI-friendly 
 | 💎 **Loot** | Unsorted discoveries, inspiration, and things to evaluate | [Inspect loot](loot/README.md) |
 | 🧰 **Loadouts** | Ready-to-use collections of items for a specific quest or stack | [Choose a loadout](loadouts/README.md) |
 
+## 🧠 Intelligent catalog (V2)
+
+BAG also exposes a [versioned, machine-readable catalog](catalog/README.md) that AI agents can search, inspect, and compose into safe local loadouts.
+
+```bash
+node spellbook/scripts/bag.mjs search "agents" --json
+node spellbook/scripts/bag.mjs loadout ai-coding --json
+node spellbook/scripts/bag.mjs plan ai-coding --target ../my-project --json
+# After reviewing the plan and approving the change:
+node spellbook/scripts/bag.mjs equip ai-coding --target ../my-project --apply
+```
+
+**Safe by design:** no automatic installations, external commands, network access, secret handling, or overwrites. Applying only copies explicitly listed local templates into an existing project directory. Read the [agent and user field guide](maps-and-guides/catalog-and-loadouts.md) for limitations and approval rules.
+
 ## 🚀 Quick start
 
 **Browsing:** choose a zone above. **Looking for something:** run the built-in search.

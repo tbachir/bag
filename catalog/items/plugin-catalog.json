@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "plugin-catalog",
+  "title": "Plugin integration guide",
+  "summary": "Checklist for plugins and connector permissions, supported clients and trust.",
+  "zone": "skill-tree",
+  "kind": "plugin",
+  "status": "ready",
+  "tags": [
+    "plugins",
+    "connectors",
+    "agents"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/plugins/README.md"
+  },
+  "mode": "reference"
+}

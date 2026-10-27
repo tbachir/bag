@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "bag-agent-guide",
+  "title": "BAG-specific agent playbook",
+  "summary": "Operating boundaries and curation policy for autonomous agents contributing to BAG.",
+  "zone": "maps-and-guides",
+  "kind": "guide",
+  "status": "ready",
+  "tags": [
+    "agents",
+    "security",
+    "curation"
+  ],
+  "source": {
+    "type": "local",
+    "path": "AGENTS.md"
+  },
+  "mode": "reference"
+}

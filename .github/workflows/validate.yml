@@ -5,8 +5,8 @@ on:
   pull_request:
 
 jobs:
-  markdown-links:
-    name: RPG zones and local links
+  catalog-and-links:
+    name: Catalog, tests and local links
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -16,3 +16,5 @@ jobs:
         with:
           node-version: '24'
       - run: node spellbook/scripts/validate.mjs
+      - run: node spellbook/scripts/bag.mjs validate --json
+      - run: node --test tests/*.test.mjs

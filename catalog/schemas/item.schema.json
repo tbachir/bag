@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/tbachir/bag/blob/main/catalog/schemas/item.schema.json",
+  "title": "BAG inventory item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "title",
+    "summary",
+    "zone",
+    "kind",
+    "status",
+    "tags",
+    "source",
+    "mode"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "zone": {
+      "enum": [
+        "inventory",
+        "equipment",
+        "skill-tree",
+        "spellbook",
+        "maps-and-guides",
+        "loot"
+      ]
+    },
+    "kind": {
+      "enum": [
+        "library",
+        "repository",
+        "resource",
+        "tool",
+        "config",
+        "skill",
+        "agent",
+        "plugin",
+        "mcp",
+        "script",
+        "guide"
+      ]
+    },
+    "status": {
+      "enum": [
+        "evaluating",
+        "ready",
+        "archived"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "path"
+      ],
+      "properties": {
+        "type": {
+          "const": "local"
+        },
+        "path": {
+          "$ref": "#/$defs/relativePath"
+        }
+      }
+    },
+    "mode": {
+      "enum": [
+        "copy",
+        "reference"
+      ]
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "from",
+          "to"
+        ],
+        "properties": {
+          "from": {
+            "$ref": "#/$defs/relativePath"
+          },
+          "to": {
+            "$ref": "#/$defs/relativePath"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "copy"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "files"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "files"
+          ]
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\\\\\\\)(?!.*\\\\.\\\\.(?:/|$))[a-zA-Z0-9._/-]+$"
+    }
+  }
+}

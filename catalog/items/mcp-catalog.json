@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "mcp-catalog",
+  "title": "MCP integration guide",
+  "summary": "Checklist for inspecting MCP transports, permissions and client compatibility.",
+  "zone": "skill-tree",
+  "kind": "mcp",
+  "status": "ready",
+  "tags": [
+    "mcp",
+    "security",
+    "agents"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/mcp/README.md"
+  },
+  "mode": "reference"
+}

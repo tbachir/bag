@@ -38,6 +38,12 @@ These are **documentation labels**, not automated statuses.
 
 Store knowledge at its primary home. E.g. a TypeScript formatter is **Equipment** when discussing daily developer tooling; a reusable shell wrapper around it is **Spellbook**; an article explaining formatter design is **Maps & Guides**. Link between them without copy-pasting.
 
+## Machine-readable entries
+
+When a resource is ready for agent discovery, add a [catalog item manifest](catalog/README.md) and keep its `source.path` linked to curated local documentation. Use `mode: reference` unless it is a reviewed local template suitable for opt-in copying. Add a loadout manifest only when it refers to existing ready items; avoid duplicate destination paths.
+
+Run `node spellbook/scripts/bag.mjs validate` and `node --test tests/*.test.mjs` for structured catalog edits.
+
 ## Submitting a change
 
 Make a small, focused change, explain the value and any caveats, and mention validation results. For sensitive findings, follow [SECURITY.md](SECURITY.md) rather than publishing secrets.

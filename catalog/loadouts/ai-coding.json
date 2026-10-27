@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "ai-coding",
+  "title": "AI Coding Starter",
+  "summary": "Templates and reference material for a reviewed AI-assisted coding workflow.",
+  "items": [
+    {
+      "id": "agent-rules"
+    },
+    {
+      "id": "editorconfig"
+    },
+    {
+      "id": "node-gitignore"
+    },
+    {
+      "id": "ai-skill-template"
+    },
+    {
+      "id": "mcp-catalog"
+    },
+    {
+      "id": "plugin-catalog"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "node-gitignore",
+  "title": "Node/TypeScript gitignore starter",
+  "summary": "Conservative baseline ignoring dependencies, generated output and environment secrets.",
+  "zone": "equipment",
+  "kind": "config",
+  "status": "ready",
+  "tags": [
+    "git",
+    "node",
+    "typescript",
+    "configuration"
+  ],
+  "source": {
+    "type": "local",
+    "path": "equipment/configs/.gitignore.template"
+  },
+  "mode": "copy",
+  "files": [
+    {
+      "from": "equipment/configs/.gitignore.template",
+      "to": ".gitignore"
+    }
+  ],
+  "notes": "Review ignores against your project conventions. Existing files are never overwritten."
+}

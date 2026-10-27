@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "agent-rules",
+  "title": "Project AGENTS.md starter",
+  "summary": "Reviewed instruction skeleton for a target repository; edit every placeholder before using.",
+  "zone": "skill-tree",
+  "kind": "agent",
+  "status": "ready",
+  "tags": [
+    "agents",
+    "instructions",
+    "coding"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/agents/AGENTS.example.md"
+  },
+  "mode": "copy",
+  "files": [
+    {
+      "from": "skill-tree/agents/AGENTS.example.md",
+      "to": "AGENTS.md"
+    }
+  ],
+  "notes": "Does not install an agent or override client-specific policies."
+}

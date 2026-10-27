@@ -2,6 +2,16 @@
 
 Small, reviewed helpers runnable from the BAG root.
 
+## Intelligent catalog CLI
+
+```bash
+node spellbook/scripts/bag.mjs list --json
+node spellbook/scripts/bag.mjs search "mcp" --json
+node spellbook/scripts/bag.mjs plan ai-coding --target ../existing-project
+```
+
+See [catalog documentation](../../catalog/README.md) for loadouts and opt-in local file copy. The default is read-only, including `equip` without `--apply`.
+
 ## Search the bag
 
 ```bash
