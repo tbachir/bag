@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BAG resource exposure descriptor v1",
+  "description": "Documentation and opt-in consumption metadata. No execution authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "item",
+    "canonical",
+    "consumers"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "item": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "canonical": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"
+    },
+    "docs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "consumers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "strategy",
+          "target"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "agent-skill",
+              "config",
+              "ci-workflow",
+              "script",
+              "asset",
+              "documentation"
+            ]
+          },
+          "strategy": {
+            "enum": [
+              "reference",
+              "symlink",
+              "copy",
+              "generate",
+              "native-reuse"
+            ]
+          },
+          "target": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "documented",
+              "opt-in",
+              "active"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
