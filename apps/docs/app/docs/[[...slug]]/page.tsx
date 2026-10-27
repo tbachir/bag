@@ -56,6 +56,7 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
   if (!page) notFound();
 
   return {
+    alternates: { languages: { en: page.url, fr: `/fr${page.url}` } },
     title: page.data.title,
     description: page.data.description,
     openGraph: {
