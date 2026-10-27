@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "o2switch-cloud",
+  "title": "o2switch Cloud Expert — AI hosting skill",
+  "summary": "Research o2switch Offre Unique Cloud and cPanel capabilities via 65 official tool links and 31 grounded decision records before declaring technology unavailable.",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "agents",
+    "ai",
+    "skills",
+    "hosting",
+    "o2switch",
+    "redis",
+    "cpanel",
+    "security",
+    "deployment"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/o2switch-cloud/SKILL.md"
+  },
+  "mode": "reference",
+  "notes": "Opt-in skill. Cloud capability documentation is not proof of account activation; consult current official FAQ and support for critical limitations."
+}

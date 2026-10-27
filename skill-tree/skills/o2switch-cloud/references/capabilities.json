@@ -1,0 +1,324 @@
+{
+  "verified_at": "2026-10-27",
+  "offer": "Offre Unique Cloud",
+  "statuses": [
+    "documented",
+    "conditional",
+    "verify",
+    "not_suitable",
+    "unsupported_confirmed"
+  ],
+  "account_access": false,
+  "capabilities": [
+    {
+      "id": "redis",
+      "status": "documented",
+      "verdict": "Redis privé est disponible comme cache reconstructible.",
+      "caveat": "Données éphémères non sauvegardées.",
+      "account_verification": "Voir Redis dans cPanel et vérifier socket/port sans partager de secrets",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/o2switch/redis/"
+      ]
+    },
+    {
+      "id": "memcached",
+      "status": "documented",
+      "verdict": "Memcached privé est disponible.",
+      "caveat": "Cache éphémère non durable.",
+      "account_verification": "Inspecter la tuile Memcached",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/o2switch/memcached/"
+      ]
+    },
+    {
+      "id": "nodejs",
+      "status": "conditional",
+      "verdict": "Node.js est disponible via Setup Node.js App et Passenger.",
+      "caveat": "Processus et version exacts à vérifier; non équivalent à un VPS root.",
+      "account_verification": "Créer une application de test sans toucher à la production",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/logiciels/hebergement-nodejs-multi-version/"
+      ]
+    },
+    {
+      "id": "react_static",
+      "status": "documented",
+      "verdict": "Une SPA React/Vite statique peut être déployée.",
+      "caveat": "Configurer les routes et réécritures.",
+      "account_verification": "Tester une URL directe d’une route cliente",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/fichiers/gestionnaire-fichiers-web/"
+      ]
+    },
+    {
+      "id": "next_ssr",
+      "status": "conditional",
+      "verdict": "Next.js SSR est potentiellement utilisable via Node.js/Passenger.",
+      "caveat": "Le runtime, le point d’entrée, la sortie build et les besoins réseau peuvent bloquer.",
+      "account_verification": "Tester un déploiement minimal de la version cible",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/logiciels/hebergement-nodejs-multi-version/"
+      ]
+    },
+    {
+      "id": "mysql",
+      "status": "documented",
+      "verdict": "MySQL/MariaDB avec utilisateurs et droits sont disponibles.",
+      "caveat": "Version et quotas à vérifier.",
+      "account_verification": "Inspecter version et privilèges",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/bases-de-donnees/mysql/"
+      ]
+    },
+    {
+      "id": "mysql_remote",
+      "status": "conditional",
+      "verdict": "Un accès MySQL distant est documenté.",
+      "caveat": "Autorisation IP et filtrage réseau nécessaires.",
+      "account_verification": "Contrôler l’autorisation réseau",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/bases-de-donnees/mysql-distant/"
+      ]
+    },
+    {
+      "id": "postgresql",
+      "status": "conditional",
+      "verdict": "PostgreSQL est présent dans la documentation.",
+      "caveat": "FAQ évoquant version 9.6 et support futur incertain; vérifier version réelle.",
+      "account_verification": "Lire version dans cPanel et demander confirmation support",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/bases-de-donnees/postgresql/"
+      ]
+    },
+    {
+      "id": "postgis",
+      "status": "verify",
+      "verdict": "PostGIS n’est pas confirmé.",
+      "caveat": "PostgreSQL ne garantit pas l’extension.",
+      "account_verification": "Chercher les extensions réellement autorisées",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/bases-de-donnees/postgresql/"
+      ]
+    },
+    {
+      "id": "pgvector",
+      "status": "verify",
+      "verdict": "pgvector n’est pas confirmé.",
+      "caveat": "Aucune conclusion à partir de la seule présence de PostgreSQL.",
+      "account_verification": "Vérifier extension sur version réelle",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/bases-de-donnees/postgresql/"
+      ]
+    },
+    {
+      "id": "php",
+      "status": "documented",
+      "verdict": "PHP multiversion est documenté.",
+      "caveat": "Choisir les extensions adaptées.",
+      "account_verification": "Inspecter Select PHP Version",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/logiciels/hebergement-php-multi-version/"
+      ]
+    },
+    {
+      "id": "python",
+      "status": "documented",
+      "verdict": "Python via Setup Python App est documenté.",
+      "caveat": "Version et cycle de vie des apps à vérifier.",
+      "account_verification": "Créer un environnement de test",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/logiciels/hebergement-python-multi-version/"
+      ]
+    },
+    {
+      "id": "ruby",
+      "status": "documented",
+      "verdict": "Ruby/Rails est documenté.",
+      "caveat": "Compatibilité des gems et versions à vérifier.",
+      "account_verification": "Inspecter version et dépendances",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/logiciels/hebergement-ruby-multi-version/"
+      ]
+    },
+    {
+      "id": "cron",
+      "status": "documented",
+      "verdict": "Les tâches cron sont disponibles.",
+      "caveat": "Fréquence, durée et quotas à vérifier.",
+      "account_verification": "Tester une tâche non destructive",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/outils-avances/tache-planifiee-cron/"
+      ]
+    },
+    {
+      "id": "ssh",
+      "status": "conditional",
+      "verdict": "Shell SSH web et accès SSH existent.",
+      "caveat": "Autorisation pare-feu et droits utilisateur.",
+      "account_verification": "Vérifier Terminal et outil SSH",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/outils-avances/terminal-ssh-web/"
+      ]
+    },
+    {
+      "id": "git",
+      "status": "documented",
+      "verdict": "Git Version Control est documenté.",
+      "caveat": "Ne pas présumer pipeline CI/CD complet.",
+      "account_verification": "Tester lecture d’un dépôt",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/fichiers/gitweb/"
+      ]
+    },
+    {
+      "id": "lunas",
+      "status": "documented",
+      "verdict": "Cloud inclut des sous-comptes Lunes indépendants.",
+      "caveat": "Ce ne sont pas des conteneurs Docker.",
+      "account_verification": "Consulter Mon Univers Web",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/o2switch/univers-web-sous-comptes/"
+      ]
+    },
+    {
+      "id": "docker",
+      "status": "verify",
+      "verdict": "Docker n’est pas confirmé sur l’offre.",
+      "caveat": "Ni support ni interdiction explicite ne doivent être inventés.",
+      "account_verification": "Confirmer avec support avant architecture Docker",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/logiciels/hebergement-nodejs-multi-version/"
+      ]
+    },
+    {
+      "id": "root",
+      "status": "verify",
+      "verdict": "L’accès root/sudo n’est pas confirmé.",
+      "caveat": "Terminal utilisateur ne signifie pas root.",
+      "account_verification": "Inspecter permissions puis confirmer au support",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/outils-avances/terminal-ssh-web/"
+      ]
+    },
+    {
+      "id": "websockets",
+      "status": "verify",
+      "verdict": "WebSockets persistants non confirmés via Passenger.",
+      "caveat": "Cycle de vie et proxy peuvent restreindre les connexions.",
+      "account_verification": "Tester une connexion longue en environnement de test",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/logiciels/hebergement-nodejs-multi-version/"
+      ]
+    },
+    {
+      "id": "sse",
+      "status": "verify",
+      "verdict": "SSE longue durée n’est pas confirmé.",
+      "caveat": "Timeouts et buffering à vérifier.",
+      "account_verification": "Mesurer timeout et reconnexions",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/logiciels/hebergement-nodejs-multi-version/"
+      ]
+    },
+    {
+      "id": "workers",
+      "status": "verify",
+      "verdict": "Workers permanents 24/7 non prouvés.",
+      "caveat": "Cron ne garantit pas un daemon permanent.",
+      "account_verification": "Tester cycle de vie et consulter support",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/outils-avances/tache-planifiee-cron/"
+      ]
+    },
+    {
+      "id": "redis_queue",
+      "status": "not_suitable",
+      "verdict": "Redis natif ne suffit pas seul pour une file critique persistante.",
+      "caveat": "Pas de sauvegarde des données Redis.",
+      "account_verification": "Choisir des jobs rejouables ou une persistance durable",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/o2switch/redis/"
+      ]
+    },
+    {
+      "id": "letsencrypt",
+      "status": "documented",
+      "verdict": "Let’s Encrypt SSL est disponible.",
+      "caveat": "Vérifier certificats et renouvellement par domaine.",
+      "account_verification": "Consulter SSL Status",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/securite/lets-encrypt-ssl-gratuit/"
+      ]
+    },
+    {
+      "id": "tigerprotect",
+      "status": "documented",
+      "verdict": "TigerProtect est disponible.",
+      "caveat": "Ne remplace pas sécurité applicative.",
+      "account_verification": "Inspecter règles du domaine",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/o2switch/tiger-protect-waf/"
+      ]
+    },
+    {
+      "id": "modsecurity",
+      "status": "documented",
+      "verdict": "ModSecurity WAF est disponible.",
+      "caveat": "Règles et exceptions peuvent varier.",
+      "account_verification": "Vérifier blocages et journaux",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/securite/mod-security-waf/"
+      ]
+    },
+    {
+      "id": "imunify",
+      "status": "documented",
+      "verdict": "ImunifyAV+ est disponible.",
+      "caveat": "Antivirus ne remplace pas mises à jour et durcissement.",
+      "account_verification": "Lire diagnostics",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/securite/antivirus-imunify/"
+      ]
+    },
+    {
+      "id": "mfa",
+      "status": "documented",
+      "verdict": "La 2FA cPanel est disponible.",
+      "caveat": "Ne sécurise pas l’authentification métier.",
+      "account_verification": "Vérifier MFA activé",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/securite/authentification-mfa/"
+      ]
+    },
+    {
+      "id": "backups",
+      "status": "documented",
+      "verdict": "JetBackup est disponible sur Cloud.",
+      "caveat": "Conservation annoncée de 45 jours à revalider.",
+      "account_verification": "Vérifier une restauration de test",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/fichiers/sauvegarde-jetbackup/"
+      ]
+    },
+    {
+      "id": "smtp",
+      "status": "conditional",
+      "verdict": "Messagerie et SMTP sont documentés.",
+      "caveat": "SPF DKIM DMARC, quotas et délivrabilité à vérifier.",
+      "account_verification": "Tester envoi authentifié sans exposer d’identifiants",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/emails/adresse-email/"
+      ]
+    },
+    {
+      "id": "monitoring",
+      "status": "documented",
+      "verdict": "Mesures, erreurs et logs d’usage sont disponibles.",
+      "caveat": "Pas un substitut au monitoring applicatif.",
+      "account_verification": "Lire Resource Usage, erreurs et journaux",
+      "official_sources": [
+        "https://faq.o2switch.fr/cpanel/mesures/suivi-usage-ressources/"
+      ]
+    }
+  ]
+}
