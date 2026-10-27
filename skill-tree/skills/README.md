@@ -20,4 +20,8 @@ Include activation criteria, workflow, safety boundaries, authoritative referenc
 
 [🎒 BAG inventory discovery skill](bag-inventory/SKILL.md) teaches a compatible AI agent to search the catalog, inspect loadouts, preview target changes, and require user approval before copy operations. **Opt-in installation only** — see your AI client's current official skill setup instructions.
 
-**Status:** template and BAG inventory skill ready; other personal skills to be curated.
+## Hosting and infrastructure
+
+[☁️ o2switch Cloud Expert](o2switch-cloud/SKILL.md) reproduces the cPanel navigation, links to 65 official documentation pages, and records 31 capability decisions, including Redis, Node.js/Passenger, PostgreSQL, WAF, backups, and uncertain limitations. The skill is opt-in; source availability is not account activation.
+
+**Status:** BAG inventory and o2switch Cloud skills available; other personal skills to be curated.
