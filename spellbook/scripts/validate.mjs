@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const zones = ['inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot', 'loadouts'];
-const excluded = new Set(['.git', '.next', '.cache', '.turbo', 'node_modules', 'dist', 'build', 'coverage']);
+const excluded = new Set(['.git', '.next', '.cache', '.turbo', 'node_modules', 'dist', 'build', 'out', 'coverage', 'test-results', 'playwright-report']);
 const failures = [];
 let checked = 0;
 

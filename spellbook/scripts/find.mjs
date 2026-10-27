@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const query = process.argv.slice(2).join(' ').trim().toLowerCase();
-const excluded = new Set(['.git', '.next', '.cache', '.turbo', 'node_modules', 'dist', 'build', 'coverage']);
+const excluded = new Set(['.git', '.next', '.cache', '.turbo', 'node_modules', 'dist', 'build', 'out', 'coverage', 'test-results', 'playwright-report']);
 
 if (!query) {
   console.error('Usage: node spellbook/scripts/find.mjs "search term"');

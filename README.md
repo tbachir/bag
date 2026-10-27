@@ -59,8 +59,9 @@ pnpm dev
 ```
 
 Open http://localhost:3000/docs. The app has its own lockfile. `pnpm build`
-produces static files in `out/` for any static host; Vercel is optional. See the
-app README for build, permanent Playwright setup, and separate hosting instructions.
+compiles the tracked BAG content into static files in `out/` for any static host.
+The app README covers permanent Playwright setup, automatic GitHub Pages publishing after merges to `main`,
+and optional Vercel hosting. Existing Markdown remains the source of truth.
 
 ### The gameplay loop
 
