@@ -62,18 +62,18 @@ jobs:
       # upload-pages-artifact excludes dotfiles, including BAG's downloadable
       # .editorconfig/.gitignore templates. Keep them in the Pages tar contract.
       - name: Package Pages artifact including configuration templates
-        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && matrix.name == 'github-pages'
+        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main' && matrix.name == 'github-pages'
         run: tar --directory out --exclude=.git --exclude=.github -cf "$RUNNER_TEMP/artifact.tar" .
       - uses: actions/upload-artifact@v4
-        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && matrix.name == 'github-pages'
+        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main' && matrix.name == 'github-pages'
         with:
           name: github-pages
           path: ${{ runner.temp }}/artifact.tar
           retention-days: 1
 
   deploy:
-    name: Publish GitHub Pages (manual only)
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    name: Publish GitHub Pages
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     permissions:

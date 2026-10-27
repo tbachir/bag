@@ -132,15 +132,17 @@ images. Rebuild when changing the public origin or path prefix. See
 
 The **Build and publish BAG docs** workflow validates both root and `/bag`
 exports for PRs and main. It also saves downloadable static artifacts. Publishing
-is manual only:
+runs automatically after a push to `main`, including merged PRs, once both
+configurations pass. PR builds never publish. Manual runs on `main` can also
+republish the validated site:
 
-1. Merge the PR, then enable **Settings → Pages → Source → GitHub Actions**.
-2. Open **Actions → Build and publish BAG docs → Run workflow** on `main`.
-3. Both configurations must pass before the validated `/bag` export is deployed.
+1. Use **Settings → Pages → Source → GitHub Actions** as the publishing source.
+2. Merge a PR into `main`; the workflow validates and publishes the `/bag` export.
+3. To republish without a new commit, use **Actions → Build and publish BAG docs → Run workflow** on `main`.
 
 The default public URL is `https://tbachir.github.io/bag/`; no custom domain is
 configured. Publishing uses the `github-pages` environment and narrowly scoped
-permissions. Merely merging a PR does not publish the site.
+permissions. A failed validation prevents publishing the new version.
 
 ### Optional Vercel publication
 
@@ -152,3 +154,7 @@ remains a static export on Vercel.
 References: [Fumadocs static builds](https://fumadocs.dev/docs/deploying/static),
 [Next.js static exports](https://nextjs.org/docs/app/guides/static-exports), and
 [GitHub Pages workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+
+## Canonical BAG resource registry
+
+Skills, CI examples, reusable configurations and source Markdown remain outside `apps/docs`; do not duplicate them as handwritten MDX. See [resource exposure guide](../../maps-and-guides/resource-exposure.md) and the [o2switch descriptor](../../catalog/exposures/o2switch-cloud.json). The current website links to canonical sources; the build-time compiler indexes them without changing their ownership. Registered consumers are descriptive and opt-in, not runtime activation.

@@ -60,7 +60,7 @@ pnpm dev
 
 Open http://localhost:3000/docs. The app has its own lockfile. `pnpm build`
 compiles the tracked BAG content into static files in `out/` for any static host.
-The app README covers permanent Playwright setup, manual GitHub Pages publishing,
+The app README covers permanent Playwright setup, automatic GitHub Pages publishing after merges to `main`,
 and optional Vercel hosting. Existing Markdown remains the source of truth.
 
 ### The gameplay loop
@@ -112,3 +112,7 @@ Each reusable item can offer short prompts to copy into Codex, Claude Code, or a
 ## 🧩 Task Composer
 
 BAG items can offer task trees alongside their documentation. Select capabilities, add required prerequisites, and copy a minimal agent prompt. See the [task composition guide](maps-and-guides/task-composer.md), [Supabase Auth task manifest](inventory/supabase/auth/tasks/index.json), and [standalone composer demo](demo/task-composer.html).
+
+## 🔗 One canonical resource, many uses
+
+A BAG skill, config, script or workflow can be documented by this inventory and separately consumed by projects or compatible agents without maintaining duplicate source files. Optional [resource exposure descriptors](catalog/exposures/o2switch-cloud.json) record canonical sources, docs references and opt-in consumer strategies; see [the practical guide](maps-and-guides/resource-exposure.md). This is documentation, not an installer. Validate descriptors with `node spellbook/scripts/validate-exposures.mjs`.
