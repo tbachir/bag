@@ -1,0 +1,31 @@
+# Secrets and machine-local settings
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+*.secret
+.secrets/
+credentials.json
+credentials.*.json
+!credentials.example.json
+
+# Dependencies, build outputs, caches
+node_modules/
+dist/
+build/
+coverage/
+.cache/
+.next/
+.expo/
+.turbo/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/settings.json
+.idea/
