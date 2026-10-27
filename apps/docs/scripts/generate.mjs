@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readFile, writeFile, mkdir, rm, lstat, copyFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -112,6 +113,35 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
       if (node.type === 'html') node.type = 'text';
     });
     rendered.set(entry.generatedPath, `---\n${yaml({ ...frontmatter, title: entry.title, description: entry.description })}---\n\n${serialize(tree)}`);
+  }
+  // Optional French translations live outside the canonical inventory.
+  // Only publish translations reviewed against the current English source revision.
+  for (const entry of entries) {
+    if (!entry.sourcePath) continue;
+    if (/(^|\\/)(AGENTS|SKILL)\\.md$/i.test(entry.sourcePath)) continue;
+    const translatedPath = `apps/docs/translations/fr/${entry.sourcePath}`;
+    const stampPath = `${translatedPath}.source-sha256`;
+    if (!trackedFiles.has(translatedPath) || !trackedFiles.has(stampPath)) continue;
+    const canonical = await readFile(path.join(root, entry.sourcePath));
+    const digest = createHash('sha256').update(canonical).digest('hex');
+    const recorded = (await readFile(path.join(root, stampPath), 'utf8')).trim();
+    if (digest !== recorded) continue; // stale translation: use English fallback
+    const translation = await readFile(path.join(root, translatedPath), 'utf8');
+    const { tree, frontmatter } = parseMarkdown(translation);
+    const heading = tree.children.find((node) => node.type === 'heading' && node.depth === 1);
+    const title = String(frontmatter.title ?? (heading ? plainText(heading) : entry.title));
+    const paragraph = tree.children.find((node) => node.type === 'paragraph');
+    const description = String(frontmatter.description ?? (paragraph ? plainText(paragraph).slice(0, 180) : entry.description));
+    if (heading && plainText(heading) === title) tree.children.splice(tree.children.indexOf(heading), 1);
+    visit(tree, (node) => {
+      if (['link', 'image', 'definition'].includes(node.type)) {
+        const resolved = resolveLink(entry.sourcePath, node.url);
+        node.url = resolved.startsWith('/docs/') ? `/fr${resolved}` : resolved;
+      }
+      if (node.type === 'html') node.type = 'text';
+    });
+    const filename = entry.generatedPath.replace(/\\.md$/, '.fr.md');
+    rendered.set(filename, `---\\n${yaml({ ...frontmatter, title, description })}---\\n\\n${serialize(tree)}`);
   }
   // Small authored navigation page, with source links resolved like repository pages.
   const zonesFile = 'apps/docs/content/docs/zones.mdx';
