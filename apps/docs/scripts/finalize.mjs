@@ -13,6 +13,16 @@ export async function finalize(app = appDir, basePath = configuredBasePath()) {
     await mkdir(path.dirname(file), { recursive: true });
     await writeFile(file, publicMarkdown(`# ${page.title}\n\n${source.replace(/^---\n[\s\S]*?\n---\n/, '')}`, basePath));
   }
+  // French Markdown shortcuts mirror the generated French pages, falling back to English.
+  for (const page of manifest.pages) {
+    const localized = page.generatedPath.replace(/\\.md$/, '.fr.md');
+    let text;
+    try { text = await readFile(path.join(app, '.generated/content', localized), 'utf8'); }
+    catch { text = await readFile(path.join(app, '.generated/content', page.generatedPath), 'utf8'); }
+    const file = path.join(app, 'out', 'fr', `${['docs', ...page.slugs].join('/')}.md`);
+    await mkdir(path.dirname(file), { recursive: true });
+    await writeFile(file, publicMarkdown(`# ${page.title}\\n\\n${text.replace(/^---\\n[\\s\\S]*?\\n---\\n/, '')}`, basePath));
+  }
   await writeFile(path.join(app, 'out/.nojekyll'), '');
   console.log(`Exported ${manifest.pages.length} Markdown shortcuts.`);
 }
