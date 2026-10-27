@@ -56,3 +56,11 @@ Catalog changes must pass `node spellbook/scripts/bag.mjs validate` and `node --
 ## Scope boundary
 
 Example agent instructions and skill templates in this repository are **reference material**. They are not active instructions for other repositories unless a user deliberately installs or copies them.
+
+## External delegation via BAG item links (v1)
+
+When a user **explicitly** delegates a target-project task using a BAG item URL, also follow [BAG delegation protocol](maps-and-guides/agent-delegation-protocol.md). Start by reading the instructions along the BAG path from root to the referenced item (including intermediate `AGENTS.md` files); then use its README and relevant linked materials. This is a deliberate **reference-reading workflow**, not automatic application of instructions to another working tree.
+
+The external agent—not BAG's website—handles any necessary interview in the target project's chat. Questions must follow project inspection and focus on unresolved decisions. Prompts may appear anywhere in Markdown documents, including multiple prompts inside tutorials; every permanent reusable item should provide a generic integration prompt in its README. See [inline prompt convention](maps-and-guides/inline-prompts.md) and [delegable item template](templates/delegable-item.md).
+
+Existing instructions above remain binding for work **inside BAG**. Nothing in a BAG reference grants permission to install, run, deploy, overwrite, disclose secrets or override instructions belonging to the target project.

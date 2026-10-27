@@ -81,3 +81,13 @@ No dependencies required for these scripts; use Node.js 20+ (the repository CI u
 ---
 
 *An inventory is never finished. There's always another quest.*
+
+## 🤖 Delegate an item to your own AI agent
+
+Each reusable item can offer short prompts to copy into Codex, Claude Code, or another agent running in **your target project**. The prompt links directly to the BAG item; the agent reads BAG's root and nested `AGENTS.md` instructions, relevant docs and references, inspects your project, then asks only necessary questions before execution. No website-based interview module is required.
+
+- [Delegation protocol](maps-and-guides/agent-delegation-protocol.md)
+- [Inline prompts anywhere in Markdown](maps-and-guides/inline-prompts.md)
+- [Delegable item template](templates/delegable-item.md)
+- [Supabase Auth example with generic and tutorial prompts](inventory/supabase/auth/README.md)
+

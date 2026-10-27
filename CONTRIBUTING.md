@@ -47,3 +47,9 @@ Run `node spellbook/scripts/bag.mjs validate` and `node --test tests/*.test.mjs`
 ## Submitting a change
 
 Make a small, focused change, explain the value and any caveats, and mention validation results. For sensitive findings, follow [SECURITY.md](SECURITY.md) rather than publishing secrets.
+
+## Delegation-ready item content
+
+For every permanent **reusable** item, include a short generic “use this item in my project” prompt in its README (see [delegable item template](templates/delegable-item.md)). An item may also include many scenario-specific prompts anywhere in Markdown, especially inside tutorials. Each copyable prompt must independently link to its BAG item path and direct the external agent to read BAG's root-to-item `AGENTS.md` chain. Place detailed procedures in docs and scoped `AGENTS.md` files, not in long copyable prompts. See [inline prompts guidance](maps-and-guides/inline-prompts.md).
+
+Do not create empty nested instruction files: specialize instructions only when they carry meaningful extra guidance. The BAG website should simply render Markdown and optionally add Copy buttons; it must not require a form/interview wizard.
