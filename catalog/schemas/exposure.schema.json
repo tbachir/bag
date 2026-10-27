@@ -8,6 +8,7 @@
     "schemaVersion",
     "item",
     "canonical",
+    "docs",
     "consumers"
   ],
   "properties": {
@@ -38,7 +39,8 @@
           "id",
           "kind",
           "strategy",
-          "target"
+          "target",
+          "status"
         ],
         "properties": {
           "id": {
