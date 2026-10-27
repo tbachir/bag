@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="fr"><meta charset="utf-8"><title>BAG — Composer</title>
+<style>body{font:16px system-ui;background:#101827;color:#fff;max-width:900px;margin:40px auto}main{display:grid;grid-template-columns:1fr 1fr;gap:20px}section{border:1px solid #536075;padding:25px;border-radius:16px}label{display:block;margin:16px}pre{white-space:pre-wrap}button{padding:12px;background:#edbc73;border:0;border-radius:8px}@media(max-width:650px){main{grid-template-columns:1fr}}</style>
+<h1>🎒 BAG — Composer une mission</h1><main><section><h2>Supabase Auth</h2><div id="choices"></div></section><section><h2>Prompt</h2><pre id="output"></pre><button id="copy">Copier</button></section></main>
+<script>
+const tasks={setup:[],sessions:['setup'],password:['sessions'],oauth:['sessions'],rls:[],isolation:['sessions']};
+let chosen=new Set(['setup','sessions']);
+function update(){
+const all=new Set(chosen);function add(id){for(const dep of tasks[id]){if(!all.has(dep)){all.add(dep);add(dep)}}}for(const id of chosen)add(id);
+const choices=document.querySelector('#choices');choices.replaceChildren();
+for(const id in tasks){const label=document.createElement('label'),check=document.createElement('input');check.type='checkbox';check.checked=all.has(id);check.disabled=all.has(id)&&!chosen.has(id);check.onchange=()=>{if(check.checked)chosen.add(id);else chosen.delete(id);update()};label.append(check,document.createTextNode(' '+id+(check.disabled?' (requis)':'')));choices.append(label)}
+document.querySelector('#output').textContent='Intègre ces tâches BAG dans mon projet :\nhttps://github.com/tbachir/bag/tree/main/inventory/supabase/auth\nTâches : '+[...all].join(', ')+'\nSuis les AGENTS.md de BAG de la racine à cet item.';
+}
+document.querySelector('#copy').onclick=()=>navigator.clipboard.writeText(document.querySelector('#output').textContent);update();
+</script></html>
