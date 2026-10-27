@@ -112,3 +112,7 @@ setup or testing.
 
 References: [Fumadocs static builds](https://fumadocs.dev/docs/deploying/static)
 and [Next.js static exports](https://nextjs.org/docs/app/guides/static-exports).
+
+## Canonical BAG resource registry
+
+Skills, CI examples, reusable configurations and source Markdown remain outside `apps/docs`; do not duplicate them as handwritten MDX. See [resource exposure guide](../../maps-and-guides/resource-exposure.md) and the [o2switch descriptor](../../catalog/exposures/o2switch-cloud.json). The current website links to canonical sources; a future build-time adapter may index them without changing their ownership. Registered consumers are descriptive and opt-in, not runtime activation.
