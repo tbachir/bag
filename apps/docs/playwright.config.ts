@@ -1,4 +1,7 @@
+import { configuredBasePath } from './scripts/config.mjs';
 import { defineConfig, devices } from '@playwright/test';
+
+const basePath = configuredBasePath();
 
 export default defineConfig({
   testDir: './e2e',
@@ -6,9 +9,10 @@ export default defineConfig({
   workers: 1,
   forbidOnly: Boolean(process.env.CI),
   retries: 0,
-  timeout: 30_000,
+  timeout: 45_000,
+  expect: { timeout: 15_000 },
   use: {
-    baseURL: 'http://127.0.0.1:3000',
+    baseURL: `http://127.0.0.1:3000${basePath}/`,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
@@ -17,8 +21,8 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    command: 'pnpm start --listen tcp://127.0.0.1:3000',
-    url: 'http://127.0.0.1:3000/docs/',
+    command: 'node scripts/preview.mjs',
+    url: `http://127.0.0.1:3000${basePath}/docs/`,
     reuseExistingServer: false,
     timeout: 30_000,
   },

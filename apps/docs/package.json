@@ -7,11 +7,18 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
+    "build": "next build --webpack",
+    "dev": "next dev --webpack",
     "start": "serve out",
     "test:e2e": "playwright test",
-    "types:check": "next typegen && tsc --noEmit"
+    "types:check": "next typegen && tsc --noEmit",
+    "content:generate": "node scripts/generate.mjs",
+    "predev": "pnpm content:generate",
+    "prebuild": "pnpm content:generate",
+    "postbuild": "node scripts/finalize.mjs && pnpm content:check",
+    "pretypes:check": "pnpm content:generate",
+    "test:unit": "node --test scripts/*.test.mjs",
+    "content:check": "node scripts/check-export.mjs"
   },
   "dependencies": {
     "cn": "^0.5.0",
@@ -24,15 +31,29 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@next/env": "16.4.2",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/mdx": "^2.0.14",
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "github-slugger": "^2.0.0",
     "postcss": "^8.5.31",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
     "serve": "^14.2.6",
     "tailwindcss": "^4.3.3",
-    "typescript": "^7.0.2"
-  }
+    "typescript": "^7.0.2",
+    "unified": "^11.0.5",
+    "yaml": "^2.9.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "lightningcss": "1.33.0"
+    }
+  },
+  "type": "module"
 }

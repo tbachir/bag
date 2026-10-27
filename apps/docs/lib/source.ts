@@ -1,11 +1,12 @@
+import { publicMarkdown } from '../scripts/markdown.mjs';
 import { llms, loader } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
-import { docsContentRoute, docsImageRoute, docsRoute } from './shared';
+import { basePath, docsRoute, sitePath } from './shared';
 import { defineDocs } from 'fumadocs-mdx/macro';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 
 const docs = defineDocs({
-  dir: 'content/docs',
+  dir: '.generated/content',
   docs: {
     schema: pageSchema,
     postprocess: {
@@ -25,7 +26,7 @@ export const source = loader({
 });
 
 export const docsLlms = llms(source, {
-  renderPage: async (page) => `# ${page.data.title} (${page.url})
+  renderPage: async (page) => `# ${page.data.title} (${sitePath(page.url)})
 
-${await page.data.getText('processed')}`,
+${publicMarkdown(await page.data.getText('processed'), basePath)}`,
 });

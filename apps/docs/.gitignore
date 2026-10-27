@@ -26,3 +26,7 @@ yarn-error.log*
 .env*.local
 .vercel
 next-env.d.ts
+
+# Generated BAG content and downloadable source files
+/.generated/
+/public/files/

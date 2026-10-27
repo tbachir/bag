@@ -11,14 +11,15 @@ export const gitConfig = {
   branch: 'main',
 };
 
-export const docsSourcePath = 'apps/docs/content/docs';
+export const basePath = process.env.NEXT_PUBLIC_DOCS_BASE_PATH ?? '';
+export function sitePath(value: string) { return `${basePath}${value}`; }
 
 const getContentUrl = createGetUrl(docsContentRoute);
 
 export function getPageMarkdownUrl(page: { slugs: string[]; locale?: string }) {
   const segments = [...page.slugs, 'content.md'];
 
-  return { segments, url: getContentUrl(segments, page.locale) };
+  return { segments, url: sitePath(getContentUrl(segments, page.locale)) };
 }
 
 const getImageUrl = createGetUrl(docsImageRoute);
@@ -26,5 +27,5 @@ const getImageUrl = createGetUrl(docsImageRoute);
 export function getPageImageUrl(page: { slugs: string[]; locale?: string }) {
   const segments = [...page.slugs, 'image.png'];
 
-  return { segments, url: getImageUrl(segments, page.locale) };
+  return { segments, url: sitePath(getImageUrl(segments, page.locale)) };
 }
