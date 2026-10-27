@@ -18,7 +18,8 @@
     "postbuild": "node scripts/finalize.mjs && pnpm content:check",
     "pretypes:check": "pnpm content:generate",
     "test:unit": "node --test scripts/*.test.mjs",
-    "content:check": "node scripts/check-export.mjs"
+    "content:check": "node scripts/check-export.mjs",
+    "translations:check": "node scripts/check-translations.mjs"
   },
   "dependencies": {
     "cn": "^0.5.0",

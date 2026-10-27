@@ -158,3 +158,7 @@ References: [Fumadocs static builds](https://fumadocs.dev/docs/deploying/static)
 ## Canonical BAG resource registry
 
 Skills, CI examples, reusable configurations and source Markdown remain outside `apps/docs`; do not duplicate them as handwritten MDX. See [resource exposure guide](../../maps-and-guides/resource-exposure.md) and the [o2switch descriptor](../../catalog/exposures/o2switch-cloud.json). The current website links to canonical sources; the build-time compiler indexes them without changing their ownership. Registered consumers are descriptive and opt-in, not runtime activation.
+
+## Localization readiness
+
+English remains the canonical documentation language. French translation tracking and the future routing contract are documented in [I18N.md](I18N.md). Run `pnpm translations:check` to audit optional French translations. The public site is currently English-only; French pages and the language switcher are not yet active.
