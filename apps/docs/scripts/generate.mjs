@@ -141,7 +141,7 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
       if (node.type === 'html') node.type = 'text';
     });
     const filename = entry.generatedPath.replace(/\.md$/, '.fr.md');
-    rendered.set(filename, `---\n${yaml({ ...frontmatter, title, description })}---\n\\n${serialize(tree)}`);
+    rendered.set(filename, `---\n${yaml({ ...frontmatter, title, description })}---\n\n${serialize(tree)}`);
   }
   // Small authored navigation page, with source links resolved like repository pages.
   const zonesFile = 'apps/docs/content/docs/zones.mdx';
