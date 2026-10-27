@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "item": "o2switch-cloud",
+  "canonical": "skill-tree/skills/o2switch-cloud/SKILL.md",
+  "docs": [
+    "skill-tree/skills/o2switch-cloud/SKILL.md",
+    "skill-tree/skills/o2switch-cloud/references/00-plan-cpanel.md"
+  ],
+  "consumers": [
+    {
+      "id": "bag-docs",
+      "kind": "documentation",
+      "strategy": "reference",
+      "target": "apps/docs",
+      "status": "documented",
+      "notes": "The docs portal should render or link to the canonical source, never maintain a second SKILL.md."
+    },
+    {
+      "id": "local-agent",
+      "kind": "agent-skill",
+      "strategy": "symlink",
+      "target": ".agents/skills/o2switch-cloud",
+      "status": "opt-in",
+      "notes": "Optional local developer setup only; use a copy strategy for portability if the agent does not follow links. No automatic installation."
+    }
+  ]
+}
