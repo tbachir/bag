@@ -62,3 +62,11 @@ test('CLI emits JSON for machine consumers', () => {
   const found=JSON.parse(output);
   assert.ok(found.some(item=>item.id==='editorconfig'));
 });
+
+test('published JSON schema rejects unsafe relative paths', async () => {
+  const raw=await readFile(path.join(ROOT,'catalog/schemas/item.schema.json'),'utf8');
+  const schema=JSON.parse(raw);
+  const regex=new RegExp(schema.$defs.relativePath.pattern);
+  for (const valid of ['AGENTS.md','.gitignore','x/y/config.json']) assert.ok(regex.test(valid),valid);
+  for (const invalid of ['../escape','x/../escape','/absolute','C:\\private','x\\evil','.','', 'x//y','x/./y']) assert.equal(regex.test(invalid),false,invalid);
+});
