@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "item": "inventory/supabase/auth",
+  "groups": [
+    {
+      "id": "foundation",
+      "title": "Fondations",
+      "tasks": [
+        "setup",
+        "sessions"
+      ]
+    },
+    {
+      "id": "methods",
+      "title": "Méthodes de connexion",
+      "tasks": [
+        "password",
+        "magic-link",
+        "oauth"
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Sécurité",
+      "tasks": [
+        "rls",
+        "account-isolation"
+      ]
+    }
+  ],
+  "tasks": {
+    "setup": {
+      "title": "Initialiser la configuration",
+      "file": "foundation/setup.md",
+      "default": true,
+      "provides": [
+        "auth-client"
+      ]
+    },
+    "sessions": {
+      "title": "Sessions sécurisées",
+      "file": "foundation/sessions.md",
+      "requires": [
+        "setup"
+      ],
+      "default": true
+    },
+    "password": {
+      "title": "Email et mot de passe",
+      "file": "methods/password.md",
+      "requires": [
+        "sessions"
+      ],
+      "default": true
+    },
+    "magic-link": {
+      "title": "Magic links",
+      "file": "methods/magic-link.md",
+      "requires": [
+        "sessions"
+      ]
+    },
+    "oauth": {
+      "title": "Connexion OAuth",
+      "file": "methods/oauth.md",
+      "requires": [
+        "sessions"
+      ]
+    },
+    "rls": {
+      "title": "Vérifier les règles RLS",
+      "file": "security/rls.md",
+      "suggests": [
+        "account-isolation"
+      ]
+    },
+    "account-isolation": {
+      "title": "Tester l'isolation des comptes",
+      "file": "security/account-isolation.md",
+      "requires": [
+        "sessions"
+      ]
+    }
+  }
+}
