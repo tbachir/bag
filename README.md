@@ -69,7 +69,7 @@ No dependencies required for these scripts; use Node.js 20+ (the repository CI u
 - [Learn how to pack a new item](maps-and-guides/getting-started.md)
 - [Open the item card template](templates/item.md)
 - [Set up an AI coding loadout](loadouts/ai-coding/README.md)
-- [Use the skill template](skill-tree/skills/_template/SKILL.md)
+- [Use the skill template](skill-tree/skills/_template/SKILL.md)\n- [Equip the BAG discovery skill (opt-in)](skill-tree/skills/bag-inventory/SKILL.md)
 - [Explore the local search script](spellbook/scripts/README.md)
 
 ### 🇫🇷 En bref

@@ -26,7 +26,7 @@ test('plan is read-only and apply only creates missing reviewed files', async ()
     let plan=await planLoadout(catalog,'ai-coding',target);
     assert.equal(plan.dryRun,true);
     assert.equal(plan.actions.filter(a=>a.status==='create').length,3);
-    assert.equal(plan.actions.filter(a=>a.status==='reference-only').length,3);
+    assert.equal(plan.actions.filter(a=>a.status==='reference-only').length,4);
     assert.deepEqual(await readdir(target),[]);
     const applied=await applyPlan(catalog,'ai-coding',target);
     assert.equal(applied.dryRun,false);

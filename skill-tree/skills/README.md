@@ -16,4 +16,8 @@ skills/
 
 Include activation criteria, workflow, safety boundaries, authoritative references, and verification. Do not paste secret values or assume all AI products share one installation scheme.
 
-**Status:** template ready; personal skills to be curated.
+## First usable skill
+
+[🎒 BAG inventory discovery skill](bag-inventory/SKILL.md) teaches a compatible AI agent to search the catalog, inspect loadouts, preview target changes, and require user approval before copy operations. **Opt-in installation only** — see your AI client's current official skill setup instructions.
+
+**Status:** template and BAG inventory skill ready; other personal skills to be curated.
