@@ -8,3 +8,7 @@ In addition to the BAG root, inventory and Supabase instructions:
 - Verify token handling, refresh/logout, cross-account isolation and the application's RLS strategy when applicable.
 - Avoid creating a second auth system unless the user's architecture requires it.
 - Consult the item's README and current upstream references, then document any version-dependent uncertainties.
+
+## Composable tasks
+
+If the user supplies selected task IDs, read [tasks/index.json](tasks/index.json), resolve mandatory prerequisites and consult the corresponding Markdown task files. Follow [tasks/AGENTS.md](tasks/AGENTS.md). Do not silently expand the optional scope beyond required dependencies.

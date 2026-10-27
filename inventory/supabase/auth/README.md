@@ -53,3 +53,8 @@ Read BAG's root and applicable nested AGENTS.md files and consult the item refer
 - [Inventory guidance](../../AGENTS.md)
 - [BAG delegation protocol](../../../maps-and-guides/agent-delegation-protocol.md)
 - [Inline prompts convention](../../../maps-and-guides/inline-prompts.md)
+
+
+## Compose tasks
+
+Use the [task manifest](tasks/index.json) to select specific capabilities; each task has its own Markdown guide. The [standalone composer](../../../demo/task-composer.html) demonstrates copyable task selections.

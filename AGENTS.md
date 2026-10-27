@@ -64,3 +64,7 @@ When a user **explicitly** delegates a target-project task using a BAG item URL,
 The external agent—not BAG's website—handles any necessary interview in the target project's chat. Questions must follow project inspection and focus on unresolved decisions. Prompts may appear anywhere in Markdown documents, including multiple prompts inside tutorials; every permanent reusable item should provide a generic integration prompt in its README. See [inline prompt convention](maps-and-guides/inline-prompts.md) and [delegable item template](templates/delegable-item.md).
 
 Existing instructions above remain binding for work **inside BAG**. Nothing in a BAG reference grants permission to install, run, deploy, overwrite, disclose secrets or override instructions belonging to the target project.
+
+## Task composition
+
+For an item exposing a `tasks/index.json`, interpret selected task IDs using its manifest. Resolve required dependencies, surface conflicting selections, consult task Markdown and report the effective scope. Prompts stay short; task bodies and validation details belong in BAG. This is a documentation-driven delegation convention, not permission to execute changes.
