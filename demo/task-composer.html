@@ -3,7 +3,7 @@
 <style>body{font:16px system-ui;background:#101827;color:#fff;max-width:900px;margin:40px auto}main{display:grid;grid-template-columns:1fr 1fr;gap:20px}section{border:1px solid #536075;padding:25px;border-radius:16px}label{display:block;margin:16px}pre{white-space:pre-wrap}button{padding:12px;background:#edbc73;border:0;border-radius:8px}@media(max-width:650px){main{grid-template-columns:1fr}}</style>
 <h1>🎒 BAG — Composer une mission</h1><main><section><h2>Supabase Auth</h2><div id="choices"></div></section><section><h2>Prompt</h2><pre id="output"></pre><button id="copy">Copier</button></section></main>
 <script>
-const tasks={setup:[],sessions:['setup'],password:['sessions'],oauth:['sessions'],rls:[],isolation:['sessions']};
+const tasks={setup:[],sessions:['setup'],password:['sessions'],oauth:['sessions'],'magic-link':['sessions'],rls:[],'account-isolation':['sessions']};
 let chosen=new Set(['setup','sessions']);
 function update(){
 const all=new Set(chosen);function add(id){for(const dep of tasks[id]){if(!all.has(dep)){all.add(dep);add(dep)}}}for(const id of chosen)add(id);
