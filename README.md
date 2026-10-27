@@ -47,6 +47,21 @@ node spellbook/scripts/validate.mjs
 
 No dependencies required for these scripts; use Node.js 20+ (the repository CI uses Node.js 24).
 
+### Documentation website
+
+The [standalone Fumadocs app](apps/docs/README.md) lives in `apps/docs` and runs
+separately from the inventory scripts. It requires Node.js 22+ and pnpm.
+
+```bash
+cd apps/docs
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Open http://localhost:3000/docs. The app has its own lockfile. `pnpm build`
+produces static files in `out/` for any static host; Vercel is optional. See the
+app README for build, permanent Playwright setup, and separate hosting instructions.
+
 ### The gameplay loop
 
 1. **Find loot** → drop a promising discovery in [Loot](loot/README.md).
