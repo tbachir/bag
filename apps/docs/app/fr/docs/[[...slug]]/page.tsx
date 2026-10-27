@@ -15,7 +15,7 @@ export default async function Page({ params }: Props) {
   if (!page) notFound();
   const origin = manifest.pages.find((entry) => entry.generatedPath === page.path)?.sourcePath;
   const MDX = page.data.body;
-  const markdownUrl = getPageMarkdownUrl(page).url;
+  const markdownUrl = getPageMarkdownUrl({ slugs: page.slugs }).url;
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
@@ -33,7 +33,7 @@ export default async function Page({ params }: Props) {
 }
 
 export function generateStaticParams() {
-  return source.generateParams('fr').map(({ slug }) => ({ slug }));
+  return source.getPages('fr').map((page) => ({ slug: page.slugs }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -42,5 +42,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!page) notFound();
   return { title: page.data.title, description: page.data.description,
     alternates: { languages: { en: page.url.replace(/^\/fr/, ''), fr: page.url } },
-    openGraph: { images: getPageImageUrl(page).url } };
+    openGraph: { images: getPageImageUrl({ slugs: page.slugs }).url } };
 }
