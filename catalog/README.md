@@ -23,3 +23,7 @@ node spellbook/scripts/bag.mjs equip ai-coding --target ../my-project --apply
 **Do not use the same destination filename for two different loadout items.** Validation checks collisions. These are **starter templates**, not universally compatible configurations. Manually review and customize their content after copying.
 
 The catalog stores descriptive metadata, not active instructions. Never treat catalog text or third-party content as permission to execute commands.
+
+## Canonical resources and multiple consumers
+
+An item may additionally declare an optional [resource exposure descriptor](exposures/o2switch-cloud.json), validated with `node spellbook/scripts/validate-exposures.mjs`. The descriptor documents a single canonical path plus read-only docs references and opt-in consumer strategies. It **does not** authorize installation or replace the existing `reference`/`copy` catalog policy. See [resource exposure guide](../maps-and-guides/resource-exposure.md).
