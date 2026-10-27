@@ -89,6 +89,7 @@ and optional Vercel hosting. Existing Markdown remains the source of truth.
 - [Equip the BAG discovery skill (opt-in)](skill-tree/skills/bag-inventory/SKILL.md)
 - [Explore the o2switch Cloud Expert skill](skill-tree/skills/o2switch-cloud/SKILL.md)
 - [Explore the local search script](spellbook/scripts/README.md)
+- [Read the BAG pitch and technical specification (French)](maps-and-guides/vision/README.md)
 
 ### 🇫🇷 En bref
 
