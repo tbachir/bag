@@ -105,6 +105,9 @@ test('exports real Markdown aliases and audits both root and project-prefix link
     const file = path.join(options.app, 'out', page.url, 'index.html');
     await mkdir(path.dirname(file), { recursive: true });
     await writeFile(file, '<h1 id="title">Title</h1>');
+    const french = path.join(options.app, 'out', 'fr', page.url, 'index.html');
+    await mkdir(path.dirname(french), { recursive: true });
+    await writeFile(french, '<h1 id="title">Title</h1>');
   }
   await finalize(options.app, '/bag');
   assert.match(await readFile(path.join(options.app, 'out/docs.md'), 'utf8'), /\/bag\/docs\/inventory\//);

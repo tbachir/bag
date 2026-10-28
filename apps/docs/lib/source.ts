@@ -1,3 +1,4 @@
+import { i18n } from './i18n';
 import { publicMarkdown } from '../scripts/markdown.mjs';
 import { llms, loader } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
@@ -21,6 +22,10 @@ const docs = defineDocs({
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: docsRoute,
+  i18n,
+  url(slugs, locale) {
+    return `${locale === 'fr' ? '/fr' : ''}${docsRoute}/${slugs.join('/')}${slugs.length ? '/' : ''}`;
+  },
   source: docs.toFumadocsSource(),
   plugins: [lucideIconsPlugin()],
 });

@@ -21,6 +21,8 @@ export async function checkExport(app = appDir, basePath = configuredBasePath())
     const html = path.join(output, page.url, 'index.html');
     const markdown = path.join(output, `${['docs', ...page.slugs].join('/')}.md`);
     if (!await fileExists(html)) errors.push(`Missing page: ${page.sourcePath ?? page.url}`);
+    if (!await fileExists(path.join(output, 'fr', page.url, 'index.html'))) errors.push(`Missing French page: ${page.url}`);
+    if (!await fileExists(path.join(output, 'fr', `${['docs', ...page.slugs].join('/')}.md`))) errors.push(`Missing French Markdown shortcut: ${page.url}`);
     if (!await fileExists(markdown)) errors.push(`Missing Markdown shortcut: ${page.url}`);
   }
   for (const asset of manifest.assets) {
