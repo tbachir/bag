@@ -1,45 +1,76 @@
-# BAG UI component library
+# BAG UI component library and resource templates
 
-BAG's [UI Workbench](https://tbachir.github.io/bag/ui/) is a Storybook-style living showroom hosted inside the static Fumadocs documentation site. It is **not** the standalone Storybook framework or a second deployment.
+The [UI Workbench](https://tbachir.github.io/bag/ui/) is a Storybook-style gallery **inside** the static Fumadocs site. It covers the 13 components from the [official Fumadocs component catalog](https://www.fumadocs.dev/docs/ui/components), documenting which are live and which require a separate integration. It is not the independent Storybook toolchain.
 
-## Component inventory
+## Existing live stories
 
-Fumadocs provides default MDX components (Cards, Callouts, headings, code blocks) and opt-in Accordion, Tabs, Steps, Files, Type Table, Banner, Zoomable Image, Inline TOC, GitHub Info, Graph View, Root Toggle, and Auto Type Table components. Some components require additional packages, hooks, or layout wiring; see [official components documentation](https://www.fumadocs.dev/docs/ui/components).
+Accordion, Banner, Code Block (server), Dynamic Code Block (client), Files, Zoomable Image, Inline TOC, Steps, Tabs and Type Table, plus default Cards and Callouts. Story source is [apps/docs/app/ui/page.tsx](../../apps/docs/app/ui/page.tsx). Component exports are explicit in [components/mdx.tsx](../../apps/docs/components/mdx.tsx).
 
-The docs app registers Accordion, Tabs, Steps, Files and Type Table, alongside default MDX components, in `apps/docs/components/mdx.tsx`. For a runnable example of these registered components see `apps/docs/app/ui/page.tsx`. This page is built as part of the static export.
+## Additional integrations (not silently enabled)
 
-## Creating a new visual template
+| Component | Needed before using in production | Official guide |
+| --- | --- | --- |
+| Auto Type Table | Install `fumadocs-typescript`, configure `createGenerator`, ensure build-time FS and lockfile integrity | [Auto Type Table](https://www.fumadocs.dev/docs/ui/components/auto-type-table) |
+| Graph View | Run `npx @fumadocs/cli@latest add graph-view`, extract real link references, build graph data, validate static export | [Graph View](https://www.fumadocs.dev/docs/ui/components/graph-view) |
+| GitHub Info | Server-render repository information at build time, handle GitHub API limits and token injection securely; do not put tokens in client JS | [GitHub Info](https://www.fumadocs.dev/docs/ui/components/github-info) |
 
-1. Decide whether it is a **presentational component** (Cards, Tabs, Files) or a **data-driven template** (library, skill, task, loadout).
-2. Keep the canonical content in the existing BAG folders. Do not move source Markdown into the documentation app.
-3. Add a typed React template to `apps/docs/components/` that accepts sanitized props; no arbitrary source JSX execution.
-4. Add a representative story to `apps/docs/app/ui/page.tsx` with realistic data and at least one accessibility edge case.
-5. If adding a trusted MDX primitive, register its exports explicitly in `apps/docs/components/mdx.tsx`. Do not blindly re-export server-only or browser-only components.
-6. Link to the canonical item rather than duplicating its full documentation. Preserve recursive folder navigation.
-7. Test light/dark mode, keyboard navigation, viewport widths, static export and GitHub Pages `/bag` prefix.
+Do not call folder nesting a semantic relationship graph. Do not replace TypeTable with Auto Type Table without verifying compiler support.
 
-## Using existing components
+## BAG template architecture
 
-For a trusted, hand-authored MDX page:
+Each canonical directory may optionally include `bag.item.json` with `type`, `template`, `recommendation`, `contexts`, `tags`, `technologies`, `useCases`, `prompts` and `navigation`. A folder without this file still compiles as a normal recursive item. The configuration is parsed strictly at build time. `ResourceShowcase` renders an optional resource hero on the original generated documentation page, without copying the README into the app.
 
-```mdx
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
-import { Files, Folder, File } from 'fumadocs-ui/components/files';
+| Template | Example | What appears |
+| --- | --- | --- |
+| `boilerplate` | [Expo/Next/Hono starter](../../inventory/repositories/sb-mobile-app-boilerplate/README.md) | Source, target contexts, trade-offs and Drop Bag action |
+| `skill` | [Repository Auditor](../../skill-tree/skills/repository-auditor/README.md) | Commands, agent-specific paths, ZIP and prompts |
+| `library` | [shadcn/ui](../../inventory/libraries/shadcn-ui/README.md) | Technology, use cases, compatibility and source |
+| `resource` | [DESIGN.md](../../inventory/resources/design-md/README.md) | Reference and usage notes |
+| `loadout` | [Expo Production](../../loadouts/expo-mobile-production/README.md) | Composition and a link to Drop Bag |
 
-<Tabs items={['Install', 'Configure']}>
-  <Tab value="Install">Use an approved setup procedure.</Tab>
-  <Tab value="Configure">Adjust only reviewed configuration.</Tab>
-</Tabs>
+Set recommendation to `mandatory` **only when the scope is named by `contexts`**. It is not a blanket instruction: e.g., a Fumadocs-specific review skill may be mandatory for Fumadocs docs changes, but not for arbitrary React or Expo projects.
 
-<Files>
-  <Folder name="docs"><File name="README.md" /></Folder>
-</Files>
+### Create a new skill template
+
+1. Start from [skill template](../../skill-tree/skills/_template/SKILL.md), ensure valid frontmatter, and add a README with usage, safety notes and one delegation prompt.
+2. Add optional `bag.item.json` in the same directory:
+   ```json
+   {
+     "type": "skill", "template": "skill", "recommendation": "recommended",
+     "contexts": ["react", "expo"],
+     "tags": ["ui"], "prompts": [
+       {"title": "Audit this screen", "text": "Read the skill, inspect my UI and give prioritized actionable findings."}
+     ]
+   }
+   ```
+3. Add a meaningful real-world prompt, not a broad instruction to change everything.
+4. Run `node spellbook/scripts/validate.mjs`, `node spellbook/scripts/bag.mjs validate`, `pnpm test:unit` and the docs static build/tests.
+5. Confirm the ZIP is generated at `/files/skills/<slug>.zip`; check extracted files include `<slug>/SKILL.md`. Only offer ZIP import on clients where the feature exists.
+
+### Agent installation
+
+The [skills CLI](https://www.npmjs.com/package/skills) can install skills from GitHub:
+
+```bash
+npx skills add tbachir/bag --list
+npx skills add tbachir/bag --skill repository-auditor
+npx skills add tbachir/bag --skill repository-auditor -a claude-code
+npx skills add tbachir/bag --skill repository-auditor -a codex
 ```
 
-For a **BAG resource Markdown file**, use ordinary portable Markdown. The current compiler escapes embedded HTML/JSX to ensure that untrusted source never runs as React. Prefer template metadata and app-side rendering rather than changing that boundary.
+For manual project-level installs, copy the **whole skill folder** to `.claude/skills/<slug>/` (Claude Code) or `.agents/skills/<slug>/` (Codex). The exact supported paths depend on client/version. ChatGPT skill ZIP uploads are not universally available: upload only where the active ChatGPT interface exposes custom skills, otherwise attach the ZIP or Markdown as reference files. Neither a skill link nor a ZIP automatically activates instructions in an unrelated project.
+
+## Drop Bag architecture
+
+- The build-time generator reads `catalog/items/*.json` and `catalog/loadouts/*.json` as the canonical composition registry. Loadout cards are derived, not manually duplicated in the website.
+- The Explorer persists up to 100 selected, validated BAG paths in the current browser's local storage. No account, cookies, external search API or server state is needed.
+- A resource detail page and the Explorer share a single client-side selection hook. Prompt generation resolves selected paths to indexed items even when their filters are hidden.
+- Prompts explicitly instruct agents to inspect the target project's files and rules and to request approval for installation, copying, production actions or destructive changes.
+
+## General authoring rules
+
+Preserve the original Markdown and nested folders; do not allow JSX embedded in resource Markdown to execute. Use typed server-side components for actual React presentation. New templates should render missing metadata gracefully, use semantic headings and accessible buttons, work in light/dark mode, and pass GitHub Pages `/bag` static export.
 
 ## Verification
 
-From `apps/docs` run `pnpm test:unit`, `pnpm types:check`, `pnpm build`, `pnpm content:check`, and `pnpm test:e2e`. Validate the default export and the GitHub Pages build with `DOCS_BASE_PATH=/bag`. Do not claim visual examples were browser-tested until these checks have actually run.
-
-See also [Fumadocs Components](https://www.fumadocs.dev/docs/ui/components), [Steps](https://www.fumadocs.dev/docs/ui/components/steps), [Tabs](https://www.fumadocs.dev/docs/ui/components/tabs), and [Customize UI](https://www.fumadocs.dev/docs/guides/customize-ui).
+From `apps/docs`: `pnpm test:unit`, `pnpm types:check`, `pnpm build`, `pnpm content:check`, then `pnpm test:e2e`. Repeat production export with `DOCS_BASE_PATH=/bag`. Archive support must not depend on server execution at request time.

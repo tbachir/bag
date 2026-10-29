@@ -4,4 +4,7 @@ Useful links that don't primarily belong to the libraries or repositories shelve
 
 Keep attribution and original URLs. Briefly explain *why* a link is worth keeping, not just its title. Move uncertain discoveries through [Loot](../../loot/README.md) first.
 
-**Status:** shelf ready; resources to be curated.
+## Featured
+
+- [DESIGN.md](design-md/README.md) — version-controlled design-system context for agents, plus curated inspiration.
+

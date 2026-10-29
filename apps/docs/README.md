@@ -162,3 +162,7 @@ Skills, CI examples, reusable configurations and source Markdown remain outside 
 ## Localization readiness
 
 English remains the canonical documentation language. French translation tracking and the future routing contract are documented in [I18N.md](I18N.md). Run `pnpm translations:check` to audit optional French translations. The public site is currently English-only; French pages and the language switcher are not yet active.
+
+## UI and Drop Bag
+
+The [UI Workbench](app/ui/page.tsx) presents Fumadocs components and BAG-specific boilerplate/skill/library/loadout templates. The [Drop Bag Explorer](app/explore/inventory-explorer.tsx) offers persistent local selection and a combined, copyable delegation prompt. Each skill can be exported as a deterministic stored ZIP during content generation, alongside static Markdown and technical downloads. The canonical manifest catalog supplies the featured loadouts and no server-side account state is used. See [UI authoring conventions](../../maps-and-guides/ui/README.md).
