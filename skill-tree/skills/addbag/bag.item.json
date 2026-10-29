@@ -1,0 +1,32 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": [
+    "ai-agents",
+    "knowledge-capture",
+    "documentation",
+    "github"
+  ],
+  "tags": [
+    "session-capture",
+    "curation",
+    "automation"
+  ],
+  "technologies": [],
+  "useCases": [
+    "knowledge-reuse",
+    "agent-workflows",
+    "documentation"
+  ],
+  "prompts": [
+    {
+      "title": "Add to BAG — propose capture plan",
+      "text": "Use the addbag skill on the available history of this session. Identify reusable decisions, methods, tools and components, search BAG for duplicates, and propose a concise ranked capture plan with destinations and evidence. Do not edit the repository before my approval."
+    },
+    {
+      "title": "Approve capture and autonomous merge",
+      "text": "I approve the addbag capture plan just presented (approved items only). Implement it in tbachir/bag on a branch, self-review the changes, fix CI and review findings, and merge its PR when required repository checks pass. Do not ask me for a second discretionary review; report blockers instead."
+    }
+  ]
+}
