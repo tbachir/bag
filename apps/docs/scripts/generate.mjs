@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import Slugger from 'github-slugger';
 import { stringify as yaml } from 'yaml';
 import { parseMarkdown, visit, plainText, serialize } from './markdown.mjs';
+import { normalizeItemMetadata, folderNavigation } from './item-metadata.mjs';
 
 export const appDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const repoRoot = path.resolve(appDir, '../..');
@@ -33,6 +34,12 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
   files = [...new Set(files.filter(inScope))].sort();
   const entries = [];
   const assets = [];
+  const folderConfigs = new Map();
+  for (const file of files) {
+    if (!/(^|\/)bag\.item\.json$/.test(file)) continue;
+    const config = JSON.parse(await readFile(path.join(root, file), 'utf8'));
+    folderConfigs.set(path.posix.dirname(file), normalizeItemMetadata(config));
+  }
   const outputs = new Map();
   const sourceMap = new Map();
   const contents = new Map();
@@ -67,7 +74,11 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
       const id = custom?.[1] ?? slugger.slug(headingText);
       headingIds.set(id.replace(/[\uFE0E\uFE0F]/g, ''), id);
     });
-    const entry = { sourcePath: file, generatedPath, slugs, url, title, description };
+    const folder = path.posix.dirname(file);
+    const item = folderConfigs.get(folder) ?? {};
+    const entry = { sourcePath: file, generatedPath, slugs, url, title, description,
+      type: item.type ?? (slugs[0] === 'skill-tree' ? 'skill' : slugs[0] ?? 'reference'),
+      tags: item.tags ?? [], technologies: item.technologies ?? [], useCases: item.useCases ?? [] };
     entries.push(entry);
     sourceMap.set(file, entry);
     contents.set(file, { tree, frontmatter, headingIds });
@@ -176,7 +187,8 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     const children = await readdir(disk, { withFileTypes: true });
     const names = children.map((child) => child.isDirectory() ? child.name : child.name.replace(/\.md$/, '')).sort();
     const order = dir ? ['index'] : ['index', 'zones', ...zones, 'catalog', 'templates', 'demo', 'downloads'];
-    await write(path.join(disk, 'meta.json'), `${JSON.stringify({ pages: [...order.filter((name) => names.includes(name)), ...names.filter((name) => !order.includes(name))] }, null, 2)}\n`);
+    const configured = folderConfigs.get(dir);
+    await write(path.join(disk, 'meta.json'), `${JSON.stringify(folderNavigation(configured, names, order), null, 2)}\n`);
   }
   const manifest = { version: 1, pages: entries, assets };
   await write(path.join(generated, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);

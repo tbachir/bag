@@ -28,6 +28,7 @@ export default function HomePage() {
             Collect what matters, equip what works, and make your next project easier.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <Link href="/explore/" className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-fd-border bg-fd-card px-5 py-3 text-sm font-semibold text-fd-foreground hover:bg-fd-accent">Inventory Explorer <ArrowRight className="size-4" aria-hidden="true" /></Link>
             <Link href="/docs/" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-fd-primary px-5 py-3 text-sm font-semibold text-fd-primary-foreground shadow-sm transition hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fd-ring">
               Explore the inventory <ArrowRight className="size-4" aria-hidden="true" />
             </Link>

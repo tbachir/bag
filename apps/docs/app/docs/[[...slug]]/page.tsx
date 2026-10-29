@@ -33,6 +33,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
           markdownUrl={markdownUrl}
           githubUrl={origin ? `https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/${origin}` : undefined}
         />
+        {origin && <a className="text-sm underline underline-offset-2" href={`https://github.com/tbachir/bag/issues/new?title=${encodeURIComponent('Docs feedback: '+origin)}&body=${encodeURIComponent('Page: '+origin+'\\n\\nSuggested improvement:')}`} target="_blank" rel="noopener noreferrer">Suggest an improvement</a>}
       </div>
       <DocsBody>
         <MDX
