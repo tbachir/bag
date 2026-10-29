@@ -16,7 +16,7 @@ export function ResourceShowcase({item}: {item:BagItem}) {
   return <aside aria-label="Resource details" className="not-prose my-6 overflow-hidden rounded-2xl border border-fd-border bg-fd-card shadow-sm">
     <div className="border-b border-fd-border bg-[radial-gradient(ellipse_at_top_right,color-mix(in_oklch,var(--fd-primary)_13%,transparent),transparent_65%)] p-5 sm:p-7">
       <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide">
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-fd-secondary px-2.5 py-1"><Package className="size-3.5"/>{titles[item.template]??'Resource'}</span>
+        <span className="inline-flex items-center gap-1.5 rounded-md bg-fd-secondary px-2.5 py-1"><Package className="size-3.5"/>{titles[item.template ?? '']??'Resource'}</span>
         {item.recommendation && <span className={`rounded-md px-2.5 py-1 ${colors[item.recommendation]??''}`}>{item.recommendation}{item.contexts?.length?' · context-specific':''}</span>}
       </div>
       <p className="mt-4 max-w-2xl text-sm leading-6 text-fd-muted-foreground">{item.description}</p>
