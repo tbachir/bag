@@ -2,7 +2,9 @@
 import { useMemo, useState } from 'react';
 import { Check, Clipboard, Filter, Layers3, Search, ShoppingBag, Trash2 } from 'lucide-react';
 import { useDropBag } from '@/components/use-drop-bag';
-import { composePrompt, type BagItem, type BagLoadout } from '@/lib/drop-bag';
+import { analyzeBag, composePrompt, type BagItem, type BagLoadout } from '@/lib/drop-bag';
+import { TaskComposer } from '@/components/task-composer';
+import { AlertTriangle, Info } from 'lucide-react';
 
 export function InventoryExplorer({items,loadouts}:{items:BagItem[];loadouts:BagLoadout[]}) {
   const [query,setQuery]=useState('');
@@ -11,7 +13,8 @@ export function InventoryExplorer({items,loadouts}:{items:BagItem[];loadouts:Bag
   const [level,setLevel]=useState('all');
   const [mode,setMode]=useState<'cards'|'paths'>('cards');
   const [copied,setCopied]=useState(false);
-  const {selected,toggle,add,replace}=useDropBag();
+  const [targetContext,setTargetContext]=useState('all');
+  const {selected,taskSelections,toggle,add,replace}=useDropBag();
   const types=useMemo(()=>[...new Set(items.map(i=>i.template||i.type))].sort(),[items]);
   const contexts=useMemo(()=>[...new Set(items.flatMap(i=>[...(i.contexts??[]),...i.tags,...i.technologies,...i.useCases]))].sort(),[items]);
   const filtered=useMemo(()=>items.filter(i=>
@@ -21,7 +24,9 @@ export function InventoryExplorer({items,loadouts}:{items:BagItem[];loadouts:Bag
     [i.title,i.description,i.sourcePath,...(i.contexts??[]),...i.tags,...i.technologies,...i.useCases].join(' ').toLowerCase().includes(query.toLowerCase())
   ),[items,query,type,context,level]);
   const chosen=useMemo(()=>selected.map(path=>items.find(i=>i.sourcePath===path)).filter((i):i is BagItem=>Boolean(i)),[selected,items]);
-  const prompt=useMemo(()=>composePrompt(chosen),[chosen]);
+  const targetContexts=targetContext==='all'?[]:[targetContext];
+  const notices=useMemo(()=>analyzeBag(chosen,taskSelections,targetContexts),[chosen,taskSelections,targetContext]);
+  const prompt=useMemo(()=>composePrompt(chosen,taskSelections,targetContexts),[chosen,taskSelections,targetContext]);
   async function copyPrompt() {
     try { await navigator.clipboard.writeText(prompt);setCopied(true); }
     catch {setCopied(false);}
@@ -45,7 +50,7 @@ export function InventoryExplorer({items,loadouts}:{items:BagItem[];loadouts:Bag
         })}
       </div>
     </section>
-    <div className="grid items-start gap-7 xl:grid-cols-[minmax(0,1fr)_360px]">
+    <div className="grid items-start gap-7 xl:grid-cols-[minmax(0,1fr)_390px]">
       <section className="min-w-0 space-y-4" aria-label="Resource inventory">
         <div className="flex flex-wrap items-end justify-between gap-3"><h2 className="text-xl font-bold">Inventory <span className="text-fd-muted-foreground">({filtered.length})</span></h2><div className="flex gap-2 text-xs"><button aria-pressed={mode==='cards'} className="rounded-lg border border-fd-border px-3 py-2" onClick={()=>setMode('cards')}>Cards</button><button aria-pressed={mode==='paths'} className="rounded-lg border border-fd-border px-3 py-2" onClick={()=>setMode('paths')}>Folder view</button></div></div>
         <div className="grid gap-2 rounded-xl border border-fd-border bg-fd-card p-3 sm:grid-cols-2">
@@ -62,7 +67,9 @@ export function InventoryExplorer({items,loadouts}:{items:BagItem[];loadouts:Bag
       </section>
       <aside aria-labelledby="bag-heading" className="space-y-4 rounded-2xl border border-fd-border bg-fd-card p-5 shadow-sm xl:sticky xl:top-6">
         <div className="flex items-start justify-between gap-2"><div><div className="flex items-center gap-2"><ShoppingBag className="size-5 text-fd-primary"/><h2 id="bag-heading" className="text-xl font-bold">Your Drop Bag</h2></div><p className="mt-1 text-xs text-fd-muted-foreground">{chosen.length} selected resources</p></div><button type="button" title="Clear Drop Bag" aria-label="Clear Drop Bag" disabled={!selected.length} onClick={()=>replace([])} className="rounded-lg p-2 hover:bg-fd-accent disabled:opacity-40"><Trash2 className="size-4"/></button></div>
-        <div className="max-h-52 space-y-1 overflow-y-auto" aria-live="polite">{chosen.length?chosen.map(i=><div key={i.sourcePath} className="flex items-center justify-between gap-2 rounded-lg bg-fd-muted px-3 py-2 text-xs"><span className="min-w-0 truncate">{i.title}</span><button type="button" aria-label={`Remove ${i.title}`} onClick={()=>toggle(i.sourcePath)} className="shrink-0 font-semibold text-fd-primary">Remove</button></div>):<p className="rounded-lg border border-dashed border-fd-border px-4 py-6 text-center text-sm text-fd-muted-foreground">Choose an item or add a loadout to start composing.</p>}</div>
+        <div className="max-h-80 space-y-3 overflow-y-auto" aria-live="polite">{chosen.length?chosen.map(i=><div key={i.sourcePath} className="rounded-lg bg-fd-muted p-3 text-xs"><div className="flex items-center justify-between gap-2"><span className="min-w-0 truncate font-semibold">{i.title}</span><button type="button" aria-label={`Remove ${i.title}`} onClick={()=>toggle(i.sourcePath)} className="shrink-0 font-semibold text-fd-primary">Remove</button></div>{i.taskManifest&&<div className="mt-3"><TaskComposer item={i} compact/></div>}</div>):<p className="rounded-lg border border-dashed border-fd-border px-4 py-6 text-center text-sm text-fd-muted-foreground">Choose an item or add a loadout to start composing.</p>}</div>
+        <label className="block text-xs font-semibold text-fd-muted-foreground">Target project context<select aria-label="Target context" value={targetContext} onChange={e=>setTargetContext(e.target.value)} className="mt-1 block min-h-10 w-full rounded-lg border border-fd-border bg-fd-background px-3 text-sm text-fd-foreground"><option value="all">Not specified — inspect target project</option>{contexts.map(ctx=><option key={ctx} value={ctx}>{ctx}</option>)}</select></label>
+        {notices.length>0&&<section aria-label="Drop Bag compatibility analysis" className="space-y-2"><h3 className="flex items-center gap-2 text-sm font-bold"><AlertTriangle className="size-4"/>Compatibility checks ({notices.length})</h3>{notices.map((notice,index)=><div key={index} className={`rounded-lg border p-3 text-xs leading-5 ${notice.level==='error'?'border-red-500/40':notice.level==='warning'?'border-amber-500/40':'border-fd-border'}`}><div className="flex items-start gap-2">{notice.level==='info'?<Info className="mt-0.5 size-3.5 shrink-0"/>:<AlertTriangle className="mt-0.5 size-3.5 shrink-0"/>}<span>{notice.message}</span></div>{notice.kind==='dependency' && notice.related && items.some(i=>i.sourcePath===notice.related) && <button type="button" onClick={()=>add([notice.related!])} className="mt-2 rounded-md border border-fd-border px-2.5 py-1 font-semibold hover:bg-fd-accent">Add required reference</button>}</div>)}</section>}
         <label htmlFor="drop-bag-prompt" className="block text-sm font-semibold">One prompt. One coherent mission.</label><textarea id="drop-bag-prompt" readOnly aria-label="Generated agent prompt" value={prompt||'Select resources to generate your prompt.'} className="min-h-56 w-full resize-y rounded-lg border border-fd-border bg-fd-background p-3 font-mono text-xs leading-5"/>
         <button type="button" disabled={!chosen.length} onClick={copyPrompt} className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-fd-primary px-4 py-2 text-sm font-semibold text-fd-primary-foreground disabled:opacity-40">{copied?<Check className="size-4"/>:<Clipboard className="size-4"/>}{copied?'Copied':'Copy combined prompt'}</button>
         <p className="text-xs leading-5 text-fd-muted-foreground">Saved locally in this browser. Links are references, not installation commands. Review target-specific compatibility, security, costs and licenses with your agent before changes.</p>

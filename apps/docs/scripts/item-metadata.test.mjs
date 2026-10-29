@@ -26,3 +26,12 @@ test('ready-to-run skill prompts are bounded and retain order',()=>{
  assert.throws(()=>normalizeItemMetadata({prompts:[{title:'X',text:'A'.repeat(901)}]}));
  assert.throws(()=>normalizeItemMetadata({prompts:[{title:'X',text:'ok',html:'no'}]}));
 });
+
+test('custom task manifests and resource relations reject unsafe paths',()=>{
+ const x=normalizeItemMetadata({taskManifest:'workflows/index.json',relations:{requires:['inventory/libraries/shadcn-ui/README.md']}});
+ assert.equal(x.taskManifest,'workflows/index.json');
+ assert.deepEqual(x.relations.requires,['inventory/libraries/shadcn-ui/README.md']);
+ assert.throws(()=>normalizeItemMetadata({taskManifest:'../secrets.json'}));
+ assert.throws(()=>normalizeItemMetadata({relations:{requires:['../../secret.md']}}));
+ assert.throws(()=>normalizeItemMetadata({relations:{unknown:['a.md']}}));
+});

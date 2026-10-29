@@ -8,6 +8,7 @@ import { stringify as yaml } from 'yaml';
 import { parseMarkdown, visit, plainText, serialize } from './markdown.mjs';
 import { normalizeItemMetadata, folderNavigation } from './item-metadata.mjs';
 import { writeSkillsArchives } from './zip-skills.mjs';
+import { findTaskManifests } from './task-manifest.mjs';
 
 export const appDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const repoRoot = path.resolve(appDir, '../..');
@@ -41,6 +42,7 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     const config = JSON.parse(await readFile(path.join(root, file), 'utf8'));
     folderConfigs.set(path.posix.dirname(file), normalizeItemMetadata(config));
   }
+  const taskManifests=await findTaskManifests(files,folderConfigs,async f=>JSON.parse(await readFile(path.join(root,f),'utf8')));
   const outputs = new Map();
   const sourceMap = new Map();
   const contents = new Map();
@@ -80,7 +82,9 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     const entry = { sourcePath: file, generatedPath, slugs, url, title, description,
       type: item.type ?? (slugs[0] === 'skill-tree' ? 'skill' : slugs[0] ?? 'reference'),
       tags: item.tags ?? [], technologies: item.technologies ?? [], useCases: item.useCases ?? [],
-      contexts: item.contexts ?? [], recommendation: item.recommendation ?? null, template: item.template ?? null, prompts: item.prompts ?? [] };
+      contexts: item.contexts ?? [], recommendation: item.recommendation ?? null, template: item.template ?? null, prompts: item.prompts ?? [],
+      relations: item.relations ?? {requires:[],conflicts:[],alternatives:[],complements:[]},
+      ...(name.toLowerCase()==='readme.md' && taskManifests.has(folder) ? {taskManifest:taskManifests.get(folder)} : {}) };
     entries.push(entry);
     sourceMap.set(file, entry);
     contents.set(file, { tree, frontmatter, headingIds });
@@ -205,7 +209,13 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     loadouts.push({ id:value.id, title:value.title, summary:value.summary, sourcePaths,
       unresolved: value.items.filter(({id}) => !catalogItems.has(id)).map(({id}) => id) });
   }
-  const manifest = { version: 2, pages: entries, assets, loadouts };
+  // Fail the build on broken explicit cross-resource relations instead of surfacing dead recommendations.
+  for(const entry of entries) if(entry.relations){
+    for(const paths of Object.values(entry.relations))
+      for(const ref of paths)
+        if(!sourceMap.has(ref)) throw new Error('Unknown resource relation '+entry.sourcePath+' -> '+ref);
+  }
+  const manifest = { version: 3, pages: entries, assets, loadouts };
   await write(path.join(generated, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   // Keep downloads in the same generated namespace; Next serves the explicit public subtree.
   await rm(path.join(app, 'public/files'), { recursive: true, force: true });
