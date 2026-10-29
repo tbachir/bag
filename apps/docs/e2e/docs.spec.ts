@@ -8,7 +8,7 @@ test('read the complete inventory and navigate between zones', async ({ page }) 
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto(url('/'));
-  await page.getByRole('link', { name: 'Explore the documentation' }).click();
+  await page.getByRole('link', { name: 'Explore the inventory', exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`${prefix}/docs/$`));
   await expect(page.getByRole('heading', { level: 1 })).toContainText('BAG');
   await expect(page.getByRole('link', { name: 'Explore inventory', exact: true })).toHaveAttribute('href', url('/docs/inventory/'));
