@@ -44,3 +44,16 @@ See [the full authoring guide](../../maps-and-guides/bag-authoring-skills.md).
 - [Skill Maintainer](skill-maintainer/README.md) — evidence-based version reviews, updates and changelogs.
 
 [Skill freshness policy](../../maps-and-guides/skill-freshness-policy.md): fast-changing skills require a pre-use check and a 30-day verified review interval; an agent must invoke Skill Maintainer before using stale guidance. This policy does not claim automatic client-wide activation.
+
+## Documentation, design, and agent-readiness
+
+These opt-in skills focus on practical review workflows rather than automatically changing other repositories:
+
+| Skill | Use when |
+| --- | --- |
+| [Fumadocs Engineering](fumadocs-engineer/SKILL.md) | Maintaining Fumadocs navigation, Markdown/MDX, static exports, search and multilingual docs |
+| [Documentation Architecture](documentation-architect/SKILL.md) | Restructuring guides, onboarding and reference docs around user tasks |
+| [UI/UX Design Review](ui-ux-design-review/SKILL.md) | Auditing responsive design, design systems and WCAG 2.2 accessibility |
+| [Agent-ready Documentation](agent-ready-documentation/SKILL.md) | Improving AGENTS.md scope, delegation prompts, skills and safe agent workflows |
+
+Each skill supplies triggers, ordered procedures, authoritative references and verification criteria. Adding them to BAG **does not install them in another AI client**. Read `SKILL.md` explicitly or use an opt-in compatible skill installation method. The Fumadocs skill explicitly accounts for BAG's tracked-Markdown-to-static-site architecture.
