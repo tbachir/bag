@@ -25,3 +25,12 @@ Include activation criteria, workflow, safety boundaries, authoritative referenc
 [☁️ o2switch Cloud Expert](o2switch-cloud/SKILL.md) reproduces the cPanel navigation, links to 65 official documentation pages, and records 31 capability decisions, including Redis, Node.js/Passenger, PostgreSQL, WAF, backups, and uncertain limitations. The skill is opt-in; source availability is not account activation.
 
 **Status:** BAG inventory and o2switch Cloud skills available; other personal skills to be curated.
+
+## BAG authoring workflows
+
+- [Author an item](bag-author-item/SKILL.md) — any resource, link, note or nested directory.
+- [Author a task](bag-author-task/SKILL.md) — outcome-oriented practical guide with optional template.
+- [Curate a library](bag-author-library/SKILL.md) — official sources, evaluation and examples.
+- [Author metadata](bag-author-metadata/SKILL.md) — optional Fumadocs navigation and proposed BAG extensions.
+
+See [the full authoring guide](../../maps-and-guides/bag-authoring-skills.md).
