@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
+import { getPageImageUrl, sitePath, gitConfig } from '@/lib/shared';
 
 type Props = { params: Promise<{ slug?: string[] }> };
 
@@ -15,7 +15,7 @@ export default async function Page({ params }: Props) {
   if (!page) notFound();
   const origin = manifest.pages.find((entry) => entry.generatedPath === page.path)?.sourcePath;
   const MDX = page.data.body;
-  const markdownUrl = `/fr${getPageMarkdownUrl({ slugs: page.slugs }).url}`;
+  const markdownUrl = sitePath(`/fr/docs${page.slugs.length ? `/${page.slugs.join('/')}` : ''}.md`);
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
