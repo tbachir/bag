@@ -34,3 +34,13 @@ Include activation criteria, workflow, safety boundaries, authoritative referenc
 - [Author metadata](bag-author-metadata/SKILL.md) — optional Fumadocs navigation and proposed BAG extensions.
 
 See [the full authoring guide](../../maps-and-guides/bag-authoring-skills.md).
+
+## Repository curation and quality skills
+
+- [Repository Auditor](repository-auditor/README.md) — inspect projects, select portable resources and establish license/provenance.
+- [Reusable Component Extractor](reusable-component-extractor/README.md) — adapt and verify individual assets before adding them to BAG.
+- [API Documentation Quality](api-documentation-quality/README.md) — contract-first, example-backed API references.
+- [Prompt Quality Reviewer](prompt-quality-reviewer/README.md) — provider-specific prompt guidance and reproducible evaluations.
+- [Skill Maintainer](skill-maintainer/README.md) — evidence-based version reviews, updates and changelogs.
+
+[Skill freshness policy](../../maps-and-guides/skill-freshness-policy.md): fast-changing skills require a pre-use check and a 30-day verified review interval; an agent must invoke Skill Maintainer before using stale guidance. This policy does not claim automatic client-wide activation.
