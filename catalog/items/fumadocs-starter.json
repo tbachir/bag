@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "fumadocs-starter",
+  "title": "Fumadocs Starter App",
+  "summary": "Opt-in official Fumadocs static app generator with reusable content, navigation and Docs Architect skill.",
+  "zone": "equipment",
+  "kind": "tool",
+  "status": "ready",
+  "tags": [
+    "fumadocs",
+    "docs",
+    "starter"
+  ],
+  "source": {
+    "type": "local",
+    "path": "equipment/fumadocs-starter/README.md"
+  },
+  "mode": "reference",
+  "notes": "Creation requires explicit --apply; upstream create-fumadocs-app installs dependencies and is not run by BAG equip."
+}

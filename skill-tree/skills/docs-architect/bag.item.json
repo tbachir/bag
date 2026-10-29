@@ -1,0 +1,27 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": [
+    "fumadocs",
+    "documentation"
+  ],
+  "tags": [
+    "architecture",
+    "documentation",
+    "agents"
+  ],
+  "technologies": [
+    "fumadocs"
+  ],
+  "useCases": [
+    "project-setup",
+    "quality"
+  ],
+  "prompts": [
+    {
+      "title": "Architecture audit and safe migration",
+      "text": "Read BAG's docs-architect SKILL.md and the target project; plan a task-based documentation architecture with Fumadocs-aware navigation, preserve original Markdown and links, and validate only authorized changes."
+    }
+  ]
+}

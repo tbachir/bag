@@ -1,0 +1,11 @@
+{
+  "title": "Documentation playbook",
+  "pages": [
+    "index",
+    "quickstart",
+    "how-to",
+    "reference",
+    "explanation",
+    "components"
+  ]
+}

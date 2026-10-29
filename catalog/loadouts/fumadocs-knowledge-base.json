@@ -8,7 +8,11 @@
       "id": "fumadocs-ui"
     },
     {
-      "id": "documentation-architect"
+      "id": "fumadocs-starter",
+      "note": "Optional, explicit new-project scaffold; not automatically executed"
+    },
+    {
+      "id": "docs-architect"
     },
     {
       "id": "fumadocs-engineer"
@@ -18,6 +22,18 @@
     },
     {
       "id": "prompt-quality-reviewer"
+    },
+    {
+      "id": "compozy-fumadocs",
+      "note": "Upstream skill reference, review before opt-in use"
+    },
+    {
+      "id": "diataxis-docs-framework",
+      "note": "Upstream skill reference, review before opt-in use"
+    },
+    {
+      "id": "adk-docs-writer",
+      "note": "Upstream skill reference, review before opt-in use"
     }
   ]
 }

@@ -1,0 +1,40 @@
+---
+title: Component Gallery
+description: Native Fumadocs UI primitives for useful documentation layouts.
+---
+
+import { Cards, Card } from 'fumadocs-ui/components/card';
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+## Cards
+
+<Cards>
+  <Card title="Explore the guides" description="Navigation through related pages" href="/docs/docs-architecture/how-to" />
+  <Card title="Understand the model" description="Background and trade-offs" href="/docs/docs-architecture/explanation" />
+</Cards>
+
+## Steps
+
+<Steps>
+### Inspect
+Read the project's existing structure.
+### Plan
+Propose the smallest useful change.
+### Validate
+Check links, build and search.
+</Steps>
+
+## Tabs
+
+<Tabs items={['Concept', 'Implementation']}>
+  <Tab value="Concept">Prioritize the reader's task.</Tab>
+  <Tab value="Implementation">Use native Fumadocs components and metadata.</Tab>
+</Tabs>
+
+## Callout
+
+<Callout type="warn" title="Static hosting">
+Server-only capabilities need separate support; validate your export before publishing.
+</Callout>

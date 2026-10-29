@@ -1,0 +1,22 @@
+---
+title: Documentation Playbook
+description: A practical example of a reader-first Fumadocs knowledge base.
+---
+
+import { Cards, Card } from 'fumadocs-ui/components/card';
+
+This section is a **working example**. Replace its content with your project's canonical material, keeping the audience journey and native page tree.
+
+<Cards>
+  <Card title="Quickstart" description="Complete your first successful task" href="/docs/docs-architecture/quickstart" />
+  <Card title="How-to" description="Solve a concrete user problem" href="/docs/docs-architecture/how-to" />
+  <Card title="Reference" description="Find exact configuration facts" href="/docs/docs-architecture/reference" />
+  <Card title="Explanation" description="Understand concepts and trade-offs" href="/docs/docs-architecture/explanation" />
+  <Card title="Component Gallery" description="Examples of native Fumadocs UI primitives" href="/docs/docs-architecture/components" />
+</Cards>
+
+## Principles
+
+- Organize content for readers, not organizational charts.
+- A nested directory is free to become an item; metadata is optional.
+- Keep one canonical source for each fact, link from other entrypoints and test navigation.

@@ -1,0 +1,31 @@
+---
+title: Quickstart
+description: Learn how to add your first documented task with native Fumadocs components.
+---
+
+import { Steps } from 'fumadocs-ui/components/steps';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+<Steps>
+
+### Identify a real outcome
+
+Write what the reader will achieve and which prerequisites they need.
+
+### Create a Markdown or MDX page
+
+Add the page under `content/docs/` and provide a clear title and description. It can live in any depth of subfolders.
+
+### Link it into navigation
+
+Use the enclosing folder's optional `meta.json` to set ordering where necessary; keep navigation discoverable.
+
+### Check the result
+
+Run `pnpm dev` to inspect the page, then `pnpm build` for the static output.
+
+</Steps>
+
+<Callout type="info" title="Why a quickstart?">
+The reader should reach one verified success before encountering detailed reference material.
+</Callout>

@@ -29,3 +29,7 @@ Future loadouts might target Windows development, Next.js, Expo mobile, offline-
 - [Fumadocs Knowledge Base](fumadocs-knowledge-base/README.md) — task-first docs and static agent-friendly references.
 
 Open the [Drop Bag](https://tbachir.github.io/bag/explore/) to compose any of these with individual catalog items; selections are never executed automatically.
+
+## Documentation starter
+
+Use [Fumadocs Knowledge Base](fumadocs-knowledge-base/README.md) for an agent-ready documentation workflow; for a brand-new application, its [Fumadocs Starter](../equipment/fumadocs-starter/README.md) generates the official static Next.js/Fumadocs baseline only on explicit request.
