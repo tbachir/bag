@@ -1,21 +1,6 @@
 name: Build and publish BAG docs
 
 on:
-  pull_request:
-    paths:
-      - 'apps/docs/**'
-      - 'inventory/**'
-      - 'equipment/**'
-      - 'skill-tree/**'
-      - 'spellbook/**'
-      - 'maps-and-guides/**'
-      - 'loot/**'
-      - 'loadouts/**'
-      - 'catalog/**'
-      - 'templates/**'
-      - 'demo/**'
-      - '*.md'
-      - '.github/workflows/docs.yml'
   push:
     branches: [main]
   workflow_dispatch:
