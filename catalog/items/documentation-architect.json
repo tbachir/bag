@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "documentation-architect",
+  "title": "Documentation Architect",
+  "summary": "Restructure docs around journeys",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "docs",
+    "agents"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/documentation-architect/SKILL.md"
+  },
+  "mode": "reference"
+}

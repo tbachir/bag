@@ -1,0 +1,31 @@
+{
+  "type": "repository",
+  "template": "boilerplate",
+  "recommendation": "recommended",
+  "contexts": [
+    "expo",
+    "react-native",
+    "nextjs",
+    "hono"
+  ],
+  "tags": [
+    "monorepo",
+    "starter",
+    "branding-cli",
+    "mobile"
+  ],
+  "technologies": [
+    "expo",
+    "nextjs",
+    "prisma",
+    "supabase"
+  ],
+  "useCases": [
+    "mobile-product",
+    "project-bootstrap"
+  ],
+  "navigation": {
+    "title": "Mobile App Boilerplate",
+    "description": "Expo, Next.js, Hono and branding CLI"
+  }
+}

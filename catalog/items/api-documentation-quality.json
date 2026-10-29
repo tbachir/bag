@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "api-documentation-quality",
+  "title": "API Documentation Quality",
+  "summary": "Evidence-based API reference",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "api",
+    "docs"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/api-documentation-quality/SKILL.md"
+  },
+  "mode": "reference"
+}

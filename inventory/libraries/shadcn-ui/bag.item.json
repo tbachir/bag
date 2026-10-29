@@ -1,0 +1,21 @@
+{
+  "type": "library",
+  "template": "library",
+  "recommendation": "recommended",
+  "contexts": [
+    "react",
+    "nextjs",
+    "ui"
+  ],
+  "tags": [
+    "shadcn-ui",
+    "ui"
+  ],
+  "technologies": [
+    "react"
+  ],
+  "useCases": [
+    "design-system",
+    "frontend"
+  ]
+}

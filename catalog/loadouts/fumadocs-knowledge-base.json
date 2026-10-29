@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "fumadocs-knowledge-base",
+  "title": "Fumadocs · Agent-ready Knowledge Base",
+  "summary": "Create a useful, static-first documentation architecture with accessible components, verified guides, navigable tasks and agent-friendly API docs.",
+  "items": [
+    {
+      "id": "fumadocs-ui"
+    },
+    {
+      "id": "documentation-architect"
+    },
+    {
+      "id": "fumadocs-engineer"
+    },
+    {
+      "id": "api-documentation-quality"
+    },
+    {
+      "id": "prompt-quality-reviewer"
+    }
+  ]
+}

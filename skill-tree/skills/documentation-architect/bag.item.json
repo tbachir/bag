@@ -1,0 +1,24 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": [
+    "fumadocs",
+    "documentation"
+  ],
+  "tags": [
+    "agents",
+    "workflow"
+  ],
+  "technologies": [],
+  "useCases": [
+    "quality",
+    "automation"
+  ],
+  "prompts": [
+    {
+      "title": "Restructure docs without losing links",
+      "text": "Use documentation-architect to inspect our documentation IA and user journeys, propose a task-first navigation tree preserving canonical files and redirects, then validate links."
+    }
+  ]
+}

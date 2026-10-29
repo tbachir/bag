@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "supabase-auth",
+  "title": "Supabase Auth",
+  "summary": "Documented authentication and RLS tasks",
+  "zone": "inventory",
+  "kind": "resource",
+  "status": "ready",
+  "tags": [
+    "supabase",
+    "auth"
+  ],
+  "source": {
+    "type": "local",
+    "path": "inventory/supabase/auth/README.md"
+  },
+  "mode": "reference"
+}

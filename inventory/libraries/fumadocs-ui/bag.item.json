@@ -1,0 +1,21 @@
+{
+  "type": "library",
+  "template": "library",
+  "recommendation": "mandatory",
+  "contexts": [
+    "fumadocs",
+    "documentation",
+    "nextjs"
+  ],
+  "tags": [
+    "fumadocs-ui",
+    "ui"
+  ],
+  "technologies": [
+    "react"
+  ],
+  "useCases": [
+    "design-system",
+    "frontend"
+  ]
+}
