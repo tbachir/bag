@@ -8,17 +8,26 @@ It's not just a bookmark collection. It's a **searchable, reusable, AI-friendly 
 
 **Collect what matters. Equip what you need. Keep leveling up.**
 
-## 🗺️ Choose your destination
+## 🔎 Find and use an item
 
-| Zone | What you'll find | Enter |
-| --- | --- | --- |
-| 🎒 **Inventory** | Libraries, repositories, useful resources, and references | [Explore inventory](inventory/README.md) |
-| ⚔️ **Equipment** | Tools, apps, dev environments, and reusable configuration files | [Equip yourself](equipment/README.md) |
-| 🌳 **Skill Tree** | AI skills, agent instructions, plugins, and MCP servers | [Unlock skills](skill-tree/README.md) |
-| 📖 **Spellbook** | Scripts, commands, snippets, and automations | [Open the spellbook](spellbook/README.md) |
-| 🗺️ **Maps & Guides** | Tutorials, documentation, best practices, and field notes | [Find your way](maps-and-guides/README.md) |
-| 💎 **Loot** | Unsorted discoveries, inspiration, and things to evaluate | [Inspect loot](loot/README.md) |
-| 🧰 **Loadouts** | Ready-to-use collections of items for a specific quest or stack | [Choose a loadout](loadouts/README.md) |
+**BAG is a recursive, item-first inventory.** Every directory can represent a resource,
+a skill, a workflow or a guide, with optional metadata and nested items of any depth.
+The seven original zones are internal organization conventions, not mandatory item types.
+
+Start with [Explore BAG](apps/docs/content/docs/zones.mdx) for task-oriented navigation.
+The documentation website renders the canonical Markdown; do not edit generated files.
+
+| Your goal | Canonical entrypoint |
+| --- | --- |
+| Find a library, repository or service | [Resources](inventory/README.md) |
+| Use an AI skill or agent integration | [Skills](skill-tree/skills/README.md) |
+| Reuse a command or automation | [Scripts](spellbook/scripts/README.md) |
+| Learn or document a process | [Guides](maps-and-guides/README.md) |
+| Assemble resources for a project | [Loadouts](loadouts/README.md) |
+| Author a new item or nested resource | [Authoring skills](maps-and-guides/bag-authoring-skills.md) |
+
+Equipment and Loot remain available as [configuration](equipment/README.md) and
+[discovery](loot/README.md) collections, but no longer compete for top-level attention.
 
 ## 🧠 Intelligent catalog (V2)
 

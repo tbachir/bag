@@ -17,6 +17,7 @@ node spellbook/scripts/bag.mjs plan ai-coding --target ../my-project
 
 | Loadout | Quest |
 | --- | --- |
-| [AI Coding](ai-coding/README.md) | Prepare a safe baseline for coding with AI agents |\n| [Node Project](../catalog/loadouts/node-project.json) | Add simple Node/TypeScript config templates without installing packages |
+| [AI Coding](ai-coding/README.md) | Prepare a safe baseline for coding with AI agents |
+| [Node Project](../catalog/loadouts/node-project.json) | Add simple Node/TypeScript config templates without installing packages |
 
 Future loadouts might target Windows development, Next.js, Expo mobile, offline-first systems, self-hosting, or observability. Add them when concrete, reviewed items exist.
