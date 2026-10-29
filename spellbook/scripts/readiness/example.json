@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": "REQ-1",
+      "owner": "product",
+      "acceptance": [
+        "User can describe the expected outcome"
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "BUILD-1",
+      "owner": "engineering",
+      "acceptance": [
+        "Acceptance tests pass"
+      ],
+      "dependsOn": [
+        "REQ-1"
+      ]
+    }
+  ]
+}
