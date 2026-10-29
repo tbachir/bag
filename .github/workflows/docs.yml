@@ -1,7 +1,6 @@
 name: Build and publish BAG docs
 
 on:
-  pull_request:
   push:
     branches: [main]
   workflow_dispatch:
