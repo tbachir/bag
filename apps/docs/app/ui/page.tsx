@@ -12,7 +12,7 @@ import { InlineTOC } from 'fumadocs-ui/components/inline-toc';
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { WorkbenchDynamic } from '@/components/workbench-dynamic';
 import { sitePath } from '@/lib/shared';
-import { ArrowUpRight, BookMarked, Boxes, Copy, Layers3, LibraryBig, Sparkles } from 'lucide-react';
+import { ArrowUpRight, BookMarked, Boxes, Layers3, Sparkles } from 'lucide-react';
 
 export const metadata = {
   title: 'UI Workbench — BAG',
@@ -63,7 +63,7 @@ export default function UIWorkbench() {
       <Story id="story-codeblock" title="Code Block" description="Shiki-powered, server-rendered snippets with copy controls."><ServerCodeBlock lang="bash" code="npx skills add tbachir/bag --skill repository-auditor" /></Story>
       <Story id="story-dynamic" title="Code Block (Dynamic)" description="Change the command; syntax highlighting updates in the browser."><WorkbenchDynamic/></Story>
       <Story id="story-files" title="Files" description="Display nested folders alongside canonical skill structure."><Files><Folder name="skill-tree" defaultOpen><Folder name="skills" defaultOpen><Folder name="repository-auditor" defaultOpen><File name="SKILL.md"/><File name="README.md"/><File name="CHANGELOG.md"/></Folder></Folder></Folder><Folder name="catalog"><Folder name="loadouts"><File name="expo-mobile-production.json"/></Folder></Folder></Files></Story>
-      <Story id="story-image" title="Zoomable Image" description="Examine generated OG screenshots; full-screen zoom supports keyboard interaction."><div className="max-w-md"><ImageZoom src={sitePath('/og/docs/image.png')} alt="BAG documentation illustration" width={640} height={360} unoptimized /></div></Story>
+      <Story id="story-image" title="Zoomable Image" description="Examine generated OG screenshots; full-screen zoom supports keyboard interaction."><div className="max-w-md"><ImageZoom src={sitePath('/og/docs/image.png')} alt="BAG documentation illustration" width={640} height={360} /></div></Story>
       <Story id="story-toc" title="Inline TOC" description="Inline navigation for longer tutorials."><InlineTOC items={[{title:'Fumadocs components',url:'#catalog',depth:2},{title:'BAG templates',url:'#templates',depth:2},{title:'Live stories',url:'#stories',depth:2}]}>Jump to a section</InlineTOC></Story>
       <Story id="story-steps" title="Steps" description="Explain repeatable, verifiable workflows."><Steps><Step><h4 className="font-semibold">Inspect the project</h4>Read its existing constraints and dependencies.</Step><Step><h4 className="font-semibold">Select resources</h4>Add compatible resources to Drop Bag.</Step><Step><h4 className="font-semibold">Apply with approval</h4>Ask the agent to validate work against acceptance tests.</Step></Steps></Story>
       <Story id="story-tabs" title="Tabs" description="Offer platform-specific instructions without repeating an entire page."><Tabs items={['Claude Code','Codex','ChatGPT']}><Tab value="Claude Code"><code>.claude/skills/repository-auditor/SKILL.md</code></Tab><Tab value="Codex"><code>.agents/skills/repository-auditor/SKILL.md</code></Tab><Tab value="ChatGPT">Download a skill ZIP and import only if your workspace supports custom skills.</Tab></Tabs></Story>
