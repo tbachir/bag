@@ -25,6 +25,7 @@ The documentation website renders the canonical Markdown; do not edit generated 
 | Learn or document a process | [Guides](maps-and-guides/README.md) |
 | Assemble resources for a project | [Loadouts](loadouts/README.md) |
 | Author a new item or nested resource | [Authoring skills](maps-and-guides/bag-authoring-skills.md) |
+| Reuse lessons from an AI conversation | [Add to BAG skill](skill-tree/skills/addbag/README.md) |
 
 Equipment and Loot remain available as [configuration](equipment/README.md) and
 [discovery](loot/README.md) collections, but no longer compete for top-level attention.

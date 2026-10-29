@@ -16,6 +16,10 @@ skills/
 
 Include activation criteria, workflow, safety boundaries, authoritative references, and verification. Do not paste secret values or assume all AI products share one installation scheme.
 
+## Capture what you learned with one call
+
+[**Add to BAG**](addbag/README.md) (`/addbag` in Claude Code when installed, `$addbag` in Codex, or `add to bag` in natural language) reads the **accessible** session, identifies reusable insights, and proposes a short capture plan. After **one explicit approval**, an agent with GitHub access can implement the selected items, validate them and autonomously merge the BAG PR once required checks pass. It does not archive private transcripts or override repository protection rules.
+
 ## First usable skill
 
 [🎒 BAG inventory discovery skill](bag-inventory/SKILL.md) teaches a compatible AI agent to search the catalog, inspect loadouts, preview target changes, and require user approval before copy operations. **Opt-in installation only** — see your AI client's current official skill setup instructions.
