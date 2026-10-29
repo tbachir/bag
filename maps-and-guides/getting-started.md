@@ -2,7 +2,7 @@
 
 ## Quest 1: find an item
 
-Open a [zone](../README.md#-choose-your-destination) or search the Markdown content:
+Open a [BAG's inventory overview](../README.md) or search the Markdown content:
 
 ```bash
 node spellbook/scripts/find.mjs "postgresql"
