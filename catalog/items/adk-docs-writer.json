@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "adk-docs-writer",
+  "title": "ADK-TS Docs Writer",
+  "summary": "Fumadocs MDX page patterns, components, frontmatter and meta.json examples.",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "fumadocs",
+    "docs",
+    "external"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/adk-docs-writer/README.md"
+  },
+  "mode": "reference",
+  "notes": "https://github.com/BrainDAO/iq-claude-config/blob/main/plugins/iq-adk-ts/skills/adk-ts-docs-writer/SKILL.md — third-party reference, not installed; Project-specific ADK-TS conventions are not portable and must not be applied verbatim."
+}

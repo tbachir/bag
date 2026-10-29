@@ -1,0 +1,29 @@
+---
+title: How-to Guide
+description: A focused guide for completing a concrete documentation task.
+---
+
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+
+## Validate your documentation build
+
+Choose the package manager already used by your project.
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tab value="pnpm">
+
+```bash
+pnpm build
+```
+
+  </Tab>
+  <Tab value="npm">
+
+```bash
+npm run build
+```
+
+  </Tab>
+</Tabs>
+
+Check output, broken links, search and static deployment paths before publishing.

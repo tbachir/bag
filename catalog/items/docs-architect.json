@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "docs-architect",
+  "title": "Docs Architect",
+  "summary": "Audience-led documentation architecture with native Fumadocs navigation and static-site safeguards.",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "fumadocs",
+    "docs",
+    "architecture"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/docs-architect/SKILL.md"
+  },
+  "mode": "reference"
+}

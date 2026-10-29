@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "compozy-fumadocs",
+  "title": "Compozy · Fumadocs",
+  "summary": "Framework-specific skill for Fumadocs source adapters, routing, MDX, UI components, search, i18n and export.",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "fumadocs",
+    "docs",
+    "external"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/compozy-fumadocs/README.md"
+  },
+  "mode": "reference",
+  "notes": "https://github.com/compozy/compozy/tree/main/.agents/skills/fumadocs — third-party reference, not installed; Compatibility must be checked against the actual installed Fumadocs version; reference only, not vendored."
+}

@@ -52,8 +52,16 @@ These opt-in skills focus on practical review workflows rather than automaticall
 | Skill | Use when |
 | --- | --- |
 | [Fumadocs Engineering](fumadocs-engineer/SKILL.md) | Maintaining Fumadocs navigation, Markdown/MDX, static exports, search and multilingual docs |
-| [Documentation Architecture](documentation-architect/SKILL.md) | Restructuring guides, onboarding and reference docs around user tasks |
+| [Docs Architect](docs-architect/SKILL.md) | Restructuring guides, onboarding and reference docs around user tasks |
 | [UI/UX Design Review](ui-ux-design-review/SKILL.md) | Auditing responsive design, design systems and WCAG 2.2 accessibility |
 | [Agent-ready Documentation](agent-ready-documentation/SKILL.md) | Improving AGENTS.md scope, delegation prompts, skills and safe agent workflows |
 
 Each skill supplies triggers, ordered procedures, authoritative references and verification criteria. Adding them to BAG **does not install them in another AI client**. Read `SKILL.md` explicitly or use an opt-in compatible skill installation method. The Fumadocs skill explicitly accounts for BAG's tracked-Markdown-to-static-site architecture.
+
+## External skills (curated references, not installed)
+
+- [Compozy Fumadocs](compozy-fumadocs/README.md) — Fumadocs Core/MDX/UI implementation reference.
+- [Diátaxis Docs Framework](diataxis-docs-framework/README.md) — documentation architecture and auditing rules.
+- [ADK-TS Docs Writer](adk-docs-writer/README.md) — Fumadocs MDX page patterns; project-specific guidance must be adapted.
+
+Use [Docs Architect](docs-architect/SKILL.md) as BAG's canonical orchestrator, not a second vendored copy of these upstream skills. For an app from scratch see [Fumadocs Starter](../../equipment/fumadocs-starter/README.md).

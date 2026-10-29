@@ -4,6 +4,8 @@ A real, reviewable BAG loadout. The machine-readable composition is in [catalog/
 
 **Best for:** Technical product docs with canonical Markdown and static export.
 
+**Ready-to-use new app:** [Fumadocs Starter](../../equipment/fumadocs-starter/README.md) provides a safe preview and an explicitly invoked official CLI scaffold with a docs playbook and Docs Architect. The loadout references it but **does not execute** its generator. External Fumadocs/Diátaxis skills are curated opt-in references, not vendored code.
+
 1. Audit user journeys and existing page tree, avoiding duplicate navigation.
 2. Prefer native Fumadocs components; treat server-only components as explicit integrations.
 3. Add source metadata, templates, examples and real search/filter workflows.
