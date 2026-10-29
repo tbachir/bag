@@ -117,3 +117,7 @@ BAG items can offer task trees alongside their documentation. Select capabilitie
 ## 🔗 One canonical resource, many uses
 
 A BAG skill, config, script or workflow can be documented by this inventory and separately consumed by projects or compatible agents without maintaining duplicate source files. Optional [resource exposure descriptors](catalog/exposures/o2switch-cloud.json) record canonical sources, docs references and opt-in consumer strategies; see [the practical guide](maps-and-guides/resource-exposure.md). This is documentation, not an installer. Validate descriptors with `node spellbook/scripts/validate-exposures.mjs`.
+
+## Author and curate BAG items
+
+Optional agent workflows cover [general items](skill-tree/skills/bag-author-item/SKILL.md), [task-oriented guides](skill-tree/skills/bag-author-task/SKILL.md), [libraries](skill-tree/skills/bag-author-library/SKILL.md) and [metadata](skill-tree/skills/bag-author-metadata/SKILL.md). See the [authoring guide](maps-and-guides/bag-authoring-skills.md). These skills describe a flexible future item model without migrating the current tree.
