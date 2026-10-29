@@ -16,7 +16,7 @@ export default function ExplorerPage() {
     recommendation:'recommendation' in p && typeof p.recommendation === 'string' ? p.recommendation : null,
     template:'template' in p && typeof p.template === 'string' ? p.template : null,
     prompts:'prompts' in p && Array.isArray(p.prompts) ? p.prompts : [],
-    taskManifest:'taskManifest' in p ? p.taskManifest as TaskManifest : undefined,
+    taskManifest:'taskManifest' in p ? p.taskManifest as unknown as TaskManifest : undefined,
     relations:'relations' in p ? p.relations as BagRelations : undefined,
   }));
   return <InventoryExplorer items={items} loadouts={manifest.loadouts} />;

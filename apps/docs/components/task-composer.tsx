@@ -8,11 +8,12 @@ export function TaskComposer({item,compact=false}:{item:BagItem;compact?:boolean
   const manifest=item.taskManifest;
   const {selected,taskSelections,setItemTasks}=useDropBag();
   if(!manifest)return null;
-  const requested=(taskSelections[item.sourcePath]??[]).filter(id=>!!manifest.tasks[id]);
+  const taskManifest=manifest;
+  const requested=(taskSelections[item.sourcePath]??[]).filter(id=>!!taskManifest.tasks[id]);
   const effective=resolveTasks(manifest,requested);
   const derived=new Set(effective.filter(id=>!requested.includes(id)));
   const chosen=new Set(effective);
-  const defaults=Object.keys(manifest.tasks).filter(id=>manifest.tasks[id].default);
+  const defaults=Object.keys(taskManifest.tasks).filter(id=>taskManifest.tasks[id].default);
   const active=selected.includes(item.sourcePath);
   function toggle(id:string){
     const next=requested.includes(id)?requested.filter(v=>v!==id):[...requested,id];
@@ -21,7 +22,7 @@ export function TaskComposer({item,compact=false}:{item:BagItem;compact?:boolean
       const toRemove=new Set([id]);
       let changed=true;
       while(changed){changed=false;for(const taskId of next){
-        if(manifest.tasks[taskId]?.requires.some(dep=>toRemove.has(dep))&&!toRemove.has(taskId)){
+        if(taskManifest.tasks[taskId]?.requires.some(dep=>toRemove.has(dep))&&!toRemove.has(taskId)){
           toRemove.add(taskId);changed=true;
         }
       }}
@@ -33,7 +34,7 @@ export function TaskComposer({item,compact=false}:{item:BagItem;compact?:boolean
       <summary className="cursor-pointer select-none px-3 py-2.5 text-sm font-semibold">{group.title}</summary>
       <div className="space-y-2 px-3 pb-3">
         {group.tasks.map(id=>{
-          const task=manifest.tasks[id];
+          const task=taskManifest.tasks[id];
           const auto=derived.has(id);
           const checked=chosen.has(id);
           return <label key={id} className="flex cursor-pointer items-start gap-3 rounded-lg border border-fd-border/60 p-3 text-sm hover:bg-fd-accent/40">
@@ -42,7 +43,7 @@ export function TaskComposer({item,compact=false}:{item:BagItem;compact?:boolean
             <span className="min-w-0 flex-1"><span className="block font-semibold">{task.title}</span>
               {task.description&&<span className="mt-1 block text-xs text-fd-muted-foreground">{task.description}</span>}
               {auto&&<span className="mt-1 block text-xs text-fd-primary">Required by your selection</span>}
-              {task.requires.length>0&&!auto&&<span className="mt-1 block text-xs text-fd-muted-foreground">Requires: {task.requires.map(x=>manifest.tasks[x]?.title??x).join(', ')}</span>}
+              {task.requires.length>0&&!auto&&<span className="mt-1 block text-xs text-fd-muted-foreground">Requires: {task.requires.map(x=>taskManifest.tasks[x]?.title??x).join(', ')}</span>}
               <a className="mt-1 inline-block text-xs font-semibold text-fd-primary hover:underline" href={`https://github.com/tbachir/bag/blob/main/${task.file}`} target="_blank" rel="noreferrer" onClick={event=>event.stopPropagation()}>Read task reference</a>
             </span>
           </label>;
@@ -60,7 +61,7 @@ export function TaskComposer({item,compact=false}:{item:BagItem;compact?:boolean
       </div>
     </div>
     <p className="flex items-start gap-2 text-xs leading-5 text-fd-muted-foreground"><CircleHelp className="mt-0.5 size-3.5 shrink-0"/>Select a task to narrow the generated prompt; required prerequisites are included automatically. Selecting tasks adds this item to your bag.</p>
-    <div className="space-y-2">{manifest.groups.map(group=>groupView(group))}</div>
+    <div className="space-y-2">{taskManifest.groups.map(group=>groupView(group))}</div>
     {requested.length>0&&<p className="flex items-center gap-1.5 text-xs font-semibold text-fd-primary"><CheckCircle2 className="size-4"/>Custom selection saved {active?'to your Drop Bag':'locally'}</p>}
   </section>;
 }
