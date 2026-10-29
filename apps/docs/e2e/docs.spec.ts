@@ -72,7 +72,7 @@ test('Drop Bag composes a persistent prompt without executing installations', as
   await page.reload();
   await page.getByRole('button', { name: '+ Add loadout' }).first().click();
   await expect(page.getByRole('heading', { name: 'Your Drop Bag' })).toBeVisible();
-  await expect(page.getByLabel('Generated agent prompt')).toContainText('Selected resources:');
+  await expect(page.getByLabel('Generated agent prompt')).toHaveValue(/Selected resources:/);
   const before = await page.getByLabel('Generated agent prompt').inputValue();
   expect(before).toContain('AGENTS.md');
   await page.reload();
