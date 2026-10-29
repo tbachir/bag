@@ -68,3 +68,7 @@ Existing instructions above remain binding for work **inside BAG**. Nothing in a
 ## Task composition
 
 For an item exposing a `tasks/index.json`, interpret selected task IDs using its manifest. Resolve required dependencies, surface conflicting selections, consult task Markdown and report the effective scope. Prompts stay short; task bodies and validation details belong in BAG. This is a documentation-driven delegation convention, not permission to execute changes.
+
+## Fast-changing skill pre-use policy
+
+Before following any BAG skill with `metadata.freshness.policy: fast-changing`, inspect `last_verified` and `review_interval_days`. If missing/overdue, read and execute [skill-maintainer](skill-tree/skills/skill-maintainer/SKILL.md) first under the [freshness policy](maps-and-guides/skill-freshness-policy.md). Do not claim a refresh if sources could not be checked; changes to a target repository still require ordinary authorization. This is an explicit agent workflow, not an automatic runtime hook.
