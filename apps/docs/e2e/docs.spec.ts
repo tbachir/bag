@@ -17,8 +17,8 @@ test('read the complete inventory and navigate between zones', async ({ page }) 
   await inventoryLink.click();
   await expect(page).toHaveURL(new RegExp(`${prefix}/docs/inventory/$`));
   await page.goto(url('/docs/zones/'));
-  await expect(page.getByRole('table').getByRole('link')).toHaveCount(7);
-  await expect(page.getByRole('link', { name: 'Open Inventory', exact: true })).toHaveAttribute('href', url('/docs/inventory/'));
+  // The item-first guide exposes goals instead of the old seven-zone table.
+  await expect(page.getByRole('link', { name: 'Explore resources', exact: true })).toHaveAttribute('href', url('/docs/inventory/'));
   expect(errors).toEqual([]);
 });
 
