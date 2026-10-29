@@ -30,3 +30,7 @@ node spellbook/scripts/validate.mjs
 Checks required RPG zones and local Markdown link targets. The check is lightweight and dependency-free; it does **not** validate external URLs or guarantee the correctness of docs, code, or security.
 
 Requirements: Node.js 20+; runs on Windows, macOS, and Linux. Both scripts are read-only.
+
+## Portable task readiness
+
+[Readiness checker](readiness/README.md) — independently authored, dependency-free JSON checks for task IDs, owners, acceptance criteria and dependency graph integrity. Includes a runnable example and Node tests. Read-only; not a replacement for project-specific acceptance decisions.

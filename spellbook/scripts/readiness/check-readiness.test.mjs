@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {auditReadiness} from './check-readiness.mjs';
+const t=(id,dependsOn=[])=>({id,owner:'team',acceptance:['Pass'],dependsOn});
+test('valid DAG',()=>assert.deepEqual(auditReadiness({tasks:[t('a'),t('b',['a'])]}),[]));
+test('duplicate',()=>assert.ok(auditReadiness({tasks:[t('a'),t('a')]}).some(x=>x.code==='ID.DUPLICATE')));
+test('owner and acceptance',()=>assert.equal(auditReadiness({tasks:[{id:'a'}]}).length,2));
+test('unknown',()=>assert.ok(auditReadiness({tasks:[t('a',['missing'])]}).some(x=>x.code==='GRAPH.UNKNOWN_REFERENCE')));
+test('self',()=>assert.ok(auditReadiness({tasks:[t('a',['a'])]}).some(x=>x.code==='GRAPH.SELF_DEPENDENCY')));
+test('cycle',()=>assert.ok(auditReadiness({tasks:[t('a',['b']),t('b',['a'])]}).some(x=>x.code==='GRAPH.DEPENDENCY_CYCLE')));
+test('bad input',()=>assert.equal(auditReadiness({})[0].code,'INPUT.INVALID'));
+test('malformed dependencies',()=>assert.ok(auditReadiness({tasks:[{...t('a'),dependsOn:'b'}]}).some(x=>x.code==='TASK.INVALID_DEPENDENCIES')));
