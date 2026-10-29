@@ -9,7 +9,8 @@ import type { BagItem } from '@/lib/drop-bag';
 const titles:Record<string,string>={skill:'AI skill',boilerplate:'Packaged starter',library:'Library',resource:'Curated resource',loadout:'Composed loadout'};
 const colors:Record<string,string>={mandatory:'text-fd-primary bg-fd-accent',recommended:'text-emerald-700 bg-emerald-500/10 dark:text-emerald-300',optional:'text-fd-muted-foreground bg-fd-muted',experimental:'text-amber-700 bg-amber-500/10 dark:text-amber-300'};
 export function ResourceShowcase({item}: {item:BagItem}) {
-  if (!item.template || !item.sourcePath) return null;
+  // Task-enabled items should expose their composer even without a visual template hint.
+  if ((!item.template && !item.taskManifest) || !item.sourcePath) return null;
   const skillSlug=item.template==='skill'?item.sourcePath.split('/')[2]:null;
   const tags=[...(item.contexts??[]),...item.tags].filter((x,i,a)=>a.indexOf(x)===i).slice(0,8);
   return <aside aria-label="Resource details" className="not-prose my-6 overflow-hidden rounded-2xl border border-fd-border bg-fd-card shadow-sm">
