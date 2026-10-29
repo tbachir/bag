@@ -171,3 +171,19 @@ test('uses English fallback when French is missing or stale and preserves canoni
   await generate({ ...options, files: ['README.md', 'inventory/README.md'] });
   await assert.rejects(readFile(path.join(options.app, '.generated/content/inventory/index.fr.md')), { code: 'ENOENT' });
 });
+
+test('attaches a task manifest to a canonical item with a custom nested workflow folder', async (t) => {
+  const owner='inventory/camera';
+  const options=await fixture(t,{
+    'README.md':'# BAG',
+    [owner+'/README.md']:'# Camera',
+    [owner+'/bag.item.json']:JSON.stringify({type:'resource',taskManifest:'workflows/index.json'}),
+    [owner+'/workflows/README.md']:'# Workflows',
+    [owner+'/workflows/audit.md']:'# Audit',
+    [owner+'/workflows/index.json']:JSON.stringify({version:1,item:owner,tasks:{audit:{title:'Audit',file:'audit.md',default:true}}}),
+  });
+  const manifest=await generate(options);
+  const page=manifest.pages.find(p=>p.sourcePath===owner+'/README.md');
+  assert.equal(page.taskManifest.tasks.audit.file,owner+'/workflows/audit.md');
+  assert.equal(page.taskManifest.tasks.audit.default,true);
+});

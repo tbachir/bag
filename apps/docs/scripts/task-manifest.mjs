@@ -24,7 +24,7 @@ export function validateTaskManifest(raw,{owner,manifestPath,files}) {
     requireValid(ID.test(id),'invalid task ID '+id);
     const task=raw.tasks[id];
     requireValid(task && typeof task==='object' && !Array.isArray(task),'invalid task '+id);
-    requireValid(Object.keys(task).every(key=>['title','file','requires','suggests','conflicts','default','description'].includes(key)),'unexpected field on '+id);
+    requireValid(Object.keys(task).every(key=>['title','file','requires','suggests','conflicts','default','description','provides'].includes(key)),'unexpected field on '+id);
     requireValid(typeof task.title==='string' && task.title.length>0 && task.title.length<=100,'invalid title on '+id);
     requireValid(safeTaskPath(task.file) && /\.mdx?$/i.test(task.file),'invalid Markdown path on '+id);
     const source=path.posix.normalize(path.posix.join(path.posix.dirname(manifestPath),task.file));
@@ -36,9 +36,11 @@ export function validateTaskManifest(raw,{owner,manifestPath,files}) {
       requireValid(new Set(list).size===list.length,'duplicate '+key+' on '+id);
       relations[key]=list;
     }
+    const provides=task.provides??[];
+    requireValid(Array.isArray(provides) && provides.length<=30 && provides.every(v=>typeof v==='string' && ID.test(v)), 'invalid provides on '+id);
     requireValid(task.default===undefined || typeof task.default==='boolean','invalid default on '+id);
     requireValid(task.description===undefined || (typeof task.description==='string' && task.description.length<=400),'invalid description on '+id);
-    tasks[id]={title:task.title,file:source,...relations,default:task.default===true,...(task.description?{description:task.description}:{})};
+    tasks[id]={title:task.title,file:source,...relations,provides,default:task.default===true,...(task.description?{description:task.description}:{})};
   }
   // A cycle would make a "required" task impossible to deselect safely.
   const state=new Map();
@@ -57,6 +59,7 @@ export function validateTaskManifest(raw,{owner,manifestPath,files}) {
     requireValid(group && typeof group==='object' && !Array.isArray(group),'invalid group');
     requireValid(ID.test(group.id||''),'invalid group ID');
     requireValid(typeof group.title==='string' && !!group.title.trim() && group.title.length<=100,'invalid group title');
+    requireValid(group.groups===undefined || (Array.isArray(group.groups) && group.groups.length<=40), 'invalid nested groups');
     const groupTasks=group.tasks??[];
     requireValid(Array.isArray(groupTasks) && groupTasks.every(id=>set.has(id)),'unknown task in group '+group.id);
     for(const id of groupTasks){requireValid(!encountered.has(id),'task assigned to multiple groups: '+id);encountered.add(id);}

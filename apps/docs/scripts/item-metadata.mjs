@@ -33,7 +33,7 @@ export function normalizeItemMetadata(value) {
   const safeRelations={};
   for(const key of ['requires','conflicts','alternatives','complements']) {
     const list=relations[key]??[];
-    if(!Array.isArray(list) || list.length>30 || list.some(p=>!safePath(p) || !/\\.md$/i.test(p)) || new Set(list).size!==list.length) throw new Error('Invalid resource '+key);
+    if(!Array.isArray(list) || list.length>30 || list.some(p=>!safePath(p) || !p.endsWith('.md')) || new Set(list).size!==list.length) throw new Error('Invalid resource '+key);
     safeRelations[key]=list;
   }
   const navigation = value.navigation ?? {};

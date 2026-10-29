@@ -1,6 +1,6 @@
 'use client';
 import {CheckCircle2, CircleHelp, ListChecks, RotateCcw} from 'lucide-react';
-import Link from 'next/link';
+import type { ReactNode } from 'react';
 import {useDropBag} from '@/components/use-drop-bag';
 import {resolveTasks,type BagItem,type TaskGroup} from '@/lib/drop-bag';
 
@@ -28,7 +28,7 @@ export function TaskComposer({item,compact=false}:{item:BagItem;compact?:boolean
       setItemTasks(item.sourcePath,next.filter(v=>!toRemove.has(v)));
     }else setItemTasks(item.sourcePath,next);
   }
-  function groupView(group:TaskGroup,depth=0):React.ReactNode{
+  function groupView(group:TaskGroup,depth=0):ReactNode{
     return <details key={group.id} open={depth===0||undefined} className="rounded-lg border border-fd-border bg-fd-background/70">
       <summary className="cursor-pointer select-none px-3 py-2.5 text-sm font-semibold">{group.title}</summary>
       <div className="space-y-2 px-3 pb-3">

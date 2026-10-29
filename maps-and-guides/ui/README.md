@@ -74,3 +74,7 @@ Preserve the original Markdown and nested folders; do not allow JSX embedded in 
 ## Verification
 
 From `apps/docs`: `pnpm test:unit`, `pnpm types:check`, `pnpm build`, `pnpm content:check`, then `pnpm test:e2e`. Repeat production export with `DOCS_BASE_PATH=/bag`. Archive support must not depend on server execution at request time.
+
+## Task-aware resource templates
+
+All folders may optionally declare `taskManifest` in `bag.item.json`, pointing to a nested JSON task tree in any folder name. The built-in `TaskComposer` appears on item detail pages and for selected Drop Bag resources. It resolves transitive prerequisites from the canonical Markdown task files and persists only the explicit user choices. Cross-item `relations` (`requires`, `alternatives`, `conflicts`, `complements`) display transparent, editorial compatibility warnings. See [Task Composer](../task-composer.md) for the complete schema and examples.

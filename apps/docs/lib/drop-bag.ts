@@ -1,7 +1,7 @@
 /** Shared, deterministic composition logic. No execution, network calls or implicit installation. */
 export type TaskNode={
   title:string; file:string; requires:string[]; suggests:string[]; conflicts:string[];
-  default:boolean; description?:string;
+  default:boolean; description?:string; provides?:string[];
 };
 export type TaskGroup={id:string;title:string;tasks:string[];groups:TaskGroup[]};
 export type TaskManifest={version:1;item:string;manifestPath:string;groups:TaskGroup[];tasks:Record<string,TaskNode>};

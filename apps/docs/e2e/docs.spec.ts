@@ -96,3 +96,29 @@ test('packs directory exposes packaged boilerplate and curated loadouts', async 
   await expect(page.getByRole('heading', { name: 'Packaged starters' })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Expo · Production Foundations/ })).toBeVisible();
 });
+
+test('task-aware Drop Bag includes transitive prerequisites and keeps selection after navigation',async ({page})=>{
+  await page.goto(url('/docs/inventory/supabase/auth/'));
+  await page.evaluate(()=>{localStorage.clear();});
+  await page.reload();
+  const oauth=page.getByRole('checkbox',{name:'Task: Connexion OAuth'});
+  await oauth.check();
+  await expect(page.getByRole('checkbox',{name:'Task: Sessions sécurisées'})).toBeChecked();
+  await expect(page.getByRole('checkbox',{name:'Task: Initialiser la configuration'})).toBeChecked();
+  await page.goto(url('/explore/'));
+  await expect(page.getByLabel('Generated agent prompt')).toHaveValue(/\[oauth\] Connexion OAuth/);
+  await expect(page.getByLabel('Generated agent prompt')).toHaveValue(/\[sessions\] Sessions sécurisées/);
+  await page.reload();
+  await expect(page.getByLabel('Generated agent prompt')).toHaveValue(/\[oauth\] Connexion OAuth/);
+});
+
+test('Drop Bag detects a declared resource dependency without installing it',async ({page})=>{
+  await page.goto(url('/docs/inventory/libraries/reui/'));
+  await page.evaluate(()=>{localStorage.clear();});
+  await page.reload();
+  await page.getByRole('button',{name:'Add to Drop Bag'}).click();
+  await page.goto(url('/explore/'));
+  await expect(page.getByRole('region',{name:'Drop Bag compatibility analysis'})).toContainText('required resource');
+  await page.getByRole('button',{name:'Add required reference'}).first().click();
+  await expect(page.getByRole('region',{name:'Drop Bag compatibility analysis'})).not.toContainText('required resource');
+});

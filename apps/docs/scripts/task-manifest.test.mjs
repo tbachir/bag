@@ -29,3 +29,9 @@ test('discovers declared custom manifest as well as legacy tasks/index.json',asy
  const found2=await findTaskManifests(files2,new Map(),async()=>({version:1,item:'inventory/auth',tasks:{base:{title:'Base',file:'base.md'}}}));
  assert.equal(found2.get('inventory/auth').tasks.base.title,'Base');
 });
+
+test('legacy auth task manifest supports capability provides metadata',()=>{
+ const raw={version:1,item:owner,tasks:{prepare:{title:'Prepare',file:'prepare.md',provides:['auth-client']}}};
+ const validated=validateTaskManifest(raw,{owner,manifestPath,files});
+ assert.deepEqual(validated.tasks.prepare.provides,['auth-client']);
+});
