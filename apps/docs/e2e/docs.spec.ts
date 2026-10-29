@@ -74,7 +74,7 @@ test('Drop Bag composes a persistent prompt without executing installations', as
   await page.reload();
   await page.getByRole('button', { name: '+ Add loadout' }).first().click();
   await expect(page.getByRole('heading', { name: 'Your Drop Bag' })).toBeVisible();
-  await expect(page.getByLabel('Generated agent prompt')).toHaveValue(/Selected resources:/);
+  await expect(page.getByLabel('Generated agent prompt')).toHaveValue(/Selected resources and scope:/);
   const before = await page.getByLabel('Generated agent prompt').inputValue();
   expect(before).toContain('AGENTS.md');
   await page.reload();
@@ -122,5 +122,5 @@ test('Drop Bag detects a declared resource dependency without installing it',asy
   await page.goto(url('/explore/'));
   await expect(page.getByRole('region',{name:'Drop Bag compatibility analysis'})).toContainText('required resource');
   await page.getByRole('button',{name:'Add required reference'}).first().click();
-  await expect(page.getByRole('region',{name:'Drop Bag compatibility analysis'})).not.toContainText('required resource');
+  await expect(page.getByRole('region',{name:'Drop Bag compatibility analysis'})).toHaveCount(0);
 });
