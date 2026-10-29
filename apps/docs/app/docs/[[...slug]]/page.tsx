@@ -12,6 +12,7 @@ import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { ResourceShowcase } from '@/components/resource-showcase';
+import type { TaskManifest, BagRelations } from '@/lib/drop-bag';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
 
@@ -38,7 +39,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         {origin && <a className="text-sm underline underline-offset-2" href={`https://github.com/tbachir/bag/issues/new?title=${encodeURIComponent('Docs feedback: '+origin)}&body=${encodeURIComponent('Page: '+origin+'\\n\\nSuggested improvement:')}`} target="_blank" rel="noopener noreferrer">Suggest an improvement</a>}
       </div>
       <DocsBody>
-        {item?.sourcePath && <ResourceShowcase item={{ title:item.title,description:item.description,sourcePath:item.sourcePath,url:item.url,type:('type' in item && typeof item.type === 'string')?item.type:'reference',tags:('tags' in item && Array.isArray(item.tags))?item.tags:[],technologies:('technologies' in item && Array.isArray(item.technologies))?item.technologies:[],useCases:('useCases' in item && Array.isArray(item.useCases))?item.useCases:[],contexts:('contexts' in item && Array.isArray(item.contexts))?item.contexts:[],recommendation:('recommendation' in item && typeof item.recommendation === 'string')?item.recommendation:null,template:('template' in item && typeof item.template === 'string')?item.template:null,prompts:('prompts' in item && Array.isArray(item.prompts))?item.prompts:[] }} />}
+        {item?.sourcePath && <ResourceShowcase item={{ title:item.title,description:item.description,sourcePath:item.sourcePath,url:item.url,type:('type' in item && typeof item.type === 'string')?item.type:'reference',tags:('tags' in item && Array.isArray(item.tags))?item.tags:[],technologies:('technologies' in item && Array.isArray(item.technologies))?item.technologies:[],useCases:('useCases' in item && Array.isArray(item.useCases))?item.useCases:[],contexts:('contexts' in item && Array.isArray(item.contexts))?item.contexts:[],recommendation:('recommendation' in item && typeof item.recommendation === 'string')?item.recommendation:null,template:('template' in item && typeof item.template === 'string')?item.template:null,prompts:('prompts' in item && Array.isArray(item.prompts))?item.prompts:[],taskManifest:('taskManifest' in item ? item.taskManifest as unknown as TaskManifest : undefined),relations:('relations' in item ? item.relations as BagRelations : undefined) }} />}
         <MDX
           components={getMDXComponents({
             // this allows you to link to other pages with relative file paths

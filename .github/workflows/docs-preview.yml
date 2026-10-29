@@ -1,0 +1,55 @@
+name: Verify Fumadocs changes
+
+on:
+  pull_request:
+    paths:
+      - 'apps/docs/**'
+      - 'inventory/**'
+      - 'equipment/**'
+      - 'skill-tree/**'
+      - 'spellbook/**'
+      - 'maps-and-guides/**'
+      - 'loadouts/**'
+      - 'catalog/**'
+      - 'templates/**'
+      - 'demo/**'
+      - 'README.md'
+      - 'AGENTS.md'
+      - '.github/workflows/docs-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Verify docs without publishing
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/docs
+    env:
+      DOCS_SITE_URL: https://tbachir.github.io
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '10.34.5'
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+          cache-dependency-path: apps/docs/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:unit
+      - run: pnpm build
+      - run: pnpm types:check
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      # Deliberately no deployment. GitHub Pages is published only by docs.yml on main.

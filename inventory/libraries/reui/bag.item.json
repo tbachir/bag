@@ -17,5 +17,10 @@
   "useCases": [
     "design-system",
     "frontend"
-  ]
+  ],
+  "relations": {
+    "requires": [
+      "inventory/libraries/shadcn-ui/README.md"
+    ]
+  }
 }

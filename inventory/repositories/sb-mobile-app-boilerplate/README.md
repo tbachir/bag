@@ -34,3 +34,7 @@ Read BAG's root AGENTS.md and all applicable nested AGENTS.md files down to this
 
 - [Repository shelf](../README.md)
 - [BAG delegation protocol](../../../maps-and-guides/agent-delegation-protocol.md)
+
+## Compose just the workflows you need
+
+The [selectable boilerplate workflows](workflows/README.md) cover architecture audit, contracts, branding, authentication, device testing and release readiness. Open the resource in BAG's documentation to check individual tasks; required prerequisites are added to the generated prompt, but no installation or deployment occurs automatically. The corresponding manifest lives at [workflows/index.json](workflows/index.json).

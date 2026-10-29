@@ -1,5 +1,5 @@
 // Optional item config belongs to the canonical BAG folder, never to generated site content.
-const allowed = new Set(['type','tags','technologies','useCases','contexts','recommendation','template','prompts','navigation']);
+const allowed = new Set(['type','tags','technologies','useCases','contexts','recommendation','template','prompts','taskManifest','relations','navigation']);
 const safeList = (value, key) => {
   if (value === undefined) return [];
   if (!Array.isArray(value) || value.length > 30 || value.some(v => typeof v !== 'string' || v.length > 80)) throw new Error('Invalid '+key+' metadata');
@@ -21,13 +21,28 @@ export function normalizeItemMetadata(value) {
     typeof p.title !== 'string' || !p.title.trim() || p.title.length > 100 ||
     typeof p.text !== 'string' || !p.text.trim() || p.text.length > 900
   )) throw new Error('Invalid prompts metadata');
+  const taskManifest=value.taskManifest;
+  const safePath=(p)=>typeof p==='string' && p.length>0 && p.length<240 &&
+    !p.startsWith('/') && !p.includes('\\\\') &&
+    /^[a-zA-Z0-9._/-]+$/.test(p) &&
+    p.split('/').every(s=>s && s!=='.' && s!=='..');
+  if(taskManifest!==undefined && (!safePath(taskManifest) || !taskManifest.endsWith('.json'))) throw new Error('Invalid taskManifest path');
+  const relations=value.relations ?? {};
+  if(!relations || typeof relations!=='object' || Array.isArray(relations) ||
+     Object.keys(relations).some(k=>!['requires','conflicts','alternatives','complements'].includes(k))) throw new Error('Invalid resource relations');
+  const safeRelations={};
+  for(const key of ['requires','conflicts','alternatives','complements']) {
+    const list=relations[key]??[];
+    if(!Array.isArray(list) || list.length>30 || list.some(p=>!safePath(p) || !p.endsWith('.md')) || new Set(list).size!==list.length) throw new Error('Invalid resource '+key);
+    safeRelations[key]=list;
+  }
   const navigation = value.navigation ?? {};
   if (!navigation || typeof navigation !== 'object' || Array.isArray(navigation)) throw new Error('Invalid navigation');
   for (const key of Object.keys(navigation)) if (!['title','description','icon','defaultOpen','collapsible','pages'].includes(key)) throw new Error('Unsupported navigation field: '+key);
   for (const key of ['title','description','icon']) if (navigation[key] !== undefined && (typeof navigation[key] !== 'string' || navigation[key].length > 160)) throw new Error('Invalid navigation '+key);
   for (const key of ['defaultOpen','collapsible']) if (navigation[key] !== undefined && typeof navigation[key] !== 'boolean') throw new Error('Invalid navigation '+key);
   if (navigation.pages !== undefined && (!Array.isArray(navigation.pages) || navigation.pages.some(v => typeof v !== 'string' || !/^[a-zA-Z0-9_.-]+$/.test(v)))) throw new Error('Invalid navigation pages');
-  return { ...(type ? {type} : {}), tags:safeList(value.tags,'tags'), technologies:safeList(value.technologies,'technologies'), useCases:safeList(value.useCases,'useCases'), contexts:safeList(value.contexts,'contexts'), ...(recommendation ? {recommendation} : {}), ...(template ? {template} : {}), prompts, navigation };
+  return { ...(type ? {type} : {}), tags:safeList(value.tags,'tags'), technologies:safeList(value.technologies,'technologies'), useCases:safeList(value.useCases,'useCases'), contexts:safeList(value.contexts,'contexts'), ...(recommendation ? {recommendation} : {}), ...(template ? {template} : {}), prompts, ...(taskManifest?{taskManifest}:{}), relations:safeRelations, navigation };
 }
 export function folderNavigation(metadata, names, preferred = []) {
   const nav = metadata?.navigation ?? {};

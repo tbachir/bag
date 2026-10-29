@@ -27,5 +27,12 @@
   "navigation": {
     "title": "Mobile App Boilerplate",
     "description": "Expo, Next.js, Hono and branding CLI"
+  },
+  "taskManifest": "workflows/index.json",
+  "relations": {
+    "complements": [
+      "inventory/supabase/auth/README.md",
+      "skill-tree/skills/repository-auditor/SKILL.md"
+    ]
   }
 }

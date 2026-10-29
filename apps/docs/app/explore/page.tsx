@@ -1,6 +1,7 @@
 import manifest from '../../.generated/manifest.json';
 import { sitePath } from '@/lib/shared';
 import { InventoryExplorer } from './inventory-explorer';
+import type { TaskManifest, BagRelations } from '@/lib/drop-bag';
 
 export const metadata = { title: 'Inventory Explorer | BAG', description: 'Filter BAG resources and compose an opt-in agent prompt.' };
 export default function ExplorerPage() {
@@ -15,6 +16,8 @@ export default function ExplorerPage() {
     recommendation:'recommendation' in p && typeof p.recommendation === 'string' ? p.recommendation : null,
     template:'template' in p && typeof p.template === 'string' ? p.template : null,
     prompts:'prompts' in p && Array.isArray(p.prompts) ? p.prompts : [],
+    taskManifest:'taskManifest' in p ? p.taskManifest as unknown as TaskManifest : undefined,
+    relations:'relations' in p ? p.relations as BagRelations : undefined,
   }));
   return <InventoryExplorer items={items} loadouts={manifest.loadouts} />;
 }
