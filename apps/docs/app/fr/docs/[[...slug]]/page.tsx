@@ -15,7 +15,7 @@ export default async function Page({ params }: Props) {
   if (!page) notFound();
   const origin = manifest.pages.find((entry) => entry.generatedPath === page.path)?.sourcePath;
   const MDX = page.data.body;
-  const markdownUrl = getPageMarkdownUrl({ slugs: page.slugs }).url;
+  const markdownUrl = `/fr${getPageMarkdownUrl({ slugs: page.slugs }).url}`;
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
@@ -41,6 +41,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = source.getPage(slug, 'fr');
   if (!page) notFound();
   return { title: page.data.title, description: page.data.description,
-    alternates: { languages: { en: page.url.replace(/^\/fr/, ''), fr: page.url } },
+    alternates: { canonical: page.url, languages: { en: page.url.replace(/^\/fr/, ''), fr: page.url } },
     openGraph: { images: getPageImageUrl({ slugs: page.slugs }).url } };
 }
