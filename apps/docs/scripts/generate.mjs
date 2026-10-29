@@ -7,6 +7,7 @@ import Slugger from 'github-slugger';
 import { stringify as yaml } from 'yaml';
 import { parseMarkdown, visit, plainText, serialize } from './markdown.mjs';
 import { normalizeItemMetadata, folderNavigation } from './item-metadata.mjs';
+import { writeSkillsArchives } from './zip-skills.mjs';
 
 export const appDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const repoRoot = path.resolve(appDir, '../..');
@@ -79,7 +80,7 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     const entry = { sourcePath: file, generatedPath, slugs, url, title, description,
       type: item.type ?? (slugs[0] === 'skill-tree' ? 'skill' : slugs[0] ?? 'reference'),
       tags: item.tags ?? [], technologies: item.technologies ?? [], useCases: item.useCases ?? [],
-      contexts: item.contexts ?? [], recommendation: item.recommendation ?? null, template: item.template ?? null };
+      contexts: item.contexts ?? [], recommendation: item.recommendation ?? null, template: item.template ?? null, prompts: item.prompts ?? [] };
     entries.push(entry);
     sourceMap.set(file, entry);
     contents.set(file, { tree, frontmatter, headingIds });
@@ -213,7 +214,8 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     await mkdir(path.dirname(dest), { recursive: true });
     await copyFile(path.join(root, asset.sourcePath), dest);
   }
-  console.log(`Generated ${entries.length} pages and ${assets.length} resources.`);
+  const archivedSkills = await writeSkillsArchives({root, files, output:path.join(app,'public/files/skills')});
+  console.log(`Generated ${entries.length} pages, ${assets.length} resources and ${archivedSkills.length} skill ZIPs.`);
   return manifest;
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await generate();

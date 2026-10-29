@@ -3,6 +3,7 @@ export type BagItem = {
   title: string; description: string; sourcePath: string; url: string; type: string;
   tags: string[]; technologies: string[]; useCases: string[];
   contexts?: string[]; recommendation?: string | null; template?: string | null;
+  prompts?: { title: string; text: string }[];
 };
 export type BagLoadout = {id: string;title: string;summary: string;sourcePaths: string[];unresolved?: string[]};
 

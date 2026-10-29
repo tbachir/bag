@@ -1,5 +1,5 @@
 // Optional item config belongs to the canonical BAG folder, never to generated site content.
-const allowed = new Set(['type','tags','technologies','useCases','contexts','recommendation','template','navigation']);
+const allowed = new Set(['type','tags','technologies','useCases','contexts','recommendation','template','prompts','navigation']);
 const safeList = (value, key) => {
   if (value === undefined) return [];
   if (!Array.isArray(value) || value.length > 30 || value.some(v => typeof v !== 'string' || v.length > 80)) throw new Error('Invalid '+key+' metadata');
@@ -14,13 +14,20 @@ export function normalizeItemMetadata(value) {
   if (recommendation !== undefined && !['mandatory','recommended','optional','experimental'].includes(recommendation)) throw new Error('Invalid recommendation');
   const template = value.template;
   if (template !== undefined && !['skill','boilerplate','library','resource','loadout'].includes(template)) throw new Error('Invalid template');
+  const prompts = value.prompts ?? [];
+  if (!Array.isArray(prompts) || prompts.length > 6 || prompts.some(p =>
+    !p || typeof p !== 'object' || Array.isArray(p) ||
+    Object.keys(p).some(key => !['title','text'].includes(key)) ||
+    typeof p.title !== 'string' || !p.title.trim() || p.title.length > 100 ||
+    typeof p.text !== 'string' || !p.text.trim() || p.text.length > 900
+  )) throw new Error('Invalid prompts metadata');
   const navigation = value.navigation ?? {};
   if (!navigation || typeof navigation !== 'object' || Array.isArray(navigation)) throw new Error('Invalid navigation');
   for (const key of Object.keys(navigation)) if (!['title','description','icon','defaultOpen','collapsible','pages'].includes(key)) throw new Error('Unsupported navigation field: '+key);
   for (const key of ['title','description','icon']) if (navigation[key] !== undefined && (typeof navigation[key] !== 'string' || navigation[key].length > 160)) throw new Error('Invalid navigation '+key);
   for (const key of ['defaultOpen','collapsible']) if (navigation[key] !== undefined && typeof navigation[key] !== 'boolean') throw new Error('Invalid navigation '+key);
   if (navigation.pages !== undefined && (!Array.isArray(navigation.pages) || navigation.pages.some(v => typeof v !== 'string' || !/^[a-zA-Z0-9_.-]+$/.test(v)))) throw new Error('Invalid navigation pages');
-  return { ...(type ? {type} : {}), tags:safeList(value.tags,'tags'), technologies:safeList(value.technologies,'technologies'), useCases:safeList(value.useCases,'useCases'), contexts:safeList(value.contexts,'contexts'), ...(recommendation ? {recommendation} : {}), ...(template ? {template} : {}), navigation };
+  return { ...(type ? {type} : {}), tags:safeList(value.tags,'tags'), technologies:safeList(value.technologies,'technologies'), useCases:safeList(value.useCases,'useCases'), contexts:safeList(value.contexts,'contexts'), ...(recommendation ? {recommendation} : {}), ...(template ? {template} : {}), prompts, navigation };
 }
 export function folderNavigation(metadata, names, preferred = []) {
   const nav = metadata?.navigation ?? {};

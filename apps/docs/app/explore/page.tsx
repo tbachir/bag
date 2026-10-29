@@ -14,6 +14,7 @@ export default function ExplorerPage() {
     contexts:'contexts' in p && Array.isArray(p.contexts) ? p.contexts : [],
     recommendation:'recommendation' in p && typeof p.recommendation === 'string' ? p.recommendation : null,
     template:'template' in p && typeof p.template === 'string' ? p.template : null,
+    prompts:'prompts' in p && Array.isArray(p.prompts) ? p.prompts : [],
   }));
   return <InventoryExplorer items={items} loadouts={manifest.loadouts} />;
 }

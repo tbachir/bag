@@ -19,3 +19,10 @@ test('recommendation is contextual and template hints are opt-in',()=>{
  assert.throws(()=>normalizeItemMetadata({recommendation:'required'}));
  assert.throws(()=>normalizeItemMetadata({template:'<script>'}));
 });
+
+test('ready-to-run skill prompts are bounded and retain order',()=>{
+ const x=normalizeItemMetadata({template:'skill',prompts:[{title:'Audit',text:'Inspect the source first.'}]});
+ assert.equal(x.prompts[0].title,'Audit');
+ assert.throws(()=>normalizeItemMetadata({prompts:[{title:'X',text:'A'.repeat(901)}]}));
+ assert.throws(()=>normalizeItemMetadata({prompts:[{title:'X',text:'ok',html:'no'}]}));
+});
