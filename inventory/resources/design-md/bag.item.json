@@ -1,0 +1,19 @@
+{
+  "type": "resource",
+  "template": "resource",
+  "recommendation": "recommended",
+  "contexts": [
+    "ai-design",
+    "react",
+    "expo"
+  ],
+  "tags": [
+    "design-tokens",
+    "design-system"
+  ],
+  "technologies": [],
+  "useCases": [
+    "branding",
+    "ui-consistency"
+  ]
+}

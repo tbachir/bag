@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "prompt-quality-reviewer",
+  "title": "Prompt Quality Reviewer",
+  "summary": "Audit composite prompts",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "prompts",
+    "security"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/prompt-quality-reviewer/SKILL.md"
+  },
+  "mode": "reference"
+}

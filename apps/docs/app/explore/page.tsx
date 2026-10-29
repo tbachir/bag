@@ -11,6 +11,10 @@ export default function ExplorerPage() {
     tags:'tags' in p && Array.isArray(p.tags) ? p.tags : [],
     technologies:'technologies' in p && Array.isArray(p.technologies) ? p.technologies : [],
     useCases:'useCases' in p && Array.isArray(p.useCases) ? p.useCases : [],
+    contexts:'contexts' in p && Array.isArray(p.contexts) ? p.contexts : [],
+    recommendation:'recommendation' in p && typeof p.recommendation === 'string' ? p.recommendation : null,
+    template:'template' in p && typeof p.template === 'string' ? p.template : null,
+    prompts:'prompts' in p && Array.isArray(p.prompts) ? p.prompts : [],
   }));
-  return <InventoryExplorer items={items} />;
+  return <InventoryExplorer items={items} loadouts={manifest.loadouts} />;
 }

@@ -1,0 +1,17 @@
+{
+  "type": "loadout",
+  "template": "loadout",
+  "recommendation": "recommended",
+  "contexts": [
+    "expo",
+    "react-native"
+  ],
+  "tags": [
+    "composition",
+    "practical"
+  ],
+  "technologies": [],
+  "useCases": [
+    "project-setup"
+  ]
+}

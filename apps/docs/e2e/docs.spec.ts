@@ -65,3 +65,34 @@ test('serve generated Markdown, downloads, LLM text, images, and real 404s', asy
   const html = await request.get(url('/docs/inventory/'));
   expect(await html.text()).toContain(`${prefix}/_next/`);
 });
+
+test('Drop Bag composes a persistent prompt without executing installations', async ({ page }) => {
+  await page.goto(url('/explore/'));
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await page.getByRole('button', { name: '+ Add loadout' }).first().click();
+  await expect(page.getByRole('heading', { name: 'Your Drop Bag' })).toBeVisible();
+  await expect(page.getByLabel('Generated agent prompt')).toHaveValue(/Selected resources:/);
+  const before = await page.getByLabel('Generated agent prompt').inputValue();
+  expect(before).toContain('AGENTS.md');
+  await page.reload();
+  await expect(page.getByLabel('Generated agent prompt')).toHaveValue(before);
+  await page.getByRole('button', { name: 'Clear Drop Bag' }).click();
+  await expect(page.getByLabel('Generated agent prompt')).toHaveValue('Select resources to generate your prompt.');
+});
+
+test('resource template links to built skill ZIP and library source', async ({ page,request }) => {
+  await page.goto(url('/docs/skill-tree/skills/repository-auditor/'));
+  await expect(page.getByRole('button', {name:'Add to Drop Bag'})).toBeVisible();
+  await expect(page.getByText('Ready-to-run prompts')).toBeVisible();
+  const archive=await request.get(url('/files/skills/repository-auditor.zip'));
+  expect(archive.ok()).toBeTruthy();
+  expect((await archive.body()).subarray(0,4).toString('hex')).toBe('504b0304');
+});
+
+test('packs directory exposes packaged boilerplate and curated loadouts', async ({page}) => {
+  await page.goto(url('/packs/'));
+  await expect(page.getByRole('heading', { name: 'Packs & Templates' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Packaged starters' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Expo · Production Foundations/ })).toBeVisible();
+});
