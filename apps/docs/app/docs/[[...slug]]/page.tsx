@@ -11,6 +11,7 @@ import {
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
+import { ResourceShowcase } from '@/components/resource-showcase';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
 
@@ -20,6 +21,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   if (!page) notFound();
 
   const origin = manifest.pages.find((entry) => entry.generatedPath === page.path)?.sourcePath;
+  const item = manifest.pages.find((entry) => entry.generatedPath === page.path);
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
 
@@ -36,6 +38,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         {origin && <a className="text-sm underline underline-offset-2" href={`https://github.com/tbachir/bag/issues/new?title=${encodeURIComponent('Docs feedback: '+origin)}&body=${encodeURIComponent('Page: '+origin+'\\n\\nSuggested improvement:')}`} target="_blank" rel="noopener noreferrer">Suggest an improvement</a>}
       </div>
       <DocsBody>
+        {item?.sourcePath && <ResourceShowcase item={{ title:item.title,description:item.description,sourcePath:item.sourcePath,url:item.url,type:item.type,tags:item.tags??[],technologies:item.technologies??[],useCases:item.useCases??[],contexts:item.contexts??[],recommendation:item.recommendation,template:item.template }} />}
         <MDX
           components={getMDXComponents({
             // this allows you to link to other pages with relative file paths

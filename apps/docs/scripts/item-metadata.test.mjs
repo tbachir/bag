@@ -11,3 +11,11 @@ test('reject unsupported metadata, unsafe navigation and malformed filters',()=>
  assert.throws(()=>normalizeItemMetadata({navigation:{pages:['../../outside']}}));
  assert.throws(()=>normalizeItemMetadata({tags:'auth'}));
 });
+
+test('recommendation is contextual and template hints are opt-in',()=>{
+ const item=normalizeItemMetadata({type:'skill',template:'skill',recommendation:'mandatory',contexts:['expo','react','expo']});
+ assert.deepEqual(item.contexts,['expo','react']);
+ assert.equal(item.template,'skill');
+ assert.throws(()=>normalizeItemMetadata({recommendation:'required'}));
+ assert.throws(()=>normalizeItemMetadata({template:'<script>'}));
+});

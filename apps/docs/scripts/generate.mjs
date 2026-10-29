@@ -78,7 +78,8 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     const item = folderConfigs.get(folder) ?? {};
     const entry = { sourcePath: file, generatedPath, slugs, url, title, description,
       type: item.type ?? (slugs[0] === 'skill-tree' ? 'skill' : slugs[0] ?? 'reference'),
-      tags: item.tags ?? [], technologies: item.technologies ?? [], useCases: item.useCases ?? [] };
+      tags: item.tags ?? [], technologies: item.technologies ?? [], useCases: item.useCases ?? [],
+      contexts: item.contexts ?? [], recommendation: item.recommendation ?? null, template: item.template ?? null };
     entries.push(entry);
     sourceMap.set(file, entry);
     contents.set(file, { tree, frontmatter, headingIds });
@@ -190,7 +191,20 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     const configured = folderConfigs.get(dir);
     await write(path.join(disk, 'meta.json'), `${JSON.stringify(folderNavigation(configured, names, order), null, 2)}\n`);
   }
-  const manifest = { version: 1, pages: entries, assets };
+  // Resolve featured loadouts using canonical catalog manifests; the UI never owns a second registry.
+  const catalogItems = new Map();
+  for (const file of files.filter(f => /^catalog\/items\/[a-z0-9-]+\.json$/.test(f))) {
+    const value = JSON.parse(await readFile(path.join(root, file), 'utf8'));
+    catalogItems.set(value.id, value);
+  }
+  const loadouts = [];
+  for (const file of files.filter(f => /^catalog\/loadouts\/[a-z0-9-]+\.json$/.test(f))) {
+    const value = JSON.parse(await readFile(path.join(root, file), 'utf8'));
+    const sourcePaths = [...new Set(value.items.map(({id}) => catalogItems.get(id)?.source?.path).filter(Boolean))];
+    loadouts.push({ id:value.id, title:value.title, summary:value.summary, sourcePaths,
+      unresolved: value.items.filter(({id}) => !catalogItems.has(id)).map(({id}) => id) });
+  }
+  const manifest = { version: 2, pages: entries, assets, loadouts };
   await write(path.join(generated, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   // Keep downloads in the same generated namespace; Next serves the explicit public subtree.
   await rm(path.join(app, 'public/files'), { recursive: true, force: true });
