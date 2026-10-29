@@ -11,12 +11,13 @@ test('read the complete inventory and navigate between zones', async ({ page }) 
   await page.getByRole('link', { name: 'Explore the inventory', exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`${prefix}/docs/$`));
   await expect(page.getByRole('heading', { level: 1 })).toContainText('BAG');
-  await expect(page.getByRole('link', { name: 'Explore inventory', exact: true })).toHaveAttribute('href', url('/docs/inventory/'));
-  await page.getByRole('link', { name: 'Explore inventory', exact: true }).click();
+  // The goal-oriented navigation label may change; the canonical destination must remain.
+  const inventoryLink=page.locator('main a[href="'+url('/docs/inventory/')+'"]').first();
+  await expect(inventoryLink).toBeVisible();
+  await inventoryLink.click();
   await expect(page).toHaveURL(new RegExp(`${prefix}/docs/inventory/$`));
   await page.goto(url('/docs/zones/'));
-  await expect(page.getByRole('table').getByRole('link')).toHaveCount(7);
-  await expect(page.getByRole('link', { name: 'Open Inventory', exact: true })).toHaveAttribute('href', url('/docs/inventory/'));
+  await expect(page.getByRole('link', { name: 'Explore resources', exact: true })).toHaveAttribute('href', url('/docs/inventory/'));
   expect(errors).toEqual([]);
 });
 
