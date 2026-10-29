@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import manifest from '../../.generated/manifest.json';
-import { sitePath } from '@/lib/shared';
 import { ArrowRight, Boxes, Layers3, PackageOpen, Sparkles } from 'lucide-react';
 
 export const metadata = {
@@ -24,7 +23,7 @@ export default function PacksPage() {
     </header>
     <section className="space-y-5" aria-labelledby="packaged-heading">
       <div><h2 id="packaged-heading" className="flex items-center gap-2 text-2xl font-bold"><Boxes className="size-6 text-fd-primary"/> Packaged starters</h2><p className="mt-2 text-sm text-fd-muted-foreground">Canonical source repositories and their reuse constraints, not copies of their entire codebase.</p></div>
-      <div className="grid gap-4 sm:grid-cols-2">{packaged.map(page=><Link key={page.sourcePath} href={sitePath(page.url)} className="group rounded-2xl border border-fd-border bg-fd-card p-6 shadow-sm transition hover:border-fd-primary/50 hover:shadow-md"><div className="mb-5 inline-flex size-11 items-center justify-center rounded-xl bg-fd-accent text-fd-primary"><PackageOpen className="size-5"/></div><h3 className="text-lg font-bold group-hover:text-fd-primary">{page.title}</h3><p className="mt-2 text-sm leading-6 text-fd-muted-foreground">{page.description}</p><span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-fd-primary">View package <ArrowRight className="size-4"/></span></Link>)}</div>
+      <div className="grid gap-4 sm:grid-cols-2">{packaged.map(page=><Link key={page.sourcePath} href={page.url} className="group rounded-2xl border border-fd-border bg-fd-card p-6 shadow-sm transition hover:border-fd-primary/50 hover:shadow-md"><div className="mb-5 inline-flex size-11 items-center justify-center rounded-xl bg-fd-accent text-fd-primary"><PackageOpen className="size-5"/></div><h3 className="text-lg font-bold group-hover:text-fd-primary">{page.title}</h3><p className="mt-2 text-sm leading-6 text-fd-muted-foreground">{page.description}</p><span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-fd-primary">View package <ArrowRight className="size-4"/></span></Link>)}</div>
       {!packaged.length && <p className="rounded-2xl border border-dashed border-fd-border p-8 text-sm text-fd-muted-foreground">No curated starter packages have been registered yet.</p>}
     </section>
     <section className="space-y-5" aria-labelledby="loadouts-heading">
