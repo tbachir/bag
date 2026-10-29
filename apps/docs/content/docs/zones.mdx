@@ -1,24 +1,37 @@
 ---
-title: Explore the seven zones
-description: Choose the part of BAG that matches your next development task.
+title: Explore BAG
+description: Find reusable items, skills, workflows and guides without navigating the repository's implementation details.
 ---
 
-Each zone links to its canonical repository index. Follow those indexes for the
-full inventory and item-specific instructions.
+BAG is a recursive inventory: **every folder can be an item**, with its own documentation,
+optional metadata and as many nested items as necessary. The seven original zones remain
+storage conventions, not seven competing workflows or a limit on item types.
 
-| Zone | Purpose | Explore |
-| --- | --- | --- |
-| Inventory | External libraries, repositories, and resource references | [Open Inventory](https://github.com/tbachir/bag/blob/main/inventory/README.md) |
-| Equipment | Installed tools, environments, and reusable configuration | [Open Equipment](https://github.com/tbachir/bag/blob/main/equipment/README.md) |
-| Skill Tree | AI skills, agent instructions, plugins, and MCP servers | [Open Skill Tree](https://github.com/tbachir/bag/blob/main/skill-tree/README.md) |
-| Spellbook | Scripts, commands, snippets, and automation | [Open Spellbook](https://github.com/tbachir/bag/blob/main/spellbook/README.md) |
-| Maps & Guides | Tutorials, documentation, practices, and field notes | [Open Maps & Guides](https://github.com/tbachir/bag/blob/main/maps-and-guides/README.md) |
-| Loot | Discoveries and ideas awaiting evaluation | [Open Loot](https://github.com/tbachir/bag/blob/main/loot/README.md) |
-| Loadouts | Compositions of existing items for a particular workflow | [Open Loadouts](https://github.com/tbachir/bag/blob/main/loadouts/README.md) |
+## Start from your goal
 
-## Work with your own agent
+| I want to... | Start here |
+| --- | --- |
+| Discover a reusable library, repository or service | [Explore resources](https://github.com/tbachir/bag/blob/main/inventory/README.md) |
+| Use or maintain an AI skill | [Explore skills](https://github.com/tbachir/bag/blob/main/skill-tree/skills/README.md) |
+| Reuse a script or an automation | [Explore scripts](https://github.com/tbachir/bag/blob/main/spellbook/scripts/README.md) |
+| Learn a workflow or follow a tutorial | [Read guides](https://github.com/tbachir/bag/blob/main/maps-and-guides/README.md) |
+| Assemble existing resources for a project | [Explore loadouts](https://github.com/tbachir/bag/blob/main/loadouts/README.md) |
+| Contribute or create a new item | [Authoring guide](https://github.com/tbachir/bag/blob/main/maps-and-guides/bag-authoring-skills.md) |
 
-Reusable items may include short integration prompts and task manifests. Read
-the [delegation protocol](https://github.com/tbachir/bag/blob/main/maps-and-guides/agent-delegation-protocol.md)
-and [task composition guide](https://github.com/tbachir/bag/blob/main/maps-and-guides/task-composer.md)
-before delegating work in another project.
+## Manage and reuse an item
+
+1. Open its README and read its scope, sources, limitations and nested items.
+2. Follow its applicable `AGENTS.md` and consult its `SKILL.md` when the item is a skill.
+3. Use the item's prompt and optional task tree to delegate a specific goal.
+4. Review prerequisites, freshness and proposed changes before installing or executing anything.
+
+[Delegation rules](https://github.com/tbachir/bag/blob/main/maps-and-guides/agent-delegation-protocol.md) ·
+[Task composition](https://github.com/tbachir/bag/blob/main/maps-and-guides/task-composer.md) ·
+[Skill freshness](https://github.com/tbachir/bag/blob/main/maps-and-guides/skill-freshness-policy.md)
+
+## Advanced: repository structure
+
+[Equipment](https://github.com/tbachir/bag/blob/main/equipment/README.md) holds configurations,
+[Loot](https://github.com/tbachir/bag/blob/main/loot/README.md) holds discoveries awaiting review,
+and [the catalog](https://github.com/tbachir/bag/blob/main/catalog/README.md) describes machine-readable references.
+These are useful storage and lifecycle conventions, not separate kinds of items or mandatory navigation steps.
