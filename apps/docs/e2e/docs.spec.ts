@@ -11,12 +11,13 @@ test('read the complete inventory and navigate between zones', async ({ page }) 
   await page.getByRole('link', { name: 'Explore the inventory', exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`${prefix}/docs/$`));
   await expect(page.getByRole('heading', { level: 1 })).toContainText('BAG');
-  // The goal-oriented navigation label may change; the canonical destination must remain.
+  // Follow the canonical inventory URL rather than a copy-dependent link label.
   const inventoryLink=page.locator('main a[href="'+url('/docs/inventory/')+'"]').first();
   await expect(inventoryLink).toBeVisible();
   await inventoryLink.click();
   await expect(page).toHaveURL(new RegExp(`${prefix}/docs/inventory/$`));
   await page.goto(url('/docs/zones/'));
+  // The item-first guide exposes goals instead of the old seven-zone table.
   await expect(page.getByRole('link', { name: 'Explore resources', exact: true })).toHaveAttribute('href', url('/docs/inventory/'));
   expect(errors).toEqual([]);
 });
