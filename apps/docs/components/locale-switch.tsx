@@ -6,7 +6,7 @@ import { basePath } from '@/lib/shared';
 
 export function LocaleSwitch() {
   const pathname = usePathname();
-  const local = pathname.startsWith(basePath) ? pathname.slice(basePath.length) : pathname;
+  const local = basePath && pathname.startsWith(basePath + '/') ? pathname.slice(basePath.length) : pathname;
   const french = local.startsWith('/fr/docs/');
   const englishPath = french ? local.slice('/fr'.length) : local;
   const frenchPath = `/fr${englishPath}`;
