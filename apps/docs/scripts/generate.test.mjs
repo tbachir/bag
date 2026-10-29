@@ -142,3 +142,32 @@ test('normalizes a deployment prefix and rejects origins or parent traversal', (
     assert.throws(() => normalizeBasePath(value), /DOCS_BASE_PATH/);
   }
 });
+
+
+test('uses English fallback when French is missing or stale and preserves canonical English', async (t) => {
+  const { createHash } = await import('node:crypto');
+  const original = '# English guide\\n\\nEnglish content\\n';
+  const french = '# Guide français\\n\\nContenu français\\n';
+  const translated = 'apps/docs/translations/fr/inventory/README.md';
+  const stamp = `${translated}.source-sha256`;
+  const options = await fixture(t, {
+    'README.md': '# BAG',
+    'inventory/README.md': original,
+    [translated]: french,
+    [stamp]: createHash('sha256').update(original).digest('hex'),
+  });
+  const files = ['README.md', 'inventory/README.md', translated, stamp];
+  await generate({ ...options, files });
+  const english = await readFile(path.join(options.app, '.generated/content/inventory/index.md'), 'utf8');
+  const localized = await readFile(path.join(options.app, '.generated/content/inventory/index.fr.md'), 'utf8');
+  assert.match(english, /English content/);
+  assert.doesNotMatch(english, /Contenu français/);
+  assert.match(localized, /Contenu français/);
+
+  await writeFile(path.join(options.root, stamp), 'stale-hash');
+  await generate({ ...options, files });
+  assert.match(await readFile(path.join(options.app, '.generated/content/inventory/index.md'), 'utf8'), /English content/);
+  await assert.rejects(readFile(path.join(options.app, '.generated/content/inventory/index.fr.md')), { code: 'ENOENT' });
+  await generate({ ...options, files: ['README.md', 'inventory/README.md'] });
+  await assert.rejects(readFile(path.join(options.app, '.generated/content/inventory/index.fr.md')), { code: 'ENOENT' });
+});
