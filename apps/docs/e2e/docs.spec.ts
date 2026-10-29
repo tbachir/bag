@@ -89,3 +89,10 @@ test('resource template links to built skill ZIP and library source', async ({ p
   expect(archive.ok()).toBeTruthy();
   expect((await archive.body()).subarray(0,4).toString('hex')).toBe('504b0304');
 });
+
+test('packs directory exposes packaged boilerplate and curated loadouts', async ({page}) => {
+  await page.goto(url('/packs/'));
+  await expect(page.getByRole('heading', { name: 'Packs & Templates' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Packaged starters' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Expo · Production Foundations/ })).toBeVisible();
+});
