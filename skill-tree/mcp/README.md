@@ -38,3 +38,9 @@ Add this entry to your AI client's configuration file (e.g. `claude_desktop_conf
 ```
 
 See [mcp-servers.example.json](mcp-servers.example.json) for the configuration template.
+
+## Curated integrations
+
+- **Storybook MCP** (`@storybook/addon-mcp`) — Expose les composants, manifestes de props et exécutions de tests (`dev`, `docs`, `test` toolsets) pour outiller les agents de code IA dans le développement d'interface. Voir [Guide Storybook](../../maps-and-guides/ui/storybook-fondations-et-automatisation.md) et la fiche [Storybook](../../inventory/libraries/storybook/README.md).
+
+**Status:** shelf ready; MCP servers to be curated.
