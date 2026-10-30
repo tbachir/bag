@@ -130,10 +130,10 @@ images. Rebuild when changing the public origin or path prefix. See
 
 ### Optional GitHub Pages publication
 
-The **Build and publish BAG docs** workflow validates both root and `/bag`
-exports for PRs and main. It also saves downloadable static artifacts. Publishing
-runs automatically after a push to `main`, including merged PRs, once both
-configurations pass. PR builds never publish. Manual runs on `main` can also
+The **Build and publish BAG docs** workflow validates the `/bag` export and
+saves downloadable static artifacts. Publishing runs automatically after a
+push to `main`, including merged PRs, once validation passes. PR builds run
+via `docs-preview.yml` and never publish. Manual runs on `main` can also
 republish the validated site:
 
 1. Use **Settings → Pages → Source → GitHub Actions** as the publishing source.
