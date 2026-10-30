@@ -1,5 +1,7 @@
 # Writing reusable, inline delegation prompts
 
+> **Diátaxis Role:** How-To Guide / Conventions · Practical conventions and rules for authoring reusable inline delegation prompts.
+
 BAG prompts are content, not a website feature or an interview module. Any Markdown item, tutorial, troubleshooting note or reference can contain **multiple copyable prompts** exactly where the reader needs them.
 
 ## Design rules

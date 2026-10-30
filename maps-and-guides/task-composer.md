@@ -1,5 +1,7 @@
 # BAG Task Composer — from resource collection to targeted missions
 
+> **Diátaxis Role:** How-To Guide · Recipe for declaring and composing composite missions using task manifests.
+
 Drop Bag supports **item-level** selection and **sub-task-level** selection, with strict references and no automatic execution. Every BAG folder remains an item: `tasks/` is **not a reserved directory**. A folder may declare its own task manifest at any safe relative location via optional `bag.item.json` metadata.
 
 ## Choose a task manifest for any item

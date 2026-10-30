@@ -1,5 +1,7 @@
 # BAG agent delegation protocol (v1)
 
+> **Diátaxis Role:** How-To Guide / Protocol Specification · Problem-oriented protocol for safely delegating target-project missions to AI coding agents via BAG references.
+
 This protocol is activated **only when a user deliberately references BAG and an item in an external-agent task**. BAG is a reference repository, not the target project's instruction authority.
 
 ## Entry contract

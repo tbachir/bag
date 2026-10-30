@@ -1,0 +1,31 @@
+{
+  "type": "guide",
+  "tags": [
+    "documentation",
+    "diataxis",
+    "guides",
+    "tutorials",
+    "references",
+    "architecture"
+  ],
+  "navigation": {
+    "title": "Maps & Guides",
+    "pages": [
+      "index",
+      "getting-started",
+      "tutorials",
+      "bag-authoring-skills",
+      "catalog-and-loadouts",
+      "agent-delegation-protocol",
+      "inline-prompts",
+      "task-composer",
+      "references",
+      "skill-freshness-policy",
+      "resource-exposure",
+      "ui",
+      "best-practices",
+      "fumadocs-inventory-explorer",
+      "vision"
+    ]
+  }
+}

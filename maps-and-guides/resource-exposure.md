@@ -1,5 +1,7 @@
 # One source, many consumers — Resource exposure (v1)
 
+> **Diátaxis Role:** Reference / Contract Specification · Technical specification for single-source multi-consumer resource exposure.
+
 The BAG repository is both a knowledge base and a curated source of reusable assets. A skill, configuration, GitHub Actions workflow, script, or template can be:
 
 - **Canonical**: one authoritative file or directory, maintained where it belongs.

@@ -1,5 +1,7 @@
 # 🧭 Field Guide — Using BAG
 
+> **Diátaxis Role:** Tutorial · Learning-oriented walkthrough guiding new users through their first quests in BAG.
+
 ## Quest 1: find an item
 
 Open a [BAG's inventory overview](../README.md) or search the Markdown content:

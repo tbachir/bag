@@ -1,5 +1,7 @@
 # BAG authoring skills
 
+> **Diátaxis Role:** How-To Guide · Task-oriented procedures for authoring items, metadata, libraries, and tasks in BAG.
+
 BAG is an unrestricted recursive library. Every folder under `inventory/` may be an item with any number of nested items. No folder name, type, README, task manifest, or metadata file is required. These skills are **optional reference workflows** for coding agents, not auto-installed instructions.
 
 | Need | Skill |

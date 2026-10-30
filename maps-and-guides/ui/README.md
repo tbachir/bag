@@ -1,5 +1,7 @@
 # BAG UI component library and resource templates
 
+> **Diátaxis Role:** Reference · Specification and technical documentation for Fumadocs UI Workbench components and BAG template types.
+
 The [UI Workbench](https://tbachir.github.io/bag/ui/) is a Storybook-style gallery **inside** the static Fumadocs site. It covers the 13 components from the [official Fumadocs component catalog](https://www.fumadocs.dev/docs/ui/components), documenting which are live and which require a separate integration. It is not the independent Storybook toolchain.
 
 ## Existing live stories

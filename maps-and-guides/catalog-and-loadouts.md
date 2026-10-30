@@ -1,5 +1,7 @@
 # 🧠 Intelligent inventory — Agent & human workflow
 
+> **Diátaxis Role:** How-To Guide · Practical workflow for querying catalog manifests, planning changes, and equipping loadouts safely.
+
 BAG uses **versioned JSON manifests** as an interoperable read-only API. Agents can inspect the catalog as JSON with Node.js; no service, authentication, paid API, internet connection, or build step is needed.
 
 ## Commands

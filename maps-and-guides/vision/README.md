@@ -1,5 +1,7 @@
 # 🔭 Vision — Pitch & specification
 
+> **Diátaxis Role:** Explanation · Architectural vision, 3-minute executive pitch, and comprehensive technical specification for the target design of BAG.
+
 Why BAG exists, how to convince an audience in three minutes, and the technical specification detailed enough to rebuild BAG's target design. Both documents are written in French.
 
 | Document | Audience | Content |

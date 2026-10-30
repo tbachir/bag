@@ -1,5 +1,7 @@
 # Fumadocs enhancements: inventory-first architecture
 
+> **Diátaxis Role:** Explanation · Architectural concepts, design decisions, and static invariants for the Fumadocs documentation engine and Drop Bag Explorer.
+
 BAG remains Markdown-first: source files and optional `bag.item.json` live anywhere under published repository zones. No authored file belongs in `.generated/`.
 
 ## Per-folder metadata
@@ -28,10 +30,18 @@ The `/explore/` route filters static manifest entries by text, type, tag, techno
 
 ## Localization
 
-English remains canonical. Optional reviewed French translations and checksum safeguards remain in `apps/docs/I18N.md`. Do not publish empty or stale French pages or claim FR coverage before both static builds and locale route tests pass. Use `pnpm translations:check` to measure coverage.
+English remains canonical. Optional reviewed French translations and checksum safeguards remain in [apps/docs/I18N.md](../apps/docs/I18N.md). Do not publish empty or stale French pages or claim FR coverage before both static builds and locale route tests pass. Use `pnpm translations:check` to measure coverage.
 
 ## Verify
 
-From `apps/docs`: `pnpm test:unit`, `pnpm build`, `pnpm content:check`, `pnpm types:check` and `pnpm test:e2e`. From repository root run `node spellbook/scripts/validate.mjs`. Test both default and `DOCS_BASE_PATH=/bag` exports. This PR may not have executed all checks if the GitHub connector cannot supply a local Node workspace.
+From `apps/docs`: `pnpm test:unit`, `pnpm build`, `pnpm content:check`, `pnpm types:check` and `pnpm test:e2e`. From repository root run `node spellbook/scripts/validate.mjs`. Test both default and `DOCS_BASE_PATH=/bag` exports.
+
+---
+
+## Related Documentation
+
+- **[Best practices & architectural invariants](best-practices/README.md):** Core principles including single home, dry-run first, and static publishing.
+- **[UI component library & templates](ui/README.md):** Storybook-style component gallery and template schema definitions.
+- **[Reference index](references/README.md):** Canonical technical references and catalog schemas.
 
 Primary references: https://www.fumadocs.dev/docs/headless/page-conventions , https://www.fumadocs.dev/docs/deploying/static , https://www.fumadocs.dev/docs/headless/utils/mcp , https://www.fumadocs.dev/docs/ui/components .

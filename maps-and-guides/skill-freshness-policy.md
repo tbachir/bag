@@ -1,5 +1,7 @@
 # Skill freshness and evidence policy
 
+> **Diátaxis Role:** Reference / Policy Specification · Exact verification policy, freshness thresholds, and review interval contracts for fast-changing skills.
+
 BAG maintains **two independent timestamps** for fast-changing skills: the last *evidence-based verification* and the date of edits. Updating a file or opening a PR alone must never reset the verification clock.
 
 ## Metadata contract

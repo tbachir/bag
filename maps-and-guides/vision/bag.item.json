@@ -1,0 +1,11 @@
+{
+  "type": "guide",
+  "navigation": {
+    "title": "Vision",
+    "pages": [
+      "index",
+      "pitch",
+      "specification"
+    ]
+  }
+}
