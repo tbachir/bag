@@ -41,6 +41,6 @@ The ten most recently created **source repositories** found for `tbachir` (exclu
 
 This initial pass inspected default-branch project READMEs; it did **not** audit or execute implementation files, validate licenses, or test extracted configurations. Treat suggestions as candidates rather than validated reusable modules.
 
-## External game-development skills
+## External agent skills collections
 
-[MengTo/Skills](mengto-skills/README.md) — evaluated upstream MIT repository and cross-linked reference index for 20 Three.js/browser game-development agent skills. Source instructions are not automatically installed or executed.
+[MengTo/Skills](mengto-skills/README.md) — evaluated upstream MIT repository and cross-linked reference index for 20 Three.js/browser game-development agent skills and 4 day-to-day agent workflow skills (progress screenshots, scoring loops, shipping guardrails, threads manager). Source instructions are not automatically installed or executed.

@@ -73,3 +73,7 @@ Use [Docs Architect](docs-architect/SKILL.md) as BAG's canonical orchestrator, n
 ## Game Development
 
 [Game Development — MengTo collection](game-development/README.md) provides 20 individually curated external skill references for browser / Three.js gameplay, level design, AI, assets, mobile controls, QA and release. The upstream skills are linked rather than copied and are not installed by BAG.
+
+## Agent Workflows
+
+[Agent Workflows — MengTo collection](agent-workflows/README.md) provides 4 individually curated external skill references for daily coding agent collaboration: unprompted progress screenshots, anchored 0–10 scoring loops, disciplined shipping with size guardrails, and multi-session thread management. The upstream skills are linked rather than copied and are not installed by BAG.
