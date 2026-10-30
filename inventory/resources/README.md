@@ -6,6 +6,8 @@ Keep attribution and original URLs. Briefly explain *why* a link is worth keepin
 
 ## Featured
 
+- [Aura Build](aura-build/README.md) — reusable UI component discovery; per-component rights, export access and integration remain to be verified.
+
 - [Identity Forge](identity-forge/README.md) — visual kits for coding agents; export access and usage terms require confirmation.
 - [Rangeen](rangeen/README.md) — palette exploration with interface previews; behavior and source license remain unverified.
 - [DESIGN.md](design-md/README.md) — version-controlled design-system context for agents, plus curated inspiration.
