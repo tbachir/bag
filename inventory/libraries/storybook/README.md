@@ -30,9 +30,31 @@ Pour comprendre l'architecture, la méthodologie de conception de stories et l'a
 
 ## Delegate — project-aware integration
 
+### 1. Integration evaluation (Generic)
+
 ```text
 Évalue l'intégration de Storybook dans mon projet actuel. BAG item: https://github.com/tbachir/bag/tree/main/inventory/libraries/storybook
 Consulte les fichiers AGENTS.md, inspecte les frameworks frontend et composants existants, et propose une configuration Storybook minimale et pérenne avec support MCP pour assister le développement. N'installe rien sans validation préalable.
 ```
+
+### 2. Setup Storybook MCP & Agent Rules
+
+```text
+Configure l'intégration Storybook MCP et les règles d'agent de mon projet sans altérer l'implémentation existante.
+BAG item: https://github.com/tbachir/bag/tree/main/inventory/libraries/storybook
+Guide de référence: https://github.com/tbachir/bag/blob/main/maps-and-guides/ui/storybook-fondations-et-automatisation.md
+Lis AGENTS.md racine et de l'item. Installe et configure @storybook/addon-mcp (toolsets docs, dev, test) et intègre les directives UI dans le AGENTS.md de mon projet.
+```
+
+### 3. Review Code vs Stories & Consolidation
+
+```text
+Effectue un audit différentiel exhaustif entre le code de mes composants UI et les stories Storybook existantes, puis propose un plan de consolidation ordonné.
+BAG item: https://github.com/tbachir/bag/tree/main/inventory/libraries/storybook
+Guide de référence: https://github.com/tbachir/bag/blob/main/maps-and-guides/ui/storybook-fondations-et-automatisation.md
+Lis AGENTS.md racine et de l'item. Identifie les composants orphelins, les props TypeScript désynchronisées, les états manquants (loading, error, disabled) et les stories à taguer !manifest. Propose un plan avant modification.
+```
+
+Consultez le [guide complet d'automatisation](../../../maps-and-guides/ui/storybook-fondations-et-automatisation.md#6-smart-prompts-de-délégation-ia) pour obtenir les descriptions détaillées de chaque prompt et les critères de validation.
 
 [Retour aux bibliothèques](../README.md).
