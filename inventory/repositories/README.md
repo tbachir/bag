@@ -8,6 +8,11 @@ For executable starter setups, document the composition in [Loadouts](../../load
 
 **Status:** shelf ready; repositories to be curated.
 
+## Interactive experiences
+
+- [MengTo Sketchbook](sketchbook/README.md) — immersive page-turning gallery, magnifier and motion design reference (evaluating; reuse rights unverified).
+
+
 
 ## Recent repository curation — 2026-10-29
 
