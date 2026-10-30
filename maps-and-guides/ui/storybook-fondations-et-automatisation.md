@@ -187,15 +187,74 @@ Quand vous lancez un nouveau projet (React, Next.js, Vite) :
 
 ---
 
-## 6. Prompt prêt à l'emploi pour agent IA
+## 6. Smart Prompts de délégation IA
 
-Copiez ce prompt dans votre IDE (Cursor, Windsurf, Claude Code, Antigravity) lors du développement d'une nouvelle fonctionnalité :
+Pour piloter efficacement Storybook avec votre agent de code (Cursor, Claude Code, Windsurf, Antigravity), utilisez ces prompts indépendants et directement copiables. Chaque prompt est conçu selon les [conventions de délégation BAG](../inline-prompts.md) et inclut sa référence d'exécution.
+
+### Prompt 1 — Setup Storybook MCP et règles d'agent
+
+Utilisez ce prompt lors de l'initialisation ou de la mise à niveau de Storybook dans un projet pour connecter l'agent via MCP et formaliser les règles d'équipe.
+
+#### Copier le prompt — Setup MCP & Agent Rules
+
+```text
+Configure l'intégration Storybook MCP et les règles d'agent de mon projet sans altérer l'implémentation existante.
+
+BAG item: https://github.com/tbachir/bag/tree/main/inventory/libraries/storybook
+Guide de référence: https://github.com/tbachir/bag/blob/main/maps-and-guides/ui/storybook-fondations-et-automatisation.md
+
+Lis le fichier AGENTS.md racine de BAG et la chaîne AGENTS.md jusqu'à l'item. Inspecte mon projet frontend :
+1. Vérifie si Storybook est déjà installé et fonctionnel ; propose les commandes d'installation minimale si absent.
+2. Ajoute et configure @storybook/addon-mcp dans .storybook/main.ts avec les trois toolsets (docs, dev, test).
+3. Documente ou enrichit le fichier AGENTS.md (ou .cursorrules) du projet avec les directives UI : obligation d'interroger Storybook MCP avant toute création de composant, convention "1 concept par story" et exclusion des bacs à sable via le tag "!manifest".
+4. Indique comment lancer Storybook et tester la détection du serveur MCP par l'agent.
+Ne valide ou n'exécute aucune installation de package sans mon accord préalable.
+```
+
+---
+
+### Prompt 2 — Revue différentielle Code vs Stories et consolidation
+
+Utilisez ce prompt sur un projet existant pour auditer l'écart entre le code source des composants applicatifs et le catalogue Storybook, puis consolider méthodiquement l'ensemble.
+
+#### Copier le prompt — Audit différentiel & Consolidation
+
+```text
+Effectue un audit différentiel exhaustif entre le code de mes composants UI et les stories Storybook existantes, puis propose un plan de consolidation ordonné.
+
+BAG item: https://github.com/tbachir/bag/tree/main/inventory/libraries/storybook
+Guide de référence: https://github.com/tbachir/bag/blob/main/maps-and-guides/ui/storybook-fondations-et-automatisation.md
+
+Lis le fichier AGENTS.md racine de BAG et la chaîne AGENTS.md jusqu'à l'item. Inspecte l'arborescence des composants (ex. src/components, components/ui) et les fichiers *.stories.* :
+1. Cartographie les composants sans story associée (manque de couverture UI).
+2. Repère les stories orphelines dont le composant a été renommé, déplacé ou supprimé.
+3. Vérifie la conformité des props TypeScript : identifie les stories cassées ou obsolètes suite à des modifications d'interfaces.
+4. Identifie les états limites manquants (Default, Loading, Disabled, WithError, Empty state).
+5. Vérifie la présence des tags "!manifest" sur les stories de scratch ou de test interne pour ne pas polluer le contexte de génération IA.
+6. Évalue la couverture d'accessibilité (@storybook/addon-a11y) et des tests d'interaction (play functions).
+
+Fournis d'abord un rapport d'audit synthétique avec tableau de priorité (P0 = stories cassées, P1 = composants orphelins majeurs, P2 = états limites manquants), puis attends ma validation avant de générer ou corriger les fichiers de stories.
+```
+
+---
+
+### Prompt 3 — Développement d'une nouvelle fonctionnalité UI (In-flow)
+
+Utilisez ce prompt au quotidien lors de la conception d'un nouveau composant ou d'une nouvelle vue dans votre IDE.
+
+#### Copier le prompt — In-flow Component Building
 
 ```text
 Consulte le serveur Storybook MCP et notre catalogue de composants avant d'écrire du code UI.
-Utilise en priorité les primitives existantes du design system documentées dans nos stories.
-Si un nouveau composant est nécessaire, crée d'abord son fichier .tsx avec typage JSDoc complet, puis son fichier .stories.tsx avec au moins deux stories distinctes (état par défaut et état alternatif/limite).
-Vérifie le respect de l'accessibilité et valide la story avant de poursuivre.
+
+BAG item: https://github.com/tbachir/bag/tree/main/inventory/libraries/storybook
+Guide de référence: https://github.com/tbachir/bag/blob/main/maps-and-guides/ui/storybook-fondations-et-automatisation.md
+
+1. Utilise en priorité les primitives existantes du design system documentées dans nos stories.
+2. Si un nouveau composant est nécessaire, crée d'abord son fichier d'implémentation avec typage TypeScript et commentaires JSDoc complets.
+3. Rédige immédiatement son fichier .stories associé avec au moins deux stories distinctes (état par défaut et état alternatif/limite).
+4. Ajoute une play function pour simuler l'interaction clé si applicable et vérifie les contrastes d'accessibilité.
+5. Valide que la story compile sans avertissement avant de finaliser.
 ```
 
 ---
