@@ -5,7 +5,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const read=(pathFromRoot)=>readFileSync(path.join(root,pathFromRoot),'utf8');
+const read=(pathFromRoot)=>readFileSync(path.join(root,pathFromRoot),'utf8').replace(/\r\n/g,'\n');
 const base='skill-tree/skills/addbag/';
 
 test('addbag has a valid portable skill frontmatter and discoverable catalog entry',()=>{

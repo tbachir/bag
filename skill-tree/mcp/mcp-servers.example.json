@@ -1,3 +1,10 @@
 {
-  "mcpServers": {}
+  "mcpServers": {
+    "bag": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/bag/spellbook/scripts/bag-mcp.mjs"
+      ]
+    }
+  }
 }
