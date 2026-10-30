@@ -14,21 +14,13 @@ concurrency:
 
 jobs:
   build:
-    name: Static docs (${{ matrix.name }})
+    name: Build and validate docs
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
-      matrix:
-        include:
-          - name: root
-            base_path: ''
-          - name: github-pages
-            base_path: /bag
     defaults:
       run:
         working-directory: apps/docs
     env:
-      DOCS_BASE_PATH: ${{ matrix.base_path }}
+      DOCS_BASE_PATH: /bag
       DOCS_SITE_URL: https://tbachir.github.io
       NEXT_TELEMETRY_DISABLED: '1'
     steps:
@@ -50,21 +42,21 @@ jobs:
       - run: pnpm test:e2e
       - uses: actions/upload-artifact@v4
         with:
-          name: bag-docs-${{ matrix.name }}
+          name: bag-docs
           path: apps/docs/out
           include-hidden-files: true
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: docs-test-results-${{ matrix.name }}
+          name: docs-test-results
           path: apps/docs/test-results
       # upload-pages-artifact excludes dotfiles, including BAG's downloadable
       # .editorconfig/.gitignore templates. Keep them in the Pages tar contract.
       - name: Package Pages artifact including configuration templates
-        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main' && matrix.name == 'github-pages'
+        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
         run: tar --directory out --exclude=.git --exclude=.github -cf "$RUNNER_TEMP/artifact.tar" .
       - uses: actions/upload-artifact@v4
-        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main' && matrix.name == 'github-pages'
+        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
         with:
           name: github-pages
           path: ${{ runner.temp }}/artifact.tar
