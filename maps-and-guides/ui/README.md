@@ -12,6 +12,17 @@ The [UI Workbench](https://tbachir.github.io/bag/ui/) is a Storybook-style galle
 
 Accordion, Banner, Code Block (server), Dynamic Code Block (client), Files, Zoomable Image, Inline TOC, Steps, Tabs and Type Table, plus default Cards and Callouts. Story source is [apps/docs/app/ui/page.tsx](../../apps/docs/app/ui/page.tsx). Component exports are explicit in [components/mdx.tsx](../../apps/docs/components/mdx.tsx).
 
+## BAG-specific visual stories
+
+The UI Workbench now provides standard and compact resource-card variants in `apps/docs/components/bag-pattern-gallery.tsx`. The examples cover skills, libraries and loadouts, with accessible links, editorial status and tags. They intentionally use representative static data: real browse pages must derive those fields and URLs from the generated catalog rather than copy fixture data. Resource selection and installation remain separate, explicitly authorized workflows.
+
+### Suggested follow-up optimizations
+
+- Move card variants into a shared presentation component used both by the Workbench and actual resource listings, avoiding visual drift.
+- Feed stories from validated catalog fixtures and verify empty/missing metadata states.
+- Add visual regression coverage at mobile and desktop widths, in both light and dark themes, plus keyboard/focus checks.
+- Keep network-dependent adapters (GitHub Info) and build-time integrations (Graph View, Auto Type Table) opt-in, with static export tests before activation.
+
 ## Additional integrations (not silently enabled)
 
 | Component | Needed before using in production | Official guide |
