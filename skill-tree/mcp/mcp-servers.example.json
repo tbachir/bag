@@ -5,6 +5,10 @@
       "args": [
         "/absolute/path/to/bag/spellbook/scripts/bag-mcp.mjs"
       ]
+    },
+    "ui-skills": {
+      "transport": "http",
+      "url": "https://www.ui-skills.com/mcp"
     }
   }
 }

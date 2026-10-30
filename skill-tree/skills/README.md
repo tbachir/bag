@@ -67,6 +67,8 @@ Each skill supplies triggers, ordered procedures, authoritative references and v
 - [Compozy Fumadocs](compozy-fumadocs/README.md) — Fumadocs Core/MDX/UI implementation reference.
 - [Diátaxis Docs Framework](diataxis-docs-framework/README.md) — documentation architecture and auditing rules.
 - [ADK-TS Docs Writer](adk-docs-writer/README.md) — Fumadocs MDX page patterns; project-specific guidance must be adapted.
+- [Animate Expo (Emil Kowalski)](animate-expo/README.md) — React Native / Expo motion decisions (worklets, thread isolation, gesture handoffs, haptics).
+- [Pick UI Library (Emil Kowalski)](pick-ui-library/README.md) — Opinionated frontend library selection (Base UI, Sonner, motion primitives) to prevent custom reinventing.
 
 Use [Docs Architect](docs-architect/SKILL.md) as BAG's canonical orchestrator, not a second vendored copy of these upstream skills. For an app from scratch see [Fumadocs Starter](../../equipment/fumadocs-starter/README.md).
 

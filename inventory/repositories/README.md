@@ -43,4 +43,5 @@ This initial pass inspected default-branch project READMEs; it did **not** audit
 
 ## External agent skills collections
 
-[MengTo/Skills](mengto-skills/README.md) — evaluated upstream MIT repository and cross-linked reference index for 20 Three.js/browser game-development agent skills and 4 day-to-day agent workflow skills (progress screenshots, scoring loops, shipping guardrails, threads manager). Source instructions are not automatically installed or executed.
+- [MengTo/Skills](mengto-skills/README.md) — evaluated upstream MIT repository and cross-linked reference index for 20 Three.js/browser game-development agent skills and 4 day-to-day agent workflow skills (progress screenshots, scoring loops, shipping guardrails, threads manager). Source instructions are not automatically installed or executed.
+- [Emil Kowalski / Skills](emilkowalski-skills/README.md) — evaluated upstream MIT repository and reference index for ~15 motion and design-engineering agent skills (animation curves, performance budgets, Apple fluid motion, Expo gestures and UI library selection). Reference only, not vendored.

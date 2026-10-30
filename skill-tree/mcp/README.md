@@ -42,5 +42,6 @@ See [mcp-servers.example.json](mcp-servers.example.json) for the configuration t
 ## Curated integrations
 
 - **Storybook MCP** (`@storybook/addon-mcp`) — Expose les composants, manifestes de props et exécutions de tests (`dev`, `docs`, `test` toolsets) pour outiller les agents de code IA dans le développement d'interface. Voir [Guide Storybook](../../maps-and-guides/ui/storybook-fondations-et-automatisation.md) et la fiche [Storybook](../../inventory/libraries/storybook/README.md).
+- **UI Skills MCP** — Serveur MCP distant (`https://www.ui-skills.com/mcp`) exposant le catalogue de skills de design-engineering et de motion UI (*ibelick*). Outils : `list_skills` (recherche dans le registre) et `get_skill` (récupération à la demande des contraintes et instructions pour agents). Voir la documentation officielle sur [UI Skills MCP Docs](https://www.ui-skills.com/mcp/docs).
 
 **Status:** shelf ready; MCP servers to be curated.

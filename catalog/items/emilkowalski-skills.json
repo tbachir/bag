@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "emilkowalski-skills",
+  "title": "Emil Kowalski / Skills",
+  "summary": "Curated collection of ~15 motion and design-engineering agent skills for polished frontend UI.",
+  "zone": "inventory",
+  "kind": "repository",
+  "status": "evaluating",
+  "tags": [
+    "skills",
+    "ui",
+    "motion",
+    "design",
+    "react"
+  ],
+  "source": {
+    "type": "local",
+    "path": "inventory/repositories/emilkowalski-skills/README.md"
+  },
+  "mode": "reference",
+  "notes": "Upstream source: https://github.com/emilkowalski/skills. Distributed via ui-skills.com."
+}
