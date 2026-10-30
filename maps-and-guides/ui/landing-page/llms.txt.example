@@ -1,0 +1,20 @@
+# Northwind
+
+> Northwind regroupe les tâches, les échéances et les échanges d'une équipe, sur le web et sur mobile. Un compte se crée en une minute.
+
+Exemple de fichier /llms.txt (proposition llmstxt.org, pas un standard). Seul le titre H1 est obligatoire. Remplacez Northwind et les URL example.com.
+
+## Démarrer
+
+- [Créer un compte](https://example.com/inscription): inscription par e-mail
+- [Guide de prise en main](https://example.com/aide/demarrer.md): les trois premières étapes, en Markdown
+
+## Produit
+
+- [Fonctions](https://example.com/fonctions.md): listes par personne, commentaires, espaces d'équipe
+- [Questions fréquentes](https://example.com/faq.md): hébergement des données, export
+
+## Optional
+
+- [Mentions légales](https://example.com/mentions-legales): éditeur et hébergeur
+- [Politique de confidentialité](https://example.com/confidentialite): données traitées et droits

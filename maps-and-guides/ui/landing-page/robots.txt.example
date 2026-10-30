@@ -1,0 +1,19 @@
+# robots.txt — exemple à adapter, à publier à la racine : https://example.com/robots.txt
+# Guide : maps-and-guides/ui/landing-page/README.md (section 4)
+# Jetons vérifiés le 2026-10-30 ; ils évoluent, revérifiez-les avant usage.
+
+# Tous les robots, y compris les robots de recherche des IA
+# (OAI-SearchBot, Claude-SearchBot), suivent ce groupe : on autorise
+# le site public et on exclut les zones connectées.
+User-agent: *
+Disallow: /app/
+Disallow: /api/
+
+# Entraînement des modèles d'IA : décommentez ce groupe pour le refuser.
+# Sans effet sur Google Search ni sur les réponses citant votre site.
+# User-agent: GPTBot
+# User-agent: ClaudeBot
+# User-agent: Google-Extended
+# Disallow: /
+
+Sitemap: https://example.com/sitemap.xml

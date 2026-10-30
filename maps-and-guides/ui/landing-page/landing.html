@@ -1,0 +1,576 @@
+<!doctype html>
+<!--
+  Gabarit de landing page publique — BAG (maps-and-guides/ui/landing-page).
+  Guide complet : README.md du même dossier.
+
+  À remplacer : « Northwind », https://example.com, /inscription, /connexion,
+  le logo SVG, les jetons de couleur dans :root, les textes et la FAQ.
+  Mode annoté : ouvrir avec ?notes. Avant de livrer : supprimer le bloc
+  <script id="notes">, le script qui l'affiche et les attributs data-note.
+-->
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <title>Northwind — Les tâches de l'équipe, au même endroit</title>
+    <meta
+      name="description"
+      content="Northwind regroupe les tâches, les échéances et les échanges de votre équipe. Créez un compte en une minute, invitez vos collègues ensuite."
+    />
+    <link rel="canonical" href="https://example.com/" />
+    <meta name="robots" content="index, follow" />
+
+    <meta name="theme-color" content="#f6f4f1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Northwind" />
+    <meta property="og:title" content="Northwind — Les tâches de l'équipe, au même endroit" />
+    <meta
+      property="og:description"
+      content="Tâches, échéances et échanges de votre équipe sur une seule page."
+    />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:image" content="https://example.com/og-image.png" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="https://example.com/favicon.ico" sizes="any" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "Northwind",
+            "url": "https://example.com/"
+          },
+          {
+            "@type": "Organization",
+            "name": "Northwind",
+            "url": "https://example.com/",
+            "logo": "https://example.com/logo-512.png",
+            "sameAs": ["https://www.linkedin.com/company/example"]
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      :root {
+        --bg: #f6f4f1;
+        --surface: #ffffff;
+        --text: #1c1a17;
+        --muted: #5f5a53;
+        --border: #e4dfd8;
+        --accent: #2f5d50;
+        --accent-text: #ffffff;
+        --focus: #2f5d50;
+        --radius: 10px;
+        --measure: 640px;
+        --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+        --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #141311;
+          --surface: #1d1b19;
+          --text: #f3f0eb;
+          --muted: #a9a39a;
+          --border: #2f2c28;
+          --accent: #8fc7b5;
+          --accent-text: #10201b;
+          --focus: #8fc7b5;
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 16px/1.6 var(--font);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: 16px;
+        top: -48px;
+        padding: 8px 12px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        z-index: 10;
+      }
+
+      .skip-link:focus {
+        top: 12px;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: var(--measure);
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      header.site {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        height: 64px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .brand svg {
+        width: 24px;
+        height: 24px;
+        color: var(--accent);
+        flex-shrink: 0;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 40px;
+        padding: 0 16px;
+        border: 1px solid transparent;
+        border-radius: var(--radius);
+        font: inherit;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        transition:
+          background-color 150ms ease-out,
+          transform 150ms ease-out;
+      }
+
+      .btn:active {
+        transform: scale(0.97);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: var(--accent-text);
+      }
+
+      .btn-quiet {
+        border-color: var(--border);
+        background: var(--surface);
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .btn-primary:hover {
+          background: color-mix(in srgb, var(--accent) 88%, var(--text));
+        }
+        .btn-quiet:hover {
+          background: color-mix(in srgb, var(--surface) 94%, var(--text));
+        }
+      }
+
+      .btn-small {
+        min-height: 36px;
+        padding: 0 12px;
+        font-size: 14px;
+      }
+
+      main {
+        padding: 48px 0 32px;
+      }
+
+      .eyebrow {
+        margin: 0;
+        font: 12px/1.4 var(--mono);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      h1 {
+        margin: 16px 0 0;
+        font-size: clamp(2.25rem, 7vw, 3.25rem);
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        text-wrap: balance;
+      }
+
+      .lede {
+        margin: 20px 0 0;
+        max-width: 34em;
+        color: var(--muted);
+        font-size: 18px;
+        text-wrap: pretty;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .hero {
+        animation: rise 240ms var(--ease-out) both;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hero {
+          animation: none;
+        }
+        .btn {
+          transition: none;
+        }
+      }
+
+      section {
+        margin-top: 72px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: -0.01em;
+      }
+
+      .features {
+        margin: 20px 0 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--border);
+      }
+
+      .features li {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 4px 12px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .features .index {
+        font: 13px/1.6 var(--mono);
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .features strong {
+        display: block;
+      }
+
+      .features span:last-child {
+        grid-column: 2;
+        color: var(--muted);
+      }
+
+      details {
+        border-bottom: 1px solid var(--border);
+      }
+
+      details:first-of-type {
+        border-top: 1px solid var(--border);
+        margin-top: 20px;
+      }
+
+      summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 52px;
+        padding: 12px 0;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::after {
+        content: "+";
+        flex-shrink: 0;
+        width: 20px;
+        text-align: center;
+        color: var(--muted);
+        font-family: var(--mono);
+        transition: transform 200ms var(--ease-out);
+      }
+
+      details[open] summary::after {
+        transform: rotate(45deg);
+      }
+
+      details p {
+        margin: 0 0 16px;
+        color: var(--muted);
+      }
+
+      .closing {
+        padding: 28px 24px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) + 4px);
+      }
+
+      .closing p {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+
+      footer.site {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px 24px;
+        padding: 32px 0 48px;
+        margin-top: 72px;
+        border-top: 1px solid var(--border);
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      footer.site nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 20px;
+      }
+
+      footer.site a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        text-decoration: none;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        footer.site a:hover {
+          color: var(--text);
+          text-decoration: underline;
+          text-underline-offset: 4px;
+        }
+      }
+
+      /* Mode annoté (?notes) — supprimer avant livraison. */
+      .note {
+        display: block;
+        margin: 8px 0;
+        padding: 8px 12px;
+        border-left: 3px solid #d97706;
+        background: color-mix(in srgb, #d97706 10%, var(--surface));
+        color: var(--text);
+        font: 13px/1.5 var(--font);
+        border-radius: 0 6px 6px 0;
+      }
+
+      .note b {
+        font: 11px/1.5 var(--mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #b45309;
+        margin-right: 6px;
+      }
+
+      .notes-head {
+        margin: 0 0 24px;
+        padding: 16px;
+        border: 1px dashed #d97706;
+        border-radius: var(--radius);
+      }
+
+      .notes-head h2 {
+        font-size: 15px;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenu" data-note="skip">Aller au contenu</a>
+
+    <div class="wrap">
+      <div id="notes-head"></div>
+
+      <header class="site">
+        <a class="brand" href="https://example.com/" aria-label="Northwind, accueil">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2" />
+            <path d="M8 16V8l8 8V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span>Northwind</span>
+        </a>
+        <a class="btn btn-quiet btn-small" href="https://example.com/connexion">Se connecter</a>
+      </header>
+
+      <main id="contenu">
+        <div class="hero" data-note="hero">
+          <p class="eyebrow">Pour les équipes de 3 à 50 personnes</p>
+          <h1>Les tâches de l'équipe, au même endroit.</h1>
+          <p class="lede">
+            Northwind regroupe les tâches, les échéances et les échanges de votre équipe. Chacun
+            sait ce qu'il a à faire cette semaine, sans relancer personne.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://example.com/inscription">Créer un compte</a>
+            <a class="btn btn-quiet" href="https://example.com/connexion">J'ai déjà un compte</a>
+          </div>
+        </div>
+
+        <section aria-labelledby="fonctions" data-note="features">
+          <h2 id="fonctions">Ce que vous y trouvez</h2>
+          <ul class="features">
+            <li>
+              <span class="index">01</span>
+              <strong>Une liste par personne</strong>
+              <span>Les tâches de la semaine, triées par échéance, sur votre téléphone comme sur le web.</span>
+            </li>
+            <li>
+              <span class="index">02</span>
+              <strong>Des échanges à côté des tâches</strong>
+              <span>Commentez une tâche au lieu d'écrire un e-mail : la décision reste là où on la cherche.</span>
+            </li>
+            <li>
+              <span class="index">03</span>
+              <strong>Des espaces d'équipe</strong>
+              <span>Invitez vos collègues par e-mail et choisissez ce que chaque rôle peut modifier.</span>
+            </li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="faq" data-note="faq">
+          <h2 id="faq">Questions fréquentes</h2>
+          <details>
+            <summary>Combien de temps faut-il pour démarrer ?</summary>
+            <p>Une minute pour créer le compte. Vous invitez votre équipe quand vous êtes prêt.</p>
+          </details>
+          <details>
+            <summary>Où sont hébergées mes données ?</summary>
+            <p>
+              Chez notre hébergeur, dans l'Union européenne. Le détail figure dans la politique de
+              confidentialité.
+            </p>
+          </details>
+          <details>
+            <summary>Puis-je exporter mes tâches ?</summary>
+            <p>Oui, à tout moment, au format CSV, depuis les réglages de votre espace.</p>
+          </details>
+        </section>
+
+        <section class="closing" aria-labelledby="demarrer">
+          <h2 id="demarrer">Prêt à essayer ?</h2>
+          <p>Un compte suffit pour l'application mobile et pour le web.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://example.com/inscription">Créer un compte</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site" data-note="footer">
+        <span>© <span id="year">2026</span> Northwind</span>
+        <nav aria-label="Informations légales">
+          <a href="https://example.com/mentions-legales">Mentions légales</a>
+          <a href="https://example.com/confidentialite">Confidentialité</a>
+          <a href="https://example.com/accessibilite">Accessibilité : non conforme</a>
+        </nav>
+      </footer>
+    </div>
+
+    <script>
+      document.getElementById("year").textContent = String(new Date().getFullYear());
+    </script>
+
+    <!-- Mode annoté : supprimer ce bloc et le script suivant avant livraison. -->
+    <script type="application/json" id="notes">
+      {
+        "head": [
+          ["SEO", "<title> unique et meta description : ce que Google et les aperçus de liens affichent. Section 3 du guide."],
+          ["SEO", "<link rel=\"canonical\"> et Open Graph (og:site_name, og:image 1200×630) : une seule URL de référence, de bons aperçus de partage."],
+          ["SEO", "JSON-LD WebSite (nom du site, sur l'accueil uniquement) et Organization (logo ≥ 112 px, sameAs). À valider sur validator.schema.org."],
+          ["IA", "Rien de spécial pour Google AI Overviews : contenu en texte, exploration autorisée, données structurées conformes au visible. Les choix entraînement / recherche se font dans robots.txt. Section 4."],
+          ["Légal", "Aucun traceur dans ce gabarit : pas de bandeau cookies. Si vous ajoutez une mesure d'audience, vérifiez les 4 conditions d'exemption CNIL. Section 5."],
+          ["A11y", "lang=\"fr\", contrastes AA dans les deux thèmes, focus visible, mouvement réduit respecté."]
+        ],
+        "skip": ["A11y", "Lien d'évitement : premier élément focalisable, il saute l'en-tête au clavier."],
+        "hero": ["Conversion", "Un seul message et deux CTA dès le premier écran : créer un compte (principal) et se connecter. Une seule animation d'entrée, 240 ms, désactivée si l'utilisateur réduit les animations."],
+        "features": ["Produit", "N'annoncez que les fonctions réellement activées, dérivées de la configuration du produit. Section 1."],
+        "faq": ["SEO / IA", "FAQ en texte HTML natif (<details>) : lisible par les moteurs et les agents, utilisable au clavier sans JavaScript."],
+        "footer": ["Légal", "Mentions légales (LCEN, hébergeur compris), confidentialité si des données personnelles sont traitées, état de conformité accessibilité. Section 5."]
+      }
+    </script>
+    <script>
+      (function () {
+        if (!new URLSearchParams(location.search).has("notes")) return;
+        var notes = JSON.parse(document.getElementById("notes").textContent);
+
+        function render(entry) {
+          var el = document.createElement("span");
+          el.className = "note";
+          var tag = document.createElement("b");
+          tag.textContent = entry[0];
+          el.appendChild(tag);
+          el.appendChild(document.createTextNode(entry[1]));
+          return el;
+        }
+
+        var head = document.getElementById("notes-head");
+        head.className = "notes-head";
+        var title = document.createElement("h2");
+        title.textContent = "Notes : ce que fait le <head>";
+        head.appendChild(title);
+        notes.head.forEach(function (entry) {
+          head.appendChild(render(entry));
+        });
+
+        document.querySelectorAll("[data-note]").forEach(function (el) {
+          var entry = notes[el.getAttribute("data-note")];
+          if (!entry) return;
+          if (el.classList.contains("skip-link")) head.appendChild(render(entry));
+          else el.insertBefore(render(entry), el.firstChild);
+        });
+      })();
+    </script>
+  </body>
+</html>

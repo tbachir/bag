@@ -7,6 +7,7 @@ The [UI Workbench](https://tbachir.github.io/bag/ui/) is a Storybook-style galle
 ## Guides d'ingénierie UI
 
 - [Storybook : Fondations, méthodologie et automatisation avec l'IA](storybook-fondations-et-automatisation.md) : guide d'adoption de Storybook comme socle UI, méthodologie Component-Driven Development, configuration du serveur MCP (`@storybook/addon-mcp`) et manifestes pour agents de code.
+- [Landing page publique : gabarit et checklist de mise en ligne](landing-page/README.md) : gabarit HTML autonome annoté, choix de direction, outils, référencement, visibilité dans les IA et obligations légales (France / UE).
 
 ## Existing live stories
 
