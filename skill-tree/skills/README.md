@@ -69,3 +69,7 @@ Each skill supplies triggers, ordered procedures, authoritative references and v
 - [ADK-TS Docs Writer](adk-docs-writer/README.md) — Fumadocs MDX page patterns; project-specific guidance must be adapted.
 
 Use [Docs Architect](docs-architect/SKILL.md) as BAG's canonical orchestrator, not a second vendored copy of these upstream skills. For an app from scratch see [Fumadocs Starter](../../equipment/fumadocs-starter/README.md).
+
+## Game Development
+
+[Game Development — MengTo collection](game-development/README.md) provides 20 individually curated external skill references for browser / Three.js gameplay, level design, AI, assets, mobile controls, QA and release. The upstream skills are linked rather than copied and are not installed by BAG.
