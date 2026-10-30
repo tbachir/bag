@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "skills": {
+    "docs-architect": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/docs-architect/SKILL.md",
+      "computedHash": "77dfc46bd3624fda48d4715626fad4b22bc3b7913be25fefbf130e90e8a19c8d"
+    },
+    "addbag": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/addbag/SKILL.md",
+      "computedHash": "f5378154cc70de51274e7b2f72b986b32851a17ca4ceec067e104cc18136410b"
+    },
+    "agent-ready-documentation": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/agent-ready-documentation/SKILL.md",
+      "computedHash": "089762439ddb90df4eb7ed972210784981b1ad5cce4788af78f1a8c47f840c03"
+    },
+    "api-documentation-quality": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/api-documentation-quality/SKILL.md",
+      "computedHash": "f18d4e4b4a0dc4abfc210c111e37315dbbd1122ebaf9ede2ac6f5ec85cd447cf"
+    },
+    "bag-author-item": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/bag-author-item/SKILL.md",
+      "computedHash": "4c08bbc1e8f254254c1fe5503f48c52f2bc7df34619951e719e3454214dc8791"
+    },
+    "bag-author-library": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/bag-author-library/SKILL.md",
+      "computedHash": "6e39542440b381b48bdd7f9acb8b662b0a698f4f65a383712f141d050c06d7b4"
+    },
+    "bag-author-metadata": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/bag-author-metadata/SKILL.md",
+      "computedHash": "f9f605d441e3b0ffa73484332bed1f6573bf57aea9d86a1df7a2017b8d37b0cd"
+    },
+    "bag-author-task": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/bag-author-task/SKILL.md",
+      "computedHash": "2ae2b5ddfb4a94464e5d1ddd2b5a0aeecc544de3cab9eb5eab04d562573be11f"
+    },
+    "bag-inventory": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/bag-inventory/SKILL.md",
+      "computedHash": "6a084a8014b19bf1824e81c8418a58224df864ffc1513dde24a2d54c1ae871ce"
+    },
+    "fumadocs-engineer": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/fumadocs-engineer/SKILL.md",
+      "computedHash": "2f7f1e514b67210b58e21de872ab9ef686d6b0b7d783a564c9d19109a292e833"
+    },
+    "o2switch-cloud": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/o2switch-cloud/SKILL.md",
+      "computedHash": "9cbc0935ce59571ae92b410bca14d41f62bc549349f63932a2bb66078c1bf14c"
+    },
+    "prompt-quality-reviewer": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/prompt-quality-reviewer/SKILL.md",
+      "computedHash": "b9f6484859cab641148e62006cb54b33d4e299f2e0a4be00767b873b1ddae97d"
+    },
+    "repository-auditor": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/repository-auditor/SKILL.md",
+      "computedHash": "1118f79e76a0422ee4c1155abcf2f6b924d8fea2b9ad77dd8e6ca9cc990ff628"
+    },
+    "reusable-component-extractor": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/reusable-component-extractor/SKILL.md",
+      "computedHash": "aef396d0dbf4a54c2bd2a135bc768865c0e412a4d28a4ee6811682d3ce25c41d"
+    },
+    "skill-maintainer": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/skill-maintainer/SKILL.md",
+      "computedHash": "b9a679cbe388af201e8d67452c7d120ba773434feefc7970d684966cafd4e208"
+    },
+    "ui-ux-design-review": {
+      "source": "tbachir/bag",
+      "sourceType": "github",
+      "skillPath": "skill-tree/skills/ui-ux-design-review/SKILL.md",
+      "computedHash": "e83f539a811f5b4cb1dbf3e58e855a8c3c1ba71936f9692a57ef44ac8eb03a87"
+    }
+  }
+}

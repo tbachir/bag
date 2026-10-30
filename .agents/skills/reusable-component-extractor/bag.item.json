@@ -1,0 +1,24 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": [
+    "react",
+    "components"
+  ],
+  "tags": [
+    "agents",
+    "workflow"
+  ],
+  "technologies": [],
+  "useCases": [
+    "quality",
+    "automation"
+  ],
+  "prompts": [
+    {
+      "title": "Extract a reusable component",
+      "text": "Use reusable-component-extractor to evaluate a component for reuse, identify coupling and licensing concerns, and propose a clean extraction with test coverage before modifying either repository."
+    }
+  ]
+}
