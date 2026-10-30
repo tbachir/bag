@@ -4,6 +4,10 @@
 
 The [UI Workbench](https://tbachir.github.io/bag/ui/) is a Storybook-style gallery **inside** the static Fumadocs site. It covers the 13 components from the [official Fumadocs component catalog](https://www.fumadocs.dev/docs/ui/components), documenting which are live and which require a separate integration. It is not the independent Storybook toolchain.
 
+## Guides d'ingénierie UI
+
+- [Storybook : Fondations, méthodologie et automatisation avec l'IA](storybook-fondations-et-automatisation.md) : guide d'adoption de Storybook comme socle UI, méthodologie Component-Driven Development, configuration du serveur MCP (`@storybook/addon-mcp`) et manifestes pour agents de code.
+
 ## Existing live stories
 
 Accordion, Banner, Code Block (server), Dynamic Code Block (client), Files, Zoomable Image, Inline TOC, Steps, Tabs and Type Table, plus default Cards and Callouts. Story source is [apps/docs/app/ui/page.tsx](../../apps/docs/app/ui/page.tsx). Component exports are explicit in [components/mdx.tsx](../../apps/docs/components/mdx.tsx).

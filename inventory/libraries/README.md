@@ -16,4 +16,4 @@ For more detail, create a file using [the item template](../../templates/item.md
 - [shadcn/ui](shadcn-ui/README.md) — source-owned React primitives and design foundations
 - [ReUI](reui/README.md) — composed application patterns for shadcn
 - [Fumadocs UI](fumadocs-ui/README.md) — documentation components and layout
-
+- [Storybook](storybook/README.md) — isolated component workshop, design system documentation, and AI MCP integration
