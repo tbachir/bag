@@ -12,6 +12,14 @@ node spellbook/scripts/bag.mjs plan ai-coding --target ../existing-project
 
 See [catalog documentation](../../catalog/README.md) for loadouts and opt-in local file copy. The default is read-only, including `equip` without `--apply`.
 
+## BAG MCP Server
+
+```bash
+node spellbook/scripts/bag-mcp.mjs
+```
+
+Runs a Model Context Protocol (MCP) server over stdio (JSON-RPC 2.0). Provides AI coding agents (Claude, Cursor, Antigravity, VS Code, Gemini CLI, etc.) with read-only tools to search, discover, inspect items, read documentation, and plan loadouts from BAG. No external dependencies.
+
 ## Search the bag
 
 ```bash
@@ -29,7 +37,7 @@ node spellbook/scripts/validate.mjs
 
 Checks required RPG zones and local Markdown link targets. The check is lightweight and dependency-free; it does **not** validate external URLs or guarantee the correctness of docs, code, or security.
 
-Requirements: Node.js 20+; runs on Windows, macOS, and Linux. Both scripts are read-only.
+Requirements: Node.js 20+; runs on Windows, macOS, and Linux. Scripts are read-only.
 
 ## Portable task readiness
 
