@@ -35,3 +35,7 @@ The ten most recently created **source repositories** found for `tbachir` (exclu
 5. Keep README-unavailable sources in evaluating status. Revisit source trees, project licenses, versions and existing BAG duplicates before promotion to ready.
 
 This initial pass inspected default-branch project READMEs; it did **not** audit or execute implementation files, validate licenses, or test extracted configurations. Treat suggestions as candidates rather than validated reusable modules.
+
+## External game-development skills
+
+[MengTo/Skills](mengto-skills/README.md) — evaluated upstream MIT repository and cross-linked reference index for 20 Three.js/browser game-development agent skills. Source instructions are not automatically installed or executed.
