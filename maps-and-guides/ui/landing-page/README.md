@@ -43,7 +43,7 @@ Lis la chaîne AGENTS.md de BAG jusqu'à cet item et suis ses références.
 Un seul fichier, sans dépendance ni build : polices système, CSS et JavaScript inline, thème clair/sombre automatique, mise en page mobile d'abord. Ouvrez-le directement dans un navigateur.
 
 - **Mode annoté :** ajoutez `?notes` à l'URL (`landing.html?notes`). Chaque choix (balises du `<head>`, données structurées, accessibilité, pied de page légal) affiche une note qui renvoie à la section correspondante de ce guide.
-- **À remplacer :** le produit fictif « Northwind », `https://example.com`, les routes `/inscription` et `/connexion`, le logo SVG et les jetons de couleur dans `:root`.
+- **À remplacer :** le produit fictif « Northwind », `https://example.com`, les liens `https://example.com/inscription`, `/connexion` et les pages légales, le logo SVG et les jetons de couleur dans `:root`.
 - **Avant de livrer :** supprimez le bloc `<script type="application/json" id="notes">`, le script qui l'affiche et les attributs `data-note`.
 
 Le gabarit reprend une direction volontairement sobre (une colonne, CTA dès le premier écran, FAQ en texte). Pour une autre direction, voir la section suivante.
