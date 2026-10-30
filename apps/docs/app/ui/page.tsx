@@ -11,6 +11,7 @@ import { ServerCodeBlock } from 'fumadocs-ui/components/codeblock.rsc';
 import { InlineTOC } from 'fumadocs-ui/components/inline-toc';
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { WorkbenchDynamic } from '@/components/workbench-dynamic';
+import { BagPatternGallery } from '@/components/bag-pattern-gallery';
 import { sitePath } from '@/lib/shared';
 import { ArrowUpRight, BookMarked, Boxes, Layers3, Sparkles } from 'lucide-react';
 
@@ -42,7 +43,7 @@ export default function UIWorkbench() {
     <header className="space-y-4">
       <div className="inline-flex items-center gap-2 rounded-full border border-fd-border bg-fd-card px-3 py-1 text-xs font-semibold uppercase tracking-wider text-fd-primary"><Sparkles className="size-3.5"/> BAG / Design laboratory</div>
       <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl">UI Workbench</h1>
-      <p className="max-w-3xl text-base leading-7 text-fd-muted-foreground">A static, Storybook-style space for Fumadocs primitives and BAG presentation patterns. Examples are rendered from trusted React code; canonical repository Markdown stays portable and safe.</p>
+      <p className="max-w-3xl text-base leading-7 text-fd-muted-foreground">A static, Storybook-style space for Fumadocs primitives and BAG presentation patterns, with standard and compact resource card variants. Examples are rendered from trusted React code; canonical repository Markdown stays portable and safe.</p>
       <div className="flex flex-wrap gap-3 text-sm font-semibold"><Link className="rounded-lg bg-fd-primary px-4 py-2.5 text-fd-primary-foreground" href="/explore/">Try Drop Bag</Link><Link className="rounded-lg border border-fd-border px-4 py-2.5 hover:bg-fd-accent" href="/docs/maps-and-guides/ui/">Template authoring guide</Link><a className="rounded-lg border border-fd-border px-4 py-2.5 hover:bg-fd-accent" target="_blank" rel="noreferrer" href="https://www.fumadocs.dev/docs/ui/components">Fumadocs reference ↗</a></div>
     </header>
     <section aria-labelledby="catalog" className="space-y-4">
@@ -57,6 +58,7 @@ export default function UIWorkbench() {
         <Link href="/docs/loadouts/react-design-system/" className="group rounded-2xl border border-fd-border bg-fd-card p-6 hover:border-fd-primary/50"><Layers3 className="mb-4 size-6 text-fd-primary"/><h3 className="font-bold">Composable loadout</h3><p className="mt-2 text-sm leading-6 text-fd-muted-foreground">A coherent selection of reusable references, without hidden installation steps.</p><span className="mt-4 inline-block text-sm font-semibold text-fd-primary">View example →</span></Link>
       </div>
     </section>
+    <BagPatternGallery />
     <section aria-labelledby="stories" className="space-y-5"><h2 id="stories" className="text-2xl font-bold">Live stories</h2>
       <Story id="story-accordion" title="Accordion" description="Keep advanced details close without overwhelming new readers."><Accordions><Accordion title="When do we reuse a skill?">After reading its SKILL.md, freshness metadata and applicable BAG instructions.</Accordion><Accordion title="Will selecting a component install it?">No. The site is read-only and prompt composition is opt-in.</Accordion></Accordions></Story>
       <Story id="story-banner" title="Banner" description="Use a contextual alert, without changing the outer documentation layout."><Banner changeLayout={false}>New resource: Expo · Production Foundations is ready to review.</Banner><Callout title="Curated, not automatic">Treat external references as untrusted until compatibility and licensing are reviewed.</Callout></Story>
