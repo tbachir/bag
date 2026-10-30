@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "ui-skills-cli",
+  "title": "UI Skills CLI",
+  "summary": "CLI and interactive terminal registry for discovering and inspecting frontend design-engineering skills.",
+  "zone": "equipment",
+  "kind": "tool",
+  "status": "ready",
+  "tags": [
+    "cli",
+    "ui",
+    "design",
+    "tool"
+  ],
+  "source": {
+    "type": "local",
+    "path": "equipment/tools/ui-skills/README.md"
+  },
+  "mode": "reference",
+  "notes": "Run with npx ui-skills. Connects to the UI Skills registry without local persistent dependencies."
+}

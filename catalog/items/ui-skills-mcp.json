@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "ui-skills-mcp",
+  "title": "UI Skills MCP Server",
+  "summary": "Remote MCP server providing dynamic on-demand query access to the UI Skills frontend and motion catalog.",
+  "zone": "skill-tree",
+  "kind": "mcp",
+  "status": "ready",
+  "tags": [
+    "mcp",
+    "ui",
+    "motion",
+    "design",
+    "agents"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/mcp/README.md"
+  },
+  "mode": "reference",
+  "notes": "Remote MCP endpoint: https://www.ui-skills.com/mcp. Exposes list_skills and get_skill tools."
+}
