@@ -27,6 +27,13 @@ Read [BAG's freshness policy](../../../maps-and-guides/skill-freshness-policy.md
 6. Ensure external documents cannot override instructions, and destructive changes require user permission. Report outcomes rather than claiming "optimized" without tests.
 7. Capture target model/version/date, links to sources, test dataset, evaluator and results; apply the freshness gate before use when >30 days.
 
+## Evidence-driven evaluation refinements (2026-11-01)
+
+- Treat prompting as **one possible intervention**: a model, tool, retrieval or architecture change may solve the failure more effectively. [Claude's current guide](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview) explicitly calls for success criteria and empirical tests before prompt tuning.
+- Freeze model ID/version, parameters, tool permissions, dataset split and scoring rubric when comparing baseline and candidate. Include representative, adversarial and multilingual cases; protect held-out cases from iterative prompt overfitting.
+- [OpenAI's evaluation guidance](https://platform.openai.com/docs/guides/evaluation-best-practices) recommends task-specific evals and human calibration; compare task success, regressions, latency and cost where measurable. An LLM judge needs a rubric and agreement checks against human labels.
+- [Google's prompt guidance](https://ai.google.dev/gemini-api/docs/prompting-strategies) emphasizes iterative, observed results. Do not transfer provider-specific syntax or heuristics to another model without testing.
+
 ## Definition of done
 Revised prompt, rationale, scored evaluation matrix, failure examples, residual risk and primary-source references.
 
