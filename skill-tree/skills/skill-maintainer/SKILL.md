@@ -4,11 +4,10 @@ description: Review and refresh time-sensitive BAG skills against authoritative 
 license: MIT
 metadata:
   language: en
-  freshness:
-    policy: fast-changing
-    review_interval_days: 30
-    last_verified: "2026-10-29"
-    update_skill: skill-maintainer
+  bag-freshness-policy: fast-changing
+  bag-review-interval-days: "30"
+  bag-last-verified: "2026-10-29"
+  bag-update-skill: skill-maintainer
 ---
 
 # Skill Maintainer
@@ -17,7 +16,7 @@ metadata:
 When any skill has freshness.review_interval_days and last_verified is older than interval, or a breaking change/security advisory is suspected.
 
 ## Freshness gate — before applying this skill
-Read [BAG's freshness policy](../../../maps-and-guides/skill-freshness-policy.md). If `metadata.freshness.last_verified` is missing, invalid, or more than 30 days old (UTC), **invoke the skill-maintainer workflow first**, using its `SKILL.md`. If it cannot verify sources or save an approved update, disclose the stale state, use only validated non-version-sensitive advice and ask for authorization before applying risky changes. Never pretend that a reference link or GitHub commit establishes verification.
+Read [BAG's freshness policy](../../../maps-and-guides/skill-freshness-policy.md). If `metadata.bag-last-verified` is missing, invalid, or more than 30 days old (UTC), **invoke the skill-maintainer workflow first**, using its `SKILL.md`. If it cannot verify sources or save an approved update, disclose the stale state, use only validated non-version-sensitive advice and ask for authorization before applying risky changes. Never pretend that a reference link or GitHub commit establishes verification.
 
 ## Procedure
 1. Read the target SKILL.md, its references and CHANGELOG.md; determine the last *verified* date, not commit date.
