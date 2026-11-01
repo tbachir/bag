@@ -4,11 +4,10 @@ description: Evaluate and iteratively improve prompts using official prompting g
 license: MIT
 metadata:
   language: en
-  freshness:
-    policy: fast-changing
-    review_interval_days: 30
-    last_verified: "2026-10-29"
-    update_skill: skill-maintainer
+  bag-freshness-policy: fast-changing
+  bag-review-interval-days: "30"
+  bag-last-verified: "2026-11-01"
+  bag-update-skill: skill-maintainer
 ---
 
 # Prompt Quality Reviewer
@@ -17,7 +16,7 @@ metadata:
 When writing, reviewing, composing or revising prompts for coding agents, assistants or structured-output systems.
 
 ## Freshness gate — before applying this skill
-Read [BAG's freshness policy](../../../maps-and-guides/skill-freshness-policy.md). If `metadata.freshness.last_verified` is missing, invalid, or more than 30 days old (UTC), **invoke the skill-maintainer workflow first**, using its `SKILL.md`. If it cannot verify sources or save an approved update, disclose the stale state, use only validated non-version-sensitive advice and ask for authorization before applying risky changes. Never pretend that a reference link or GitHub commit establishes verification.
+Read [BAG's freshness policy](../../../maps-and-guides/skill-freshness-policy.md). If `metadata.bag-last-verified` is missing, invalid, or more than 30 days old (UTC), **invoke the skill-maintainer workflow first**, using its `SKILL.md`. If it cannot verify sources or save an approved update, disclose the stale state, use only validated non-version-sensitive advice and ask for authorization before applying risky changes. Never pretend that a reference link or GitHub commit establishes verification.
 
 ## Procedure
 1. Identify intended model/provider, task, authorized tools, context, user audience, output contract and safety constraints; distinguish system/developer/user responsibility.
