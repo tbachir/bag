@@ -18,6 +18,8 @@ When any skill has `metadata.bag-review-interval-days` and `bag-last-verified` i
 ## Freshness gate — before applying this skill
 Read [BAG's freshness policy](../../../maps-and-guides/skill-freshness-policy.md). If `metadata.bag-last-verified` is missing, invalid, or more than 30 days old (UTC), **invoke the skill-maintainer workflow first**, using its `SKILL.md`. If it cannot verify sources or save an approved update, disclose the stale state, use only validated non-version-sensitive advice and ask for authorization before applying risky changes. Never pretend that a reference link or GitHub commit establishes verification.
 
+**Bootstrap exception:** if `skill-maintainer` itself is stale, do not recursively invoke the same skill. Read the policy and perform the evidence-check procedure below once; until evidence is gathered, mark the result `STALE — NOT VERIFIED` and avoid version-sensitive claims. This prevents an infinite pre-use gate loop.
+
 ## Procedure
 1. Read the target SKILL.md, its references and CHANGELOG.md; determine the last *verified* date, not commit date.
 2. Check authoritative vendor docs, specifications, release notes and migrations, plus security advisories if applicable. Record direct URLs, versions and retrieval date; compare actual changes with documented assumptions.
