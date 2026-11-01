@@ -14,6 +14,7 @@ The original 30-day policy classifies an entry as stale only when it declares a 
 - **After proposed edits:** nine tracked fast-changing skills. Six evidence-reviewed on 2026-11-01 (Fumadocs Engineering, Docs Architect, UI/UX Design Review, Agent-ready Documentation, API Documentation Quality, Prompt Quality Reviewer), next review 2026-12-01 UTC. Three metadata-migrated only (Repository Auditor, Reusable Component Extractor, Skill Maintainer), **verification stays 2026-10-29**, next due 2026-11-28 UTC.
 - **Seven untracked indexed skills:** `addbag`, `bag-inventory`, `o2switch-cloud`, `bag-author-item`, `bag-author-task`, `bag-author-library`, `bag-author-metadata`. Untracked does not automatically mean stale. Prioritize o2switch and addbag for provider/client-specific review before deciding their freshness policy.
 - One stale reference name in `addbag` (`documentation-architect`) corrected to canonical `docs-architect`.
+- The Skill Maintainer's own stale gate could imply recursive self-invocation; added an explicit one-pass bootstrap exception without changing its 2026-10-29 verification date.
 
 ## Evidence-backed changes to methods
 
