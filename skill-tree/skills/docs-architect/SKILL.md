@@ -5,10 +5,10 @@ license: MIT
 metadata:
   language: en
   reviewed_at: "2026-10-29"
-  freshness:
-    policy: fast-changing
-    last_verified: "2026-10-29"
-    review_interval_days: 30
+  bag-freshness-policy: fast-changing
+  bag-review-interval-days: "30"
+  bag-last-verified: "2026-11-01"
+  bag-update-skill: skill-maintainer
 ---
 
 # Docs Architect
