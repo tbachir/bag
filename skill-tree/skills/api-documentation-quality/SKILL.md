@@ -4,11 +4,10 @@ description: Create and audit contract-driven API documentation and practical in
 license: MIT
 metadata:
   language: en
-  freshness:
-    policy: fast-changing
-    review_interval_days: 30
-    last_verified: "2026-10-29"
-    update_skill: skill-maintainer
+  bag-freshness-policy: fast-changing
+  bag-review-interval-days: "30"
+  bag-last-verified: "2026-11-01"
+  bag-update-skill: skill-maintainer
 ---
 
 # Api Documentation Quality
@@ -17,7 +16,7 @@ metadata:
 When adding or revising REST, GraphQL, RPC, SDK or webhook documentation.
 
 ## Freshness gate — before applying this skill
-Read [BAG's freshness policy](../../../maps-and-guides/skill-freshness-policy.md). If `metadata.freshness.last_verified` is missing, invalid, or more than 30 days old (UTC), **invoke the skill-maintainer workflow first**, using its `SKILL.md`. If it cannot verify sources or save an approved update, disclose the stale state, use only validated non-version-sensitive advice and ask for authorization before applying risky changes. Never pretend that a reference link or GitHub commit establishes verification.
+Read [BAG's freshness policy](../../../maps-and-guides/skill-freshness-policy.md). If `metadata.bag-last-verified` is missing, invalid, or more than 30 days old (UTC), **invoke the skill-maintainer workflow first**, using its `SKILL.md`. If it cannot verify sources or save an approved update, disclose the stale state, use only validated non-version-sensitive advice and ask for authorization before applying risky changes. Never pretend that a reference link or GitHub commit establishes verification.
 
 ## Procedure
 1. Inspect the actual schema and deployed/versioned API contract; avoid inventing endpoints or assuming implementation matches an old spec.
