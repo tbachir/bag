@@ -23,10 +23,10 @@ for (const entry of entries) {
   try { source = await readFile(path.join(base,name,'SKILL.md'),'utf8'); } catch { continue; }
   const fm = source.match(/^---\s*\n([\s\S]*?)\n---(?:\n|$)/)?.[1] ?? '';
   // Interpret only the exact metadata fields we own; do not execute YAML.
-  const fast = /^\s*policy:\s*fast-changing\s*$/m.test(fm);
-  if (!fast) continue;
-  const interval = Number(fm.match(/^\s*review_interval_days:\s*(\d+)\s*$/m)?.[1] ?? 30);
-  const verified = fm.match(/^\s*last_verified:\s*["']?(\d{4}-\d{2}-\d{2})["']?\s*$/m)?.[1] ?? null;
+  const fast = /^\s*(?:bag-freshness-policy|policy):\s*["']?fast-changing["']?\s*$/m.test(fm);
+  if (!fast) { if (flags.has('--all')) results.push({skill:name,status:'UNTRACKED'}); continue; }
+  const interval = Number(fm.match(/^\s*(?:bag-review-interval-days|review_interval_days):\s*["']?(\d+)["']?\s*$/m)?.[1] ?? 30);
+  const verified = fm.match(/^\s*(?:bag-last-verified|last_verified):\s*["']?(\d{4}-\d{2}-\d{2})["']?\s*$/m)?.[1] ?? null;
   const parsed = verified ? new Date(verified + 'T00:00:00Z') : null;
   const valid = parsed && !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0,10) === verified && parsed <= now;
   const days = valid ? Math.floor((now-parsed)/86400000) : null;
