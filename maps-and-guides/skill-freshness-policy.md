@@ -10,7 +10,6 @@ In each fast-changing `SKILL.md` YAML frontmatter:
 
 ```yaml
 metadata:
-  freshness:
   bag-freshness-policy: fast-changing
   bag-review-interval-days: "30"
   bag-last-verified: "2026-11-01"
