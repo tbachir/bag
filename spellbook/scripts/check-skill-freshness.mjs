@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Read-only freshness audit for BAG skills.
- * Usage: node spellbook/scripts/check-skill-freshness.mjs [--json] [--strict] [--date YYYY-MM-DD]
+ * Usage: node spellbook/scripts/check-skill-freshness.mjs [--json] [--all] [--strict] [--date YYYY-MM-DD]
  * No dependencies, network calls, writes, or implicit verification.
  */
 import { readdir, readFile } from 'node:fs/promises';
