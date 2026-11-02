@@ -34,7 +34,7 @@ Pour comprendre l'architecture, la méthodologie de conception de stories et l'a
 
 ```text
 Évalue l'intégration de Storybook dans mon projet actuel. BAG item: https://github.com/tbachir/bag/tree/main/inventory/libraries/storybook
-Consulte les fichiers AGENTS.md, inspecte les frameworks frontend et composants existants, et propose une configuration Storybook minimale et pérenne avec support MCP pour assister le développement. N'installe rien sans validation préalable.
+Consulte les fichiers AGENTS.md, inspecte les frameworks frontend et composants existants, et propose une configuration Storybook minimale et pérenne avec support MCP pour assister le développement. Réalise l'intégration de façon autonome sans solliciter d'intervention inutile.
 ```
 
 ### 2. Setup Storybook MCP & Agent Rules
@@ -43,7 +43,7 @@ Consulte les fichiers AGENTS.md, inspecte les frameworks frontend et composants 
 Configure l'intégration Storybook MCP et les règles d'agent de mon projet sans altérer l'implémentation existante.
 BAG item: https://github.com/tbachir/bag/tree/main/inventory/libraries/storybook
 Guide de référence: https://github.com/tbachir/bag/blob/main/maps-and-guides/ui/storybook-fondations-et-automatisation.md
-Lis AGENTS.md racine et de l'item. Installe et configure @storybook/addon-mcp (toolsets docs, dev, test) et intègre les directives UI dans le AGENTS.md de mon projet.
+Lis AGENTS.md racine et de l'item. Installe et configure @storybook/addon-mcp (toolsets docs, dev, test) et intègre les directives UI dans le AGENTS.md de mon projet. Réalise l'intégration et la configuration de bout en bout de façon autonome sans solliciter d'intervention si ce n'est pas strictement nécessaire.
 ```
 
 ### 3. Review Code vs Stories & Consolidation

@@ -174,6 +174,25 @@ const TOOLS = [
       required: ['loadoutId', 'targetDirectory'],
       additionalProperties: false
     }
+  },
+  {
+    name: 'bag_ui_studio',
+    description: 'Generate an interactive HTML UI Studio prototype, screen specs, Storybook catalog, and dead-features audit for any project with a design/DESIGN.md or auto-discovered routes.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        targetDirectory: {
+          type: 'string',
+          description: 'Path to target application directory (e.g. "./apps/native" or "./apps/web")'
+        },
+        outputPath: {
+          type: 'string',
+          description: 'Optional output path for generated HTML prototype'
+        }
+      },
+      required: ['targetDirectory'],
+      additionalProperties: false
+    }
   }
 ];
 
@@ -279,6 +298,17 @@ export async function executeTool(name, args = {}) {
       if (!args.loadoutId) throw new Error('loadoutId is required');
       if (!args.targetDirectory) throw new Error('targetDirectory is required');
       return await planLoadout(catalog, args.loadoutId, args.targetDirectory);
+    }
+    case 'bag_ui_studio': {
+      if (!args.targetDirectory) throw new Error('targetDirectory is required');
+      const { runUiStudio } = await import('./ui-studio.mjs');
+      const cliArgs = ['--target', args.targetDirectory];
+      if (args.outputPath) cliArgs.push('--out', args.outputPath);
+      const out = await runUiStudio(cliArgs);
+      return {
+        success: true,
+        generatedFile: out
+      };
     }
     default:
       throw new Error(`Unknown tool: ${name}`);

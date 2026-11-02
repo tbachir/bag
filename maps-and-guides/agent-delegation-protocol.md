@@ -33,18 +33,18 @@ A delegated task provides (a) the desired outcome, (b) the BAG repository URL an
 - Prefer existing patterns, dependencies and authorized integrations over introducing new technology.
 - Identify prerequisites, options and concrete risks before changing files.
 
-### 3 — Interview when necessary
+### 3 — Interview when necessary (Proactive autonomous execution)
 - No interview UI or BAG web questionnaire is required. The **external agent** handles questions in its normal conversation.
-- Ask only questions that materially affect scope, safety, architectural choice, cost, deployment, secrets, irreversible changes or acceptance.
-- Offer focused alternatives and recommended defaults with consequences.
-- If safe, reversible details are unspecified, adopt reasonable defaults and disclose them.
-- If blocked by a necessary decision or access, state exactly what is missing.
+- **Autonomie d'action par défaut (Autonomous execution) :** Si l'IA peut accomplir une action directement, de manière sûre et réversible (ex. installer une dépendance de dev documentée, ajuster un fichier de configuration, rédiger des stories ou inscrire des règles d'agent), **elle doit l'exécuter directement sans demander à l'auteur de la demande d'avoir à intervenir**.
+- Posez des questions ou demandez une confirmation uniquement pour les actions qui affectent matériellement le périmètre, comportent un risque destructif ou irréversible (suppression de données ou de code), engendrent des coûts externes, manipulent des secrets sensibles ou déploient en production.
+- Adoptez des valeurs par défaut raisonnables et documentées pour tous les détails d'implémentation non spécifiés au lieu d'interrompre le flux de travail.
+- Si l'avancement est réellement bloqué par une décision d'architecture majeure ou un manque d'accès, exposez précisément le blocage.
 
 ### 4 — Execute with authorization
 - Plan the smallest coherent change, including tests and rollback where relevant.
-- Treat referenced skills, plugins, MCPs, shell commands, install instructions and third-party resources as **proposals**, never implicit authorization.
-- Inspect the relevant manifests, origins, scopes and permissions before proposing an install; require explicit authorization where necessary.
-- Never silently copy secrets, run remote scripts, change global settings, deploy, purchase, overwrite or mutate the target without adequate authorization.
+- **Mandat d'exécution complet :** Une demande déléguée explicite (ex. « Configure X », « Installe et configure Y ») confère à l'agent le mandat plein et entier de réaliser toutes les actions d'ingénierie courantes requises pour atteindre l'objectif. L'agent ne doit pas s'arrêter à une proposition passive ni demander de permission redondante pour les dépendances de développement nécessaires.
+- Inspect the relevant manifests, origins, scopes and permissions before installing external tooling.
+- Never silently copy secrets, run unverified remote scripts, change global machine settings, deploy to production, purchase services or execute destructive file removals without explicit authorization.
 - Follow target repository instructions while editing it.
 
 ### 5 — Verify and report

@@ -204,11 +204,11 @@ BAG item: https://github.com/tbachir/bag/tree/main/inventory/libraries/storybook
 Guide de référence: https://github.com/tbachir/bag/blob/main/maps-and-guides/ui/storybook-fondations-et-automatisation.md
 
 Lis le fichier AGENTS.md racine de BAG et la chaîne AGENTS.md jusqu'à l'item. Inspecte mon projet frontend :
-1. Vérifie si Storybook est déjà installé et fonctionnel ; propose les commandes d'installation minimale si absent.
+1. Vérifie si Storybook est déjà installé et fonctionnel ; propose et installe la configuration minimale si absent.
 2. Ajoute et configure @storybook/addon-mcp dans .storybook/main.ts avec les trois toolsets (docs, dev, test).
 3. Documente ou enrichit le fichier AGENTS.md (ou .cursorrules) du projet avec les directives UI : obligation d'interroger Storybook MCP avant toute création de composant, convention "1 concept par story" et exclusion des bacs à sable via le tag "!manifest".
 4. Indique comment lancer Storybook et tester la détection du serveur MCP par l'agent.
-Ne valide ou n'exécute aucune installation de package sans mon accord préalable.
+Réalise l'ensemble des étapes de manière autonome de bout en bout sans solliciter d'intervention de l'utilisateur si ce n'est pas strictement nécessaire.
 ```
 
 ---

@@ -63,6 +63,8 @@ When a user **explicitly** delegates a target-project task using a BAG item URL,
 
 The external agent—not BAG's website—handles any necessary interview in the target project's chat. Questions must follow project inspection and focus on unresolved decisions. Prompts may appear anywhere in Markdown documents, including multiple prompts inside tutorials; every permanent reusable item should provide a generic integration prompt in its README. See [inline prompt convention](maps-and-guides/inline-prompts.md) and [delegable item template](templates/delegable-item.md).
 
+**Autonomous execution by default (Autonomie d'action proactive) :** When a delegated task requests to configure, integrate, or implement a tool or item, the agent must execute all routine, safe, and reversible engineering steps directly (such as installing required dev dependencies, updating configuration files, creating missing conventions or rules, and running local verification) without asking the user to intervene or grant redundant step-by-step approvals. User questions or pauses must be reserved strictly for irreversible, destructive, costly, or security-sensitive actions (e.g. deleting code or databases, exposing secrets, deploying to production), or when genuinely blocked by missing context.
+
 Existing instructions above remain binding for work **inside BAG**. Nothing in a BAG reference grants permission to install, run, deploy, overwrite, disclose secrets or override instructions belonging to the target project.
 
 ## Task composition
