@@ -5,10 +5,10 @@ license: MIT
 metadata:
   language: en
   reviewed_at: "2026-10-29"
-  freshness:
-    policy: fast-changing
-    last_verified: "2026-10-29"
-    review_interval_days: 30
+  bag-freshness-policy: fast-changing
+  bag-review-interval-days: "30"
+  bag-last-verified: "2026-11-01"
+  bag-update-skill: skill-maintainer
 ---
 
 # Docs Architect
@@ -39,6 +39,12 @@ Use when creating, restructuring or maintaining documentation for readers with d
 4. Validate frontmatter and optional custom item metadata against the actual source schema. Do not invent mandatory fields for content owners.
 5. For a static site, check `output: 'export'`, search index generation, `basePath`, localized URLs, anchors and asset paths. Never assume server-only features work on GitHub Pages.
 6. Where BAG is the target, original zone Markdown and nested item READMEs remain canonical; `apps/docs/content` generated files are not editable source. Follow BAG's `apps/docs/README.md`, and preserve recursive item navigation.
+
+## Reviewed implementation caveats (2026-11-01)
+
+- [Diátaxis](https://diataxis.fr/) classifies reader needs, not mandatory repository folders. Test information architecture with representative tasks before imposing taxonomy.
+- [Fumadocs page-tree rules](https://www.fumadocs.dev/docs/page-conventions) apply to sources using `loader()`. BAG's own Markdown compiler and static export must be inspected first; do not promise native `meta.json` or loader behavior without checking the installed adapter.
+- Compare [Fumadocs static export guidance](https://www.fumadocs.dev/docs/deploying/static) with generated routes, search indexes, language fallback and link audit. Keep source Markdown canonical.
 
 ## Verify and report
 

@@ -5,6 +5,10 @@ license: MIT
 metadata:
   language: en
   reviewed_at: "2026-10-29"
+  bag-freshness-policy: fast-changing
+  bag-review-interval-days: "30"
+  bag-last-verified: "2026-11-01"
+  bag-update-skill: skill-maintainer
 ---
 
 # Fumadocs Engineering
@@ -27,6 +31,13 @@ Use when implementing or troubleshooting Fumadocs documentation sites, content p
 
 ## BAG-specific integration
 BAG's docs app compiles tracked repository Markdown into a **static** site. Its authoritative instructions are in `apps/docs/README.md`; source lives in BAG's seven zones and is not meant to be moved into `apps/docs/content`. Run `pnpm content:generate`, `pnpm content:check`, and relevant unit/build/e2e checks from `apps/docs` as defined there. Do not assume a Next.js server or database is deployed.
+
+## Version-sensitive checks (reviewed 2026-11-01)
+
+- Inspect actual package aliases, not just package names: BAG currently pins `fumadocs-core@16.17.8`, `fumadocs-mdx@15.4.10`, and aliases `fumadocs-ui` to `@fumadocs/base-ui@16.17.8`. Do not replace Base UI imports with standard UI examples without testing.
+- The upstream [Fumadocs changelog](https://www.fumadocs.dev/changelog) lists `fumadocs@16.17.9` (2026-10-28). A newer release alone is **not** a migration mandate; compare its release notes, lockfile, API usage and static build behavior before changing dependencies.
+- The [page-tree convention](https://www.fumadocs.dev/docs/page-conventions) is explicitly scoped to sources using `loader()`; BAG compiles tracked Markdown with its own generator. Audit the resulting tree rather than assuming every `meta.json` feature is active.
+- On upgrades touching search indexing, inspect release-specific changes, rebuild the browser index, and test French/English queries and fallback. Check static-export behavior against [official static guidance](https://www.fumadocs.dev/docs/deploying/static).
 
 ## Deliverable
 Report changed source paths, navigation before/after, content coverage, checks executed and deployment compatibility. Distinguish tested behavior from recommended future enhancements.

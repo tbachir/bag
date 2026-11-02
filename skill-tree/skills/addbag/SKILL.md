@@ -44,7 +44,7 @@ node spellbook/scripts/bag.mjs search "keyword" --json
 node spellbook/scripts/bag.mjs list --json
 ```
 
-Prefer **update existing item** > **add small reference or task** > **create a new item** > **package a skill** > **compose a loadout**. Reuse BAG's other skills as needed: `bag-author-item`, `bag-author-library`, `bag-author-task`, `repository-auditor`, `reusable-component-extractor`, `documentation-architect`, `prompt-quality-reviewer`. They are not prerequisites if a lightweight edit is sufficient.
+Prefer **update existing item** > **add small reference or task** > **create a new item** > **package a skill** > **compose a loadout**. Reuse BAG's other skills as needed: `bag-author-item`, `bag-author-library`, `bag-author-task`, `repository-auditor`, `reusable-component-extractor`, `docs-architect`, `prompt-quality-reviewer`. They are not prerequisites if a lightweight edit is sufficient.
 
 Place content where it is easiest to discover. Any nested folder can be an item; **`tasks/` is not a privileged folder**. Use optional `bag.item.json`, catalog manifest, task manifest and loadouts only when the actual feature makes them valuable. Follow the **implemented** schemas/validators of the checked-out BAG revision rather than old proposals. Preserve source Markdown, static Fumadocs export and existing GitHub Pages routes.
 

@@ -47,6 +47,8 @@ See [the full authoring guide](../../maps-and-guides/bag-authoring-skills.md).
 - [Prompt Quality Reviewer](prompt-quality-reviewer/README.md) — provider-specific prompt guidance and reproducible evaluations.
 - [Skill Maintainer](skill-maintainer/README.md) — evidence-based version reviews, updates and changelogs.
 
+[November 2026 skill audit](../../maps-and-guides/skill-audit-2026-11-01.md) records source reviews, version-sensitive findings, tracked/untracked skills and validation blockers.
+
 [Skill freshness policy](../../maps-and-guides/skill-freshness-policy.md): fast-changing skills require a pre-use check and a 30-day verified review interval; an agent must invoke Skill Maintainer before using stale guidance. This policy does not claim automatic client-wide activation.
 
 ## Documentation, design, and agent-readiness

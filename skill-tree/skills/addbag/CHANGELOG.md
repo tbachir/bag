@@ -1,5 +1,10 @@
 # Add to BAG — change history
 
+## 2026-11-01 — Reference correction (not a freshness verification)
+
+- Corrected the internal skill name `documentation-architect` to the existing `docs-architect`.
+- No agent-client installation, end-to-end validation or provider-specific freshness review performed; `addbag` remains untracked by the fast-changing checker pending a dedicated review.
+
 ## 2026-10-29 — Initial release
 
 - Introduced a portable `addbag` skill with natural language trigger and client-specific invocation guidance.
