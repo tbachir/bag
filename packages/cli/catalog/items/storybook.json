@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "storybook",
+  "title": "Storybook",
+  "summary": "Isolated component workshop, design system foundation and UI documentation with AI MCP integration.",
+  "zone": "inventory",
+  "kind": "library",
+  "status": "ready",
+  "tags": [
+    "storybook",
+    "ui",
+    "design-system",
+    "mcp",
+    "ai"
+  ],
+  "source": {
+    "type": "local",
+    "path": "inventory/libraries/storybook/README.md"
+  },
+  "mode": "reference"
+}

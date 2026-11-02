@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "editorconfig",
+  "title": "Portable EditorConfig baseline",
+  "summary": "UTF-8, LF and two-space indentation defaults for a new project.",
+  "zone": "equipment",
+  "kind": "config",
+  "status": "ready",
+  "tags": [
+    "configuration",
+    "formatting",
+    "editor"
+  ],
+  "source": {
+    "type": "local",
+    "path": "equipment/configs/.editorconfig.template"
+  },
+  "mode": "copy",
+  "files": [
+    {
+      "from": "equipment/configs/.editorconfig.template",
+      "to": ".editorconfig"
+    }
+  ]
+}

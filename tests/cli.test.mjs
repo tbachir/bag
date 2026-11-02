@@ -35,6 +35,34 @@ test('CLI: skill list and show', async () => {
   assert.ok(show.content.includes('name: clean-code'));
 });
 
+test('CLI: skill add requires --apply and returns dry-run by default', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-cli-skill-add-'));
+  try {
+    // 1. Dry run by default (no files written)
+    const { stdout: dryOut } = await exec(process.execPath, [
+      CLI, 'skill', 'add', 'clean-code', '--target', tmpDir, '--json'
+    ]);
+    const dry = JSON.parse(dryOut);
+    assert.equal(dry.status, 'dry-run');
+    assert.equal(dry.skill, 'clean-code');
+    const skillPath = path.join(tmpDir, '.agents/skills/clean-code/SKILL.md');
+    let exists = true;
+    try { await fs.stat(skillPath); } catch { exists = false; }
+    assert.equal(exists, false, 'skill add without --apply must not write files');
+
+    // 2. With --apply (writes files)
+    const { stdout: applyOut } = await exec(process.execPath, [
+      CLI, 'skill', 'add', 'clean-code', '--target', tmpDir, '--apply', '--json'
+    ]);
+    const applied = JSON.parse(applyOut);
+    assert.equal(applied.status, 'installed');
+    const content = await fs.readFile(skillPath, 'utf8');
+    assert.ok(content.includes('name: clean-code'));
+  } finally {
+    await fs.rm(tmpDir, { recursive: true, force: true });
+  }
+});
+
 test('CLI: mcp list and add with dry-run and apply', async () => {
   const { stdout: listOut } = await exec(process.execPath, [CLI, 'mcp', 'list', '--json']);
   const list = JSON.parse(listOut);
@@ -117,4 +145,21 @@ test('CLI: validate passes', async () => {
   assert.equal(res.valid, true);
   assert.ok(res.items >= 30);
   assert.ok(res.loadouts >= 5);
+});
+
+test('CLI: distributable package contains runtime and inventory in npm pack', async () => {
+  const cliDir = path.join(ROOT, 'packages/cli');
+  const { exec: execShell } = await import('node:child_process');
+  const execAsync = promisify(execShell);
+  const { stdout } = await execAsync('npm pack --dry-run --json --ignore-scripts --offline', {
+    cwd: cliDir
+  });
+  const [tarball] = JSON.parse(stdout);
+  assert.ok(tarball.files.some(f => f.path === 'bin/bag.mjs'));
+  assert.ok(tarball.files.some(f => f.path === 'src/lib.mjs'));
+  assert.ok(tarball.files.some(f => f.path === 'README.md'));
+  assert.ok(tarball.files.some(f => f.path === 'catalog/items/clean-code.json'));
+  assert.ok(tarball.files.some(f => f.path === 'skills/clean-code/SKILL.md'));
+  assert.ok(tarball.files.some(f => f.path === 'skills/o2switch-cloud/SKILL.md'));
+  assert.ok(tarball.files.some(f => f.path === 'skills/o2switch-cloud/references/capabilities.json'));
 });

@@ -36,7 +36,7 @@ Local PowerShell example, from BAG's root, **only for a developer who opts in**:
 
 ```powershell
 New-Item -ItemType Directory -Force .agents/skills | Out-Null
-$source = (Resolve-Path 'skill-tree/skills/o2switch-cloud').Path
+$source = (Resolve-Path 'skills/o2switch-cloud').Path
 $destination = Join-Path (Resolve-Path '.agents/skills').Path 'o2switch-cloud'
 if (Test-Path $destination) { throw "Destination already exists: $destination" }
 New-Item -ItemType SymbolicLink -Path $destination -Target $source

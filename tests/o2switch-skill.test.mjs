@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
-const BASE = join(ROOT, 'skill-tree/skills/o2switch-cloud');
+const BASE = join(ROOT, 'skills/o2switch-cloud');
 const readJson = async (path) => JSON.parse(await readFile(join(BASE, path), 'utf8'));
 
 test('o2switch Cloud skill has 11 cPanel sections and 65 official tool pages', async () => {
@@ -37,7 +37,7 @@ test('o2switch Cloud appears in BAG discovery as a reference-only skill', async 
   const { readCatalog, searchItems } = await import('../catalog/lib.mjs');
   const catalog = await readCatalog();
   const skill = catalog.items.get('o2switch-cloud');
-  assert.equal(skill.zone,'skill-tree');
+  assert.equal(skill.zone, 'skills');
   assert.equal(skill.mode,'reference');
   assert.ok(searchItems(catalog, 'o2switch').some(item => item.id === 'o2switch-cloud'));
 });

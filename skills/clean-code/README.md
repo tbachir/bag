@@ -14,7 +14,7 @@ The **Clean Code** skill guides the agent to:
 
 ## Integration Prompt
 ```markdown
-Follow the BAG Clean Code skill (skill-tree/skills/clean-code/SKILL.md) to refactor the target file or module. Ensure behavior preservation by validating tests before and after. Focus on function decomposition, naming clarity, and guard clauses.
+Follow the BAG Clean Code skill (skills/clean-code/SKILL.md) to refactor the target file or module. Ensure behavior preservation by validating tests before and after. Focus on function decomposition, naming clarity, and guard clauses.
 ```
 
 ## Catalog Entry

@@ -7,7 +7,7 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { readCatalog, searchItems, describeLoadout, planLoadout, applyPlan, fail, ROOT } from '../../../catalog/lib.mjs';
+import { readCatalog, searchItems, describeLoadout, planLoadout, applyPlan, fail, ROOT } from '../src/lib.mjs';
 
 const HELP = `BAG — Agent-first Developer Inventory & CLI
 
@@ -141,8 +141,19 @@ async function main() {
         }
         const agentFolder = flags.adapter === 'claude-code' ? '.claude/skills' : '.agents/skills';
         const destSkill = path.join(path.resolve(flags.target), agentFolder, skillId);
-        await copyDirSafe(sourceSkill, destSkill);
-        output = { status: 'installed', skill: skillId, destination: destSkill };
+
+        if (!flags.apply) {
+          output = {
+            status: 'dry-run',
+            skill: skillId,
+            adapter: flags.adapter || 'agents',
+            destination: destSkill,
+            message: 'Run with --apply to write changes to disk.'
+          };
+        } else {
+          await copyDirSafe(sourceSkill, destSkill);
+          output = { status: 'installed', skill: skillId, destination: destSkill };
+        }
       } else {
         fail(`Unknown skill action: ${action}`);
       }

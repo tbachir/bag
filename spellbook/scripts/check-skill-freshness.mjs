@@ -9,18 +9,37 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const base = path.join(root, 'skill-tree', 'skills');
+const skillsBase = path.join(root, 'skills');
+const legacyBase = path.join(root, 'skill-tree', 'skills');
 const flags = new Set(process.argv.slice(2));
 const dateArg = process.argv.find((_, i, a) => a[i-1] === '--date');
 const now = dateArg ? new Date(dateArg + 'T00:00:00Z') : new Date();
 if (Number.isNaN(now.getTime())) { console.error('Invalid --date'); process.exit(2); }
-const entries = await readdir(base, { withFileTypes: true });
+
+// Scan canonical skills/ if it exists, falling back or augmenting with legacy skill-tree/skills
+let entries = [];
+try {
+  entries = await readdir(skillsBase, { withFileTypes: true });
+} catch {
+  entries = await readdir(legacyBase, { withFileTypes: true });
+}
+const seenNames = new Set();
 const results = [];
 for (const entry of entries) {
-  if (!entry.isDirectory() || entry.name.startsWith('_')) continue;
+  if (!entry.isDirectory() || entry.name.startsWith('_') || entry.name.startsWith('.')) continue;
   const name = entry.name;
+  if (seenNames.has(name)) continue;
+  seenNames.add(name);
   let source;
-  try { source = await readFile(path.join(base,name,'SKILL.md'),'utf8'); } catch { continue; }
+  try {
+    source = await readFile(path.join(skillsBase, name, 'SKILL.md'), 'utf8');
+  } catch {
+    try {
+      source = await readFile(path.join(legacyBase, name, 'SKILL.md'), 'utf8');
+    } catch {
+      continue;
+    }
+  }
   const fm = source.match(/^---\s*\n([\s\S]*?)\n---(?:\n|$)/)?.[1] ?? '';
   // Interpret only the exact metadata fields we own; do not execute YAML.
   const fast = /^\s*(?:bag-freshness-policy|policy):\s*["']?fast-changing["']?\s*$/m.test(fm);

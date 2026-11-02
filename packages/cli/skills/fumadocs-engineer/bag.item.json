@@ -1,0 +1,24 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "mandatory",
+  "contexts": [
+    "fumadocs",
+    "documentation"
+  ],
+  "tags": [
+    "agents",
+    "workflow"
+  ],
+  "technologies": [],
+  "useCases": [
+    "quality",
+    "automation"
+  ],
+  "prompts": [
+    {
+      "title": "Add documentation component safely",
+      "text": "Use fumadocs-engineer to implement a new Fumadocs component from the official docs in the current Next.js version. Preserve static export, basePath and source Markdown safety."
+    }
+  ]
+}

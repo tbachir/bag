@@ -92,8 +92,8 @@ const TOOLS = [
       properties: {
         zone: {
           type: 'string',
-          description: 'RPG zone filter: inventory, equipment, skill-tree, spellbook, maps-and-guides, loot',
-          enum: ['inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot']
+          description: 'Zone filter: skills, mcp, recipes, templates, packs, guides, inventory, equipment, skill-tree, spellbook, maps-and-guides, loot',
+          enum: ['skills', 'mcp', 'recipes', 'templates', 'packs', 'guides', 'inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot']
         },
         kind: {
           type: 'string',

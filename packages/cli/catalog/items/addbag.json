@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "addbag",
+  "title": "Add to BAG — Session Capitalization",
+  "summary": "Review a conversation, propose reusable BAG additions, then publish them via an approved autonomous PR workflow.",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "agents",
+    "documentation",
+    "curation"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/addbag/SKILL.md"
+  },
+  "mode": "reference"
+}

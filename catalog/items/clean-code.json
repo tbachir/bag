@@ -3,7 +3,7 @@
   "id": "clean-code",
   "title": "Clean Code & Refactoring",
   "summary": "Robert C. Martin Clean Code craftsmanship, small functions, intention-revealing names, error hygiene, and behavior-preserving refactoring.",
-  "zone": "skill-tree",
+  "zone": "skills",
   "kind": "skill",
   "status": "ready",
   "tags": [
@@ -15,7 +15,7 @@
   ],
   "source": {
     "type": "local",
-    "path": "skill-tree/skills/clean-code/SKILL.md"
+    "path": "skills/clean-code/SKILL.md"
   },
   "mode": "reference"
 }

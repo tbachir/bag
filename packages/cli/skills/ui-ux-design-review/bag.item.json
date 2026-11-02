@@ -1,0 +1,29 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": [
+    "react",
+    "expo",
+    "ui"
+  ],
+  "tags": [
+    "agents",
+    "workflow"
+  ],
+  "technologies": [],
+  "useCases": [
+    "quality",
+    "automation"
+  ],
+  "prompts": [
+    {
+      "title": "Review mobile onboarding",
+      "text": "Use ui-ux-design-review to audit the current onboarding screens for touch ergonomics, a11y, loading/error states, dark theme and small screens. Give a prioritized actionable plan."
+    },
+    {
+      "title": "Evaluate a component before reuse",
+      "text": "Use ui-ux-design-review to compare our existing patterns with the proposed component, noting keyboard behavior, responsive states, theming and integration trade-offs."
+    }
+  ]
+}

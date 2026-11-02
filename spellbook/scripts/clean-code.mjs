@@ -78,24 +78,62 @@ export async function analyzeFile(filePath, fix = false) {
   const content = await fs.readFile(filePath, 'utf8');
   const lines = content.split(/\r?\n/);
   const issues = [];
-  let modifiedContent = content;
   let fileFixed = false;
 
-  const isCode = !['.json', '.md'].includes(path.extname(filePath).toLowerCase());
+  const ext = path.extname(filePath).toLowerCase();
+  const isMarkdown = ext === '.md' || ext === '.markdown';
+  const isPython = ext === '.py';
+  const isJsLike = ['.js', '.mjs', '.cjs', '.ts', '.tsx', '.jsx'].includes(ext);
+  const isCode = !['.json', '.md'].includes(ext);
   let newLines = fix ? [] : null;
+
+  let inPyTriple = null;
+  let inJsTemplate = false;
 
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i];
     const lineNum = i + 1;
+
+    // Track whether line starts or continues inside a multiline string
+    const startsInMultiline = Boolean(inPyTriple || inJsTemplate);
+
+    // Update multiline string state for Python
+    if (isPython) {
+      if (inPyTriple) {
+        const closeIdx = line.indexOf(inPyTriple);
+        if (closeIdx !== -1) {
+          const rest = line.slice(closeIdx + 3);
+          const next = rest.match(/"""|'''/);
+          inPyTriple = next ? next[0] : null;
+        }
+      } else {
+        const matches = [...line.matchAll(/"""|'''/g)];
+        if (matches.length % 2 === 1) {
+          inPyTriple = matches[matches.length - 1][0];
+        }
+      }
+    }
+
+    // Update multiline template literal state for JS/TS
+    if (isJsLike) {
+      const backticks = [...line.matchAll(/(?<!\\)`/g)];
+      if (backticks.length % 2 === 1) {
+        inJsTemplate = !inJsTemplate;
+      }
+    }
+
+    const isMeaningful = isMarkdown || startsInMultiline || inPyTriple || inJsTemplate;
 
     // 1. Trailing whitespace
     if (/[ \t]+$/.test(line)) {
       issues.push({
         type: 'trailing-whitespace',
         line: lineNum,
-        message: 'Line contains trailing whitespace'
+        message: isMeaningful
+          ? 'Line contains trailing whitespace (preserved; meaningful in context)'
+          : 'Line contains trailing whitespace'
       });
-      if (fix) {
+      if (fix && !isMeaningful) {
         line = line.replace(/[ \t]+$/, '');
         fileFixed = true;
       }
@@ -160,8 +198,9 @@ export async function analyzeFile(filePath, fix = false) {
   }
 
   if (fix && fileFixed) {
-    let output = newLines.join('\n');
-    if (!output.endsWith('\n') && output.length > 0) output += '\n';
+    const eol = content.includes('\r\n') ? '\r\n' : '\n';
+    let output = newLines.join(eol);
+    if (!output.endsWith(eol) && output.length > 0) output += eol;
     await fs.writeFile(filePath, output, 'utf8');
   }
 

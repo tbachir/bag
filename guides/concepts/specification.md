@@ -703,7 +703,7 @@ Ce skill apprend à un agent le protocole décrit au §7.7. Il précise ses pré
 
 ### 11.3 Gabarit « skill de domaine à preuves »
 
-Le skill [o2switch Cloud](../../skill-tree/skills/o2switch-cloud/SKILL.md) en est l'implémentation de référence. Tout skill qui porte sur un fournisseur ou une plateforme DEVRAIT reprendre les sept éléments suivants.
+Le skill [o2switch Cloud](../../skills/o2switch-cloud/SKILL.md) en est l'implémentation de référence. Tout skill qui porte sur un fournisseur ou une plateforme DEVRAIT reprendre les sept éléments suivants.
 
 1. **Périmètre exact.** L'Offre Unique Cloud, et non un hébergement mutualisé générique ou un VPS avec accès root.
 2. **Miroir de l'interface réelle.** 11 rubriques et 65 outils, dans l'ordre de cPanel, chacun lié à sa page officielle.

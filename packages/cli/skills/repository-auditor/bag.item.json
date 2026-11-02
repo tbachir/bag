@@ -1,0 +1,29 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": [
+    "github",
+    "reuse",
+    "audits"
+  ],
+  "tags": [
+    "agents",
+    "workflow"
+  ],
+  "technologies": [],
+  "useCases": [
+    "quality",
+    "automation"
+  ],
+  "prompts": [
+    {
+      "title": "Audit a repository for reusable components",
+      "text": "Use the repository-auditor skill to inventory my repository's architecture, dependencies, reusable parts, licenses and risks. Provide an evidence-linked extraction shortlist. Make no changes yet."
+    },
+    {
+      "title": "Check a PR for regressions",
+      "text": "Use repository-auditor to compare this PR with main, identify broken routes, duplicated components and missing tests. Prioritize severity and cite file paths. Do not merge."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "bag-inventory-skill",
+  "title": "BAG inventory discovery skill",
+  "summary": "Opt-in agent workflow for structured BAG discovery, project loadout previews and explicitly approved local copying.",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "agents",
+    "ai",
+    "search",
+    "skills",
+    "loadouts"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/bag-inventory/SKILL.md"
+  },
+  "mode": "reference",
+  "notes": "Agent skill is not automatically installed or enabled in any client."
+}

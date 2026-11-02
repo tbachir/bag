@@ -93,3 +93,61 @@ test('installSkill: rejects non-existent item or non-skill item', async () => {
     await fs.rm(tmpDir, { recursive: true, force: true });
   }
 });
+
+test('installSkill: plans and installs skill supporting directory files (references, scripts)', async () => {
+  const catalog = await readCatalog();
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-support-files-test-'));
+  try {
+    const plan = await planItem(catalog, 'o2switch-cloud', tmpDir);
+    assert.equal(plan.item, 'o2switch-cloud');
+    assert.ok(plan.actions.length >= 5, 'Must plan SKILL.md and supporting files');
+    assert.ok(plan.actions.some(a => a.destination.includes('00-plan-cpanel.md')));
+    assert.ok(plan.actions.some(a => a.destination.includes('capabilities.json')));
+    assert.ok(plan.actions.some(a => a.destination.includes('query.py')));
+
+    const res = await installSkill(catalog, 'o2switch-cloud', tmpDir, { apply: true });
+    assert.equal(res.dryRun, false);
+
+    const cpanelPlan = path.join(tmpDir, '.agents/skills/o2switch-cloud/references/00-plan-cpanel.md');
+    const capabilities = path.join(tmpDir, '.agents/skills/o2switch-cloud/references/capabilities.json');
+    const queryScript = path.join(tmpDir, '.agents/skills/o2switch-cloud/scripts/query.py');
+
+    assert.ok((await fs.stat(cpanelPlan)).isFile());
+    assert.ok((await fs.stat(capabilities)).isFile());
+    assert.ok((await fs.stat(queryScript)).isFile());
+  } finally {
+    await fs.rm(tmpDir, { recursive: true, force: true });
+  }
+});
+
+test('installSkill: rejects symbolic links at lockfile destination', async () => {
+  const catalog = await readCatalog();
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-lock-symlink-test-'));
+  const outsideDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-outside-'));
+  const outsideLock = path.join(outsideDir, 'external-lock.json');
+  await fs.writeFile(outsideLock, '{"version": 1, "skills": {}}\n', 'utf8');
+
+  try {
+    const targetLockLink = path.join(tmpDir, 'skills-lock.json');
+    await fs.symlink(outsideLock, targetLockLink, 'file');
+
+    await assert.rejects(
+      async () => await installSkill(catalog, 'clean-code', tmpDir, { apply: true }),
+      /symbolic link/
+    );
+
+    const externalContent = await fs.readFile(outsideLock, 'utf8');
+    assert.equal(externalContent, '{"version": 1, "skills": {}}\n');
+
+    let skillInstalled = true;
+    try {
+      await fs.stat(path.join(tmpDir, '.agents/skills/clean-code'));
+    } catch {
+      skillInstalled = false;
+    }
+    assert.equal(skillInstalled, false, 'No skill files should be installed when lockfile destination is unsafe');
+  } finally {
+    await fs.rm(tmpDir, { recursive: true, force: true });
+    await fs.rm(outsideDir, { recursive: true, force: true });
+  }
+});

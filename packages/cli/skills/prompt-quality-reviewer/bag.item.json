@@ -1,0 +1,24 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": [
+    "ai",
+    "prompts"
+  ],
+  "tags": [
+    "agents",
+    "workflow"
+  ],
+  "technologies": [],
+  "useCases": [
+    "quality",
+    "automation"
+  ],
+  "prompts": [
+    {
+      "title": "Review a composite agent prompt",
+      "text": "Use prompt-quality-reviewer to audit this assembled prompt for conflicting instructions, scope creep, ambiguity, missing validations and prompt-injection risks. Return a better version."
+    }
+  ]
+}

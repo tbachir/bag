@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "expo-mobile-production",
+  "title": "Expo · Production Foundations",
+  "summary": "Audit and harden an Expo/Next/Hono monorepo using the existing boilerplate, UX skill, contracts, and optional Supabase authentication. Review before implementing.",
+  "items": [
+    {
+      "id": "mobile-boilerplate"
+    },
+    {
+      "id": "repository-auditor"
+    },
+    {
+      "id": "ui-ux-design-review"
+    },
+    {
+      "id": "supabase-auth"
+    },
+    {
+      "id": "prompt-quality-reviewer"
+    }
+  ]
+}

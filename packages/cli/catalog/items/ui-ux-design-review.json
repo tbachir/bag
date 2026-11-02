@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "ui-ux-design-review",
+  "title": "UI/UX Design Review",
+  "summary": "Accessibility, responsiveness and UI quality",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "ui",
+    "react"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/ui-ux-design-review/SKILL.md"
+  },
+  "mode": "reference"
+}

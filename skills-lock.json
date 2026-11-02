@@ -64,7 +64,7 @@
     "o2switch-cloud": {
       "source": "tbachir/bag",
       "sourceType": "github",
-      "skillPath": "skill-tree/skills/o2switch-cloud/SKILL.md",
+      "skillPath": "skills/o2switch-cloud/SKILL.md",
       "computedHash": "9cbc0935ce59571ae92b410bca14d41f62bc549349f63932a2bb66078c1bf14c"
     },
     "prompt-quality-reviewer": {

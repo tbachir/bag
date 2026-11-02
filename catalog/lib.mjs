@@ -3,13 +3,27 @@
  * No network, package installation, external execution, or dependencies.
  */
 import { readFile, readdir, lstat, realpath, mkdir, copyFile, writeFile } from 'node:fs/promises';
-import { constants } from 'node:fs';
+import { constants, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+function findBagRoot() {
+  const currentFile = fileURLToPath(import.meta.url);
+  // Check if running within monorepo checkout (3 levels up from packages/cli/src or 1 level up from catalog)
+  const candidateMonorepo = path.resolve(path.dirname(currentFile), '../../..');
+  if (existsSync(path.join(candidateMonorepo, '.git')) && existsSync(path.join(candidateMonorepo, 'catalog/items'))) {
+    return candidateMonorepo;
+  }
+  const candidateDirect = path.resolve(path.dirname(currentFile), '..');
+  if (existsSync(path.join(candidateDirect, '.git')) && existsSync(path.join(candidateDirect, 'catalog/items'))) {
+    return candidateDirect;
+  }
+  return candidateDirect;
+}
+
+export const ROOT = findBagRoot();
 const ZONES = new Set(['inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot', 'skills', 'mcp', 'recipes', 'templates', 'packs', 'guides']);
 const KINDS = new Set(['library', 'repository', 'resource', 'tool', 'config', 'skill', 'agent', 'plugin', 'mcp', 'script', 'guide', 'pack', 'recipe', 'template']);
 const STATUSES = new Set(['evaluating', 'ready', 'archived']);
@@ -226,6 +240,49 @@ export async function planItem(catalog, id, target, root = ROOT, options = {}) {
       destination: destRel,
       status: dest.exists ? 'exists-skip' : 'create'
     });
+
+    // Plan supporting files in subdirectories of the skill folder (e.g. references/, scripts/)
+    const skillSourceDir = path.posix.dirname(item.source.path);
+    const skillDestDir = path.posix.dirname(destRel);
+    const skillDirFull = path.join(root, ...skillSourceDir.split('/'));
+
+    async function collectSkillSupportingFiles(dirRel) {
+      const fullDir = path.join(root, ...dirRel.split('/'));
+      let entries = [];
+      try {
+        entries = await readdir(fullDir, { withFileTypes: true });
+      } catch (e) {
+        if (e.code === 'ENOENT') return;
+        throw e;
+      }
+      for (const entry of entries) {
+        if (entry.name.startsWith('.')) continue;
+        const entryRel = `${dirRel}/${entry.name}`;
+        if (entry.isDirectory()) {
+          await collectSkillSupportingFiles(entryRel);
+        } else if (entry.isFile()) {
+          const subRel = entryRel.slice(skillSourceDir.length + 1);
+          const targetRel = `${skillDestDir}/${subRel}`;
+          const fileDest = await checkDestination(destRoot, targetRel);
+          actions.push({
+            item: item.id,
+            mode: 'skill',
+            source: entryRel,
+            destination: targetRel,
+            status: fileDest.exists ? 'exists-skip' : 'create'
+          });
+        }
+      }
+    }
+
+    try {
+      const rootEntries = await readdir(skillDirFull, { withFileTypes: true });
+      for (const entry of rootEntries) {
+        if (entry.isDirectory() && !entry.name.startsWith('.')) {
+          await collectSkillSupportingFiles(`${skillSourceDir}/${entry.name}`);
+        }
+      }
+    } catch {}
   } else if (item.mode === 'copy') {
     for (const mapping of item.files || []) {
       const dest = await checkDestination(destRoot, mapping.to);
@@ -255,6 +312,11 @@ export async function installSkill(catalog, id, target, options = {}, root = ROO
   const plan = await planItem(catalog, id, target, root, options);
   if (!options.apply) return plan;
 
+  // Validate lockfile destination before copying ANY installation files
+  if (options.lockfile !== false) {
+    await checkDestination(plan.target, 'skills-lock.json');
+  }
+
   const actions = [];
   let installedHash = null;
   let installedPath = null;
@@ -275,17 +337,28 @@ export async function installSkill(catalog, id, target, options = {}, root = ROO
     try {
       await copyFile(from, dest.full, constants.COPYFILE_EXCL);
       actions.push({ ...action, status: 'created' });
-      const content = await readFile(from);
-      installedHash = createHash('sha256').update(content).digest('hex');
-      installedPath = action.source;
+      if (action.source === item.source.path) {
+        const content = await readFile(from);
+        installedHash = createHash('sha256').update(content).digest('hex');
+        installedPath = action.source;
+      }
     } catch (error) {
       if (error.code === 'EEXIST') actions.push({ ...action, status: 'exists-skip' });
       else throw error;
     }
   }
 
+  if (!installedHash && plan.actions.length > 0) {
+    const mainAction = plan.actions.find(a => a.source === item.source.path) || plan.actions[0];
+    const from = await safeSource(root, mainAction.source);
+    const content = await readFile(from);
+    installedHash = createHash('sha256').update(content).digest('hex');
+    installedPath = mainAction.source;
+  }
+
   let lockfileUpdated = false;
   if (installedHash && options.lockfile !== false) {
+    await checkDestination(plan.target, 'skills-lock.json');
     const lockPath = path.join(plan.target, 'skills-lock.json');
     let lockData = { version: 1, skills: {} };
     try {

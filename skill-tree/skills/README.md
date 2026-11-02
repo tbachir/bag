@@ -26,7 +26,7 @@ Include activation criteria, workflow, safety boundaries, authoritative referenc
 
 ## Hosting and infrastructure
 
-[☁️ o2switch Cloud Expert](o2switch-cloud/SKILL.md) reproduces the cPanel navigation, links to 65 official documentation pages, and records 31 capability decisions, including Redis, Node.js/Passenger, PostgreSQL, WAF, backups, and uncertain limitations. The skill is opt-in; source availability is not account activation.
+[☁️ o2switch Cloud Expert](o2switch-cloud/README.md) reproduces the cPanel navigation, links to 65 official documentation pages, and records 31 capability decisions, including Redis, Node.js/Passenger, PostgreSQL, WAF, backups, and uncertain limitations. The skill is opt-in; source availability is not account activation.
 
 **Status:** BAG inventory and o2switch Cloud skills available; other personal skills to be curated.
 

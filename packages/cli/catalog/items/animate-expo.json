@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "animate-expo",
+  "title": "Animate Expo (Emil Kowalski)",
+  "summary": "Decision framework for React Native & Expo animations, thread separation (worklets), gestures and haptics.",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "expo",
+    "react-native",
+    "animation",
+    "motion",
+    "skills"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/animate-expo/README.md"
+  },
+  "mode": "reference",
+  "notes": "Upstream source: https://www.ui-skills.com/skills/emilkowalski/animate-expo. Reference only, not vendored."
+}

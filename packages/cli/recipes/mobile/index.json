@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "item": "inventory/repositories/sb-mobile-app-boilerplate",
+  "groups": [
+    {
+      "id": "foundation",
+      "title": "Architecture & contracts",
+      "tasks": [
+        "audit",
+        "contracts"
+      ],
+      "groups": [
+        {
+          "id": "identity",
+          "title": "Branding and identity",
+          "tasks": [
+            "branding"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Authentication & security",
+      "tasks": [
+        "auth"
+      ],
+      "groups": []
+    },
+    {
+      "id": "delivery",
+      "title": "Quality and release",
+      "tasks": [
+        "device-tests",
+        "release"
+      ],
+      "groups": []
+    }
+  ],
+  "tasks": {
+    "audit": {
+      "title": "Audit existing project before adopting patterns",
+      "file": "audit.md",
+      "default": true
+    },
+    "contracts": {
+      "title": "Verify API contracts and database boundaries",
+      "file": "contracts.md",
+      "requires": [
+        "audit"
+      ],
+      "default": true
+    },
+    "branding": {
+      "title": "Adapt branding via CLI with preview and rollback",
+      "file": "branding.md",
+      "requires": [
+        "audit"
+      ]
+    },
+    "auth": {
+      "title": "Review authentication and access boundaries",
+      "file": "auth.md",
+      "requires": [
+        "contracts"
+      ],
+      "suggests": [
+        "device-tests"
+      ]
+    },
+    "device-tests": {
+      "title": "Test native devices and app flows",
+      "file": "device-tests.md",
+      "requires": [
+        "contracts"
+      ],
+      "default": true
+    },
+    "release": {
+      "title": "Prepare release evidence and smoke checks",
+      "file": "release.md",
+      "requires": [
+        "device-tests"
+      ],
+      "default": false
+    }
+  }
+}
