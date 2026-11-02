@@ -41,12 +41,15 @@ export function normalizeItemMetadata(value) {
   for (const key of Object.keys(navigation)) if (!['title','description','icon','defaultOpen','collapsible','pages'].includes(key)) throw new Error('Unsupported navigation field: '+key);
   for (const key of ['title','description','icon']) if (navigation[key] !== undefined && (typeof navigation[key] !== 'string' || navigation[key].length > 160)) throw new Error('Invalid navigation '+key);
   for (const key of ['defaultOpen','collapsible']) if (navigation[key] !== undefined && typeof navigation[key] !== 'boolean') throw new Error('Invalid navigation '+key);
-  if (navigation.pages !== undefined && (!Array.isArray(navigation.pages) || navigation.pages.some(v => typeof v !== 'string' || !/^[a-zA-Z0-9_.-]+$/.test(v)))) throw new Error('Invalid navigation pages');
+  if (navigation.pages !== undefined && (!Array.isArray(navigation.pages) || navigation.pages.some(v => typeof v !== 'string' || !/^([a-zA-Z0-9_.-]+|---[a-zA-Z0-9_ .&/-]+---)$/.test(v)))) throw new Error('Invalid navigation pages');
   return { ...(type ? {type} : {}), tags:safeList(value.tags,'tags'), technologies:safeList(value.technologies,'technologies'), useCases:safeList(value.useCases,'useCases'), contexts:safeList(value.contexts,'contexts'), ...(recommendation ? {recommendation} : {}), ...(template ? {template} : {}), prompts, ...(taskManifest?{taskManifest}:{}), relations:safeRelations, navigation };
 }
 export function folderNavigation(metadata, names, preferred = []) {
   const nav = metadata?.navigation ?? {};
   const desired = nav.pages ?? preferred;
-  const ordered = [...new Set([...desired.filter(name => names.includes(name)), ...names.filter(name => !desired.includes(name))])];
+  const isSeparator = (v) => /^---[a-zA-Z0-9_ .&/-]+---$/.test(v);
+  const matched = desired.filter(name => names.includes(name) || isSeparator(name));
+  const remaining = names.filter(name => !desired.includes(name));
+  const ordered = [...new Set([...matched, ...remaining])];
   return { ...nav, pages: ordered };
 }

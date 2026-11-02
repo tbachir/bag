@@ -1,0 +1,1031 @@
+{
+  "verified_at": "2026-10-27",
+  "offer": "Offre Unique Cloud",
+  "account_activation": "not_verified",
+  "sections": [
+    {
+      "id": "exclusifs",
+      "title": "Outils exclusifs o2switch",
+      "doc_url": "https://faq.o2switch.fr/cpanel/o2switch/",
+      "tools": [
+        {
+          "id": "wptiger",
+          "name": "WPTiger",
+          "description": "Installer, sécuriser et optimiser WordPress",
+          "url": "https://faq.o2switch.fr/cpanel/o2switch/wptiger/",
+          "keywords": [
+            "wptiger",
+            "installer",
+            "securiser",
+            "optimiser",
+            "wordpress"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "univers-web-sous-comptes",
+          "name": "Gestion de mon Univers Web",
+          "description": "Créer des sous-comptes Lunes isolés",
+          "url": "https://faq.o2switch.fr/cpanel/o2switch/univers-web-sous-comptes/",
+          "keywords": [
+            "gestion",
+            "mon",
+            "univers",
+            "web",
+            "creer",
+            "des",
+            "sous",
+            "comptes",
+            "lunes",
+            "isoles"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "tiger-protect-waf",
+          "name": "TigerProtect",
+          "description": "Protection web et anti-bots",
+          "url": "https://faq.o2switch.fr/cpanel/o2switch/tiger-protect-waf/",
+          "keywords": [
+            "tigerprotect",
+            "protection",
+            "web",
+            "anti",
+            "bots",
+            "tiger",
+            "protect",
+            "waf"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "ipxtender-hebergement-multi-ips",
+          "name": "ipXtender",
+          "description": "Choisir des IP distinctes",
+          "url": "https://faq.o2switch.fr/cpanel/o2switch/ipxtender-hebergement-multi-ips/",
+          "keywords": [
+            "ipxtender",
+            "choisir",
+            "des",
+            "distinctes",
+            "hebergement",
+            "multi",
+            "ips"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "litespeed-cache-webadc",
+          "name": "LiteSpeed LSCache",
+          "description": "Cache HTTP serveur",
+          "url": "https://faq.o2switch.fr/cpanel/o2switch/litespeed-cache-webadc/",
+          "keywords": [
+            "litespeed",
+            "lscache",
+            "cache",
+            "http",
+            "serveur",
+            "webadc"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "xtremcache-varnish",
+          "name": "xtremCache / Varnish",
+          "description": "Reverse proxy cache HTTP",
+          "url": "https://faq.o2switch.fr/cpanel/o2switch/xtremcache-varnish/",
+          "keywords": [
+            "xtremcache",
+            "varnish",
+            "reverse",
+            "proxy",
+            "cache",
+            "http"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "redis",
+          "name": "Redis",
+          "description": "Cache Redis privé et éphémère",
+          "url": "https://faq.o2switch.fr/cpanel/o2switch/redis/",
+          "keywords": [
+            "redis",
+            "cache",
+            "prive",
+            "ephemere"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "memcached",
+          "name": "Memcached",
+          "description": "Instance de cache mémoire privée",
+          "url": "https://faq.o2switch.fr/cpanel/o2switch/memcached/",
+          "keywords": [
+            "memcached",
+            "instance",
+            "cache",
+            "memoire",
+            "privee"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "optimisation-pagespeed",
+          "name": "PageSpeed",
+          "description": "Optimisations de performances",
+          "url": "https://faq.o2switch.fr/cpanel/o2switch/optimisation-pagespeed/",
+          "keywords": [
+            "pagespeed",
+            "optimisations",
+            "performances",
+            "optimisation"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "domaines",
+      "title": "Domaines",
+      "doc_url": "https://faq.o2switch.fr/cpanel/domaines/",
+      "tools": [
+        {
+          "id": "configuration-domaine",
+          "name": "Domaines configurés",
+          "description": "Associer domaine et répertoire",
+          "url": "https://faq.o2switch.fr/cpanel/domaines/configuration-domaine/",
+          "keywords": [
+            "domaines",
+            "configures",
+            "associer",
+            "domaine",
+            "repertoire",
+            "configuration"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "configuration-sous-domaine",
+          "name": "Sous-domaines",
+          "description": "Créer un sous-domaine",
+          "url": "https://faq.o2switch.fr/cpanel/domaines/configuration-sous-domaine/",
+          "keywords": [
+            "sous",
+            "domaines",
+            "creer",
+            "domaine",
+            "configuration"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "editeur-zone-dns",
+          "name": "Zone Editor / DNS",
+          "description": "Enregistrements DNS",
+          "url": "https://faq.o2switch.fr/cpanel/domaines/editeur-zone-dns/",
+          "keywords": [
+            "zone",
+            "editor",
+            "dns",
+            "enregistrements",
+            "editeur"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "redirection-domaine",
+          "name": "Redirections Web",
+          "description": "Rediriger le trafic HTTP",
+          "url": "https://faq.o2switch.fr/cpanel/domaines/redirection-domaine/",
+          "keywords": [
+            "redirections",
+            "web",
+            "rediriger",
+            "trafic",
+            "http",
+            "redirection",
+            "domaine"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "emails",
+      "title": "Emails",
+      "doc_url": "https://faq.o2switch.fr/cpanel/emails/",
+      "tools": [
+        {
+          "id": "adresse-email",
+          "name": "Comptes de messagerie",
+          "description": "Boîtes mail et SMTP",
+          "url": "https://faq.o2switch.fr/cpanel/emails/adresse-email/",
+          "keywords": [
+            "comptes",
+            "messagerie",
+            "boites",
+            "mail",
+            "smtp",
+            "adresse",
+            "email"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "delivrabilite-spf-dkim",
+          "name": "Authentification SPF/DKIM",
+          "description": "Délivrabilité et signatures",
+          "url": "https://faq.o2switch.fr/cpanel/emails/delivrabilite-spf-dkim/",
+          "keywords": [
+            "authentification",
+            "spf",
+            "dkim",
+            "delivrabilite",
+            "signatures"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "suivi-remise-log-email",
+          "name": "Suivre la remise",
+          "description": "Traces de remise",
+          "url": "https://faq.o2switch.fr/cpanel/emails/suivi-remise-log-email/",
+          "keywords": [
+            "suivre",
+            "remise",
+            "traces",
+            "suivi",
+            "log",
+            "email"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "repondeur-automatique",
+          "name": "Répondeurs automatiques",
+          "description": "Réponses automatiques",
+          "url": "https://faq.o2switch.fr/cpanel/emails/repondeur-automatique/",
+          "keywords": [
+            "repondeurs",
+            "automatiques",
+            "reponses",
+            "repondeur",
+            "automatique"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "redirecteur-email",
+          "name": "Redirecteurs",
+          "description": "Redirection e-mail",
+          "url": "https://faq.o2switch.fr/cpanel/emails/redirecteur-email/",
+          "keywords": [
+            "redirecteurs",
+            "redirection",
+            "mail",
+            "redirecteur",
+            "email"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "filtre-email",
+          "name": "Filtres de messagerie",
+          "description": "Règles de filtrage par boîte",
+          "url": "https://faq.o2switch.fr/cpanel/emails/filtre-email/",
+          "keywords": [
+            "filtres",
+            "messagerie",
+            "regles",
+            "filtrage",
+            "par",
+            "boite",
+            "filtre",
+            "email"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "filtre-email-global",
+          "name": "Filtres de messagerie globaux",
+          "description": "Filtres globaux",
+          "url": "https://faq.o2switch.fr/cpanel/emails/filtre-email-global/",
+          "keywords": [
+            "filtres",
+            "messagerie",
+            "globaux",
+            "filtre",
+            "email",
+            "global"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "routage-email",
+          "name": "Routage des emails",
+          "description": "Routage des messages",
+          "url": "https://faq.o2switch.fr/cpanel/emails/routage-email/",
+          "keywords": [
+            "routage",
+            "des",
+            "emails",
+            "messages",
+            "email"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "antispam-boxtrapper",
+          "name": "BoxTrapper",
+          "description": "Contrôle anti-spam",
+          "url": "https://faq.o2switch.fr/cpanel/emails/antispam-boxtrapper/",
+          "keywords": [
+            "boxtrapper",
+            "controle",
+            "anti",
+            "spam",
+            "antispam"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "chiffrement-gpg",
+          "name": "Chiffrement GPG",
+          "description": "Clés GnuPG",
+          "url": "https://faq.o2switch.fr/cpanel/emails/chiffrement-gpg/",
+          "keywords": [
+            "chiffrement",
+            "gpg",
+            "cles",
+            "gnupg"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "espace-disque-email",
+          "name": "Usage disque e-mail",
+          "description": "Espace des boîtes mail",
+          "url": "https://faq.o2switch.fr/cpanel/emails/espace-disque-email/",
+          "keywords": [
+            "usage",
+            "disque",
+            "mail",
+            "espace",
+            "des",
+            "boites",
+            "email"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "filtre-antispam",
+          "name": "Comportement antispam",
+          "description": "Filtrage anti-spam",
+          "url": "https://faq.o2switch.fr/cpanel/emails/filtre-antispam/",
+          "keywords": [
+            "comportement",
+            "antispam",
+            "filtrage",
+            "anti",
+            "spam",
+            "filtre"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "import-massif-compte-email",
+          "name": "Importation d’adresses",
+          "description": "Création en masse",
+          "url": "https://faq.o2switch.fr/cpanel/emails/import-massif-compte-email/",
+          "keywords": [
+            "importation",
+            "d’adresses",
+            "creation",
+            "masse",
+            "import",
+            "massif",
+            "compte",
+            "email"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "bases",
+      "title": "Bases de données",
+      "doc_url": "https://faq.o2switch.fr/cpanel/bases-de-donnees/",
+      "tools": [
+        {
+          "id": "mysql",
+          "name": "Bases de données MySQL",
+          "description": "MySQL et MariaDB",
+          "url": "https://faq.o2switch.fr/cpanel/bases-de-donnees/mysql/",
+          "keywords": [
+            "bases",
+            "donnees",
+            "mysql",
+            "mariadb"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "phpmyadmin",
+          "name": "phpMyAdmin",
+          "description": "Administration MySQL",
+          "url": "https://faq.o2switch.fr/cpanel/bases-de-donnees/phpmyadmin/",
+          "keywords": [
+            "phpmyadmin",
+            "administration",
+            "mysql"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "mysql-distant",
+          "name": "MySQL distant",
+          "description": "Accès externe contrôlé",
+          "url": "https://faq.o2switch.fr/cpanel/bases-de-donnees/mysql-distant/",
+          "keywords": [
+            "mysql",
+            "distant",
+            "acces",
+            "externe",
+            "controle"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "postgresql",
+          "name": "PostgreSQL",
+          "description": "Fonction documentée, version à vérifier",
+          "url": "https://faq.o2switch.fr/cpanel/bases-de-donnees/postgresql/",
+          "keywords": [
+            "postgresql",
+            "fonction",
+            "documentee",
+            "version",
+            "verifier"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "phppgadmin",
+          "name": "phpPgAdmin",
+          "description": "Administration PostgreSQL",
+          "url": "https://faq.o2switch.fr/cpanel/bases-de-donnees/phppgadmin/",
+          "keywords": [
+            "phppgadmin",
+            "administration",
+            "postgresql"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "logiciels",
+      "title": "Logiciels / Langages",
+      "doc_url": "https://faq.o2switch.fr/cpanel/logiciels/",
+      "tools": [
+        {
+          "id": "hebergement-php-multi-version",
+          "name": "Sélectionner une version de PHP",
+          "description": "Versions et extensions PHP",
+          "url": "https://faq.o2switch.fr/cpanel/logiciels/hebergement-php-multi-version/",
+          "keywords": [
+            "selectionner",
+            "une",
+            "version",
+            "php",
+            "versions",
+            "extensions",
+            "hebergement",
+            "multi"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "hebergement-nodejs-multi-version",
+          "name": "Setup Node.js App",
+          "description": "Node.js avec Passenger",
+          "url": "https://faq.o2switch.fr/cpanel/logiciels/hebergement-nodejs-multi-version/",
+          "keywords": [
+            "setup",
+            "node",
+            "app",
+            "avec",
+            "passenger",
+            "hebergement",
+            "nodejs",
+            "multi",
+            "version"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "hebergement-python-multi-version",
+          "name": "Setup Python App",
+          "description": "Environnement Python",
+          "url": "https://faq.o2switch.fr/cpanel/logiciels/hebergement-python-multi-version/",
+          "keywords": [
+            "setup",
+            "python",
+            "app",
+            "environnement",
+            "hebergement",
+            "multi",
+            "version"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "hebergement-ruby-multi-version",
+          "name": "Setup Ruby App",
+          "description": "Ruby et Rails",
+          "url": "https://faq.o2switch.fr/cpanel/logiciels/hebergement-ruby-multi-version/",
+          "keywords": [
+            "setup",
+            "ruby",
+            "app",
+            "rails",
+            "hebergement",
+            "multi",
+            "version"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "securite",
+      "title": "Sécurité",
+      "doc_url": "https://faq.o2switch.fr/cpanel/securite/",
+      "tools": [
+        {
+          "id": "antivirus-imunify",
+          "name": "Antivirus Imunify AV+",
+          "description": "Scanner les malwares",
+          "url": "https://faq.o2switch.fr/cpanel/securite/antivirus-imunify/",
+          "keywords": [
+            "antivirus",
+            "imunify",
+            "av+",
+            "scanner",
+            "les",
+            "malwares"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "mod-security-waf",
+          "name": "ModSecurity",
+          "description": "Pare-feu applicatif WAF",
+          "url": "https://faq.o2switch.fr/cpanel/securite/mod-security-waf/",
+          "keywords": [
+            "modsecurity",
+            "pare",
+            "feu",
+            "applicatif",
+            "waf",
+            "mod",
+            "security"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "authentification-mfa",
+          "name": "Authentification à deux facteurs",
+          "description": "MFA cPanel",
+          "url": "https://faq.o2switch.fr/cpanel/securite/authentification-mfa/",
+          "keywords": [
+            "authentification",
+            "deux",
+            "facteurs",
+            "mfa",
+            "cpanel"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "token-api-cpanel",
+          "name": "API Tokens",
+          "description": "Tokens d’API cPanel",
+          "url": "https://faq.o2switch.fr/cpanel/securite/token-api-cpanel/",
+          "keywords": [
+            "api",
+            "tokens",
+            "d’api",
+            "cpanel",
+            "token"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "status-certificat-ssl",
+          "name": "Status SSL/TLS",
+          "description": "Vérifier les certificats",
+          "url": "https://faq.o2switch.fr/cpanel/securite/status-certificat-ssl/",
+          "keywords": [
+            "status",
+            "ssl",
+            "tls",
+            "verifier",
+            "les",
+            "certificats",
+            "certificat"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "bloqueur-adresse-ip",
+          "name": "Bloqueur d’adresses IP",
+          "description": "Bloquer les adresses IP",
+          "url": "https://faq.o2switch.fr/cpanel/securite/bloqueur-adresse-ip/",
+          "keywords": [
+            "bloqueur",
+            "d’adresses",
+            "bloquer",
+            "les",
+            "adresses",
+            "adresse"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "lets-encrypt-ssl-gratuit",
+          "name": "Let’s Encrypt SSL",
+          "description": "Certificats HTTPS gratuits",
+          "url": "https://faq.o2switch.fr/cpanel/securite/lets-encrypt-ssl-gratuit/",
+          "keywords": [
+            "let’s",
+            "encrypt",
+            "ssl",
+            "certificats",
+            "https",
+            "gratuits",
+            "lets",
+            "gratuit"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "certificat-ssl",
+          "name": "SSL/TLS",
+          "description": "Certificats et clés SSL",
+          "url": "https://faq.o2switch.fr/cpanel/securite/certificat-ssl/",
+          "keywords": [
+            "ssl",
+            "tls",
+            "certificats",
+            "cles",
+            "certificat"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "fichiers",
+      "title": "Fichiers",
+      "doc_url": "https://faq.o2switch.fr/cpanel/fichiers/",
+      "tools": [
+        {
+          "id": "comptes-ftp",
+          "name": "Comptes FTP",
+          "description": "Accès FTP",
+          "url": "https://faq.o2switch.fr/cpanel/fichiers/comptes-ftp/",
+          "keywords": [
+            "comptes",
+            "ftp",
+            "acces"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "gestionnaire-fichiers-web",
+          "name": "Gestionnaire de fichiers",
+          "description": "Manipuler les fichiers",
+          "url": "https://faq.o2switch.fr/cpanel/fichiers/gestionnaire-fichiers-web/",
+          "keywords": [
+            "gestionnaire",
+            "fichiers",
+            "manipuler",
+            "les",
+            "web"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "sauvegarde-jetbackup",
+          "name": "JetBackup",
+          "description": "Sauvegarde et restauration",
+          "url": "https://faq.o2switch.fr/cpanel/fichiers/sauvegarde-jetbackup/",
+          "keywords": [
+            "jetbackup",
+            "sauvegarde",
+            "restauration"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "protection-repertoire-web",
+          "name": "Confidentialité du répertoire",
+          "description": "Protéger les dossiers",
+          "url": "https://faq.o2switch.fr/cpanel/fichiers/protection-repertoire-web/",
+          "keywords": [
+            "confidentialite",
+            "repertoire",
+            "proteger",
+            "les",
+            "dossiers",
+            "protection",
+            "web"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "gitweb",
+          "name": "Git Version Control / GitWeb",
+          "description": "Opérations Git",
+          "url": "https://faq.o2switch.fr/cpanel/fichiers/gitweb/",
+          "keywords": [
+            "git",
+            "version",
+            "control",
+            "gitweb",
+            "operations"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "utilisation-disque",
+          "name": "Utilisation du disque",
+          "description": "Occupation disque",
+          "url": "https://faq.o2switch.fr/cpanel/fichiers/utilisation-disque/",
+          "keywords": [
+            "utilisation",
+            "disque",
+            "occupation"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "outils",
+      "title": "Outils",
+      "doc_url": "https://faq.o2switch.fr/cpanel/outils/",
+      "tools": [
+        {
+          "id": "exception-parefeu",
+          "name": "Autorisation SSH / exception pare-feu",
+          "description": "Autoriser IP pour SSH",
+          "url": "https://faq.o2switch.fr/cpanel/outils/exception-parefeu/",
+          "keywords": [
+            "autorisation",
+            "ssh",
+            "exception",
+            "pare",
+            "feu",
+            "autoriser",
+            "pour",
+            "parefeu"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "installateur-softaculous",
+          "name": "Softaculous Apps Installer",
+          "description": "Catalogue d’installateurs",
+          "url": "https://faq.o2switch.fr/cpanel/outils/installateur-softaculous/",
+          "keywords": [
+            "softaculous",
+            "apps",
+            "installer",
+            "catalogue",
+            "d’installateurs",
+            "installateur"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "avances",
+      "title": "Outils avancés",
+      "doc_url": "https://faq.o2switch.fr/cpanel/outils-avances/",
+      "tools": [
+        {
+          "id": "tache-planifiee-cron",
+          "name": "Tâches Cron",
+          "description": "Planifier des scripts",
+          "url": "https://faq.o2switch.fr/cpanel/outils-avances/tache-planifiee-cron/",
+          "keywords": [
+            "taches",
+            "cron",
+            "planifier",
+            "des",
+            "scripts",
+            "tache",
+            "planifiee"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "terminal-ssh-web",
+          "name": "Terminal SSH Web",
+          "description": "Shell utilisateur",
+          "url": "https://faq.o2switch.fr/cpanel/outils-avances/terminal-ssh-web/",
+          "keywords": [
+            "terminal",
+            "ssh",
+            "web",
+            "shell",
+            "utilisateur"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "pages-erreurs-personnalises",
+          "name": "Pages d’erreurs",
+          "description": "Pages HTTP personnalisées",
+          "url": "https://faq.o2switch.fr/cpanel/outils-avances/pages-erreurs-personnalises/",
+          "keywords": [
+            "pages",
+            "d’erreurs",
+            "http",
+            "personnalisees",
+            "erreurs",
+            "personnalises"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "gestionnaire-index",
+          "name": "Index des répertoires",
+          "description": "Listing des dossiers",
+          "url": "https://faq.o2switch.fr/cpanel/outils-avances/gestionnaire-index/",
+          "keywords": [
+            "index",
+            "des",
+            "repertoires",
+            "listing",
+            "dossiers",
+            "gestionnaire"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "mesures",
+      "title": "Mesures",
+      "doc_url": "https://faq.o2switch.fr/cpanel/mesures/",
+      "tools": [
+        {
+          "id": "suivi-usage-ressources",
+          "name": "Utilisation des ressources",
+          "description": "CPU, mémoire, I/O, processus",
+          "url": "https://faq.o2switch.fr/cpanel/mesures/suivi-usage-ressources/",
+          "keywords": [
+            "utilisation",
+            "des",
+            "ressources",
+            "cpu",
+            "memoire",
+            "processus",
+            "suivi",
+            "usage"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "php-x-ray",
+          "name": "PHP X-Ray",
+          "description": "Profilage PHP",
+          "url": "https://faq.o2switch.fr/cpanel/mesures/php-x-ray/",
+          "keywords": [
+            "php",
+            "ray",
+            "profilage"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "log-acces-brut",
+          "name": "Accès brut",
+          "description": "Journaux HTTP",
+          "url": "https://faq.o2switch.fr/cpanel/mesures/log-acces-brut/",
+          "keywords": [
+            "acces",
+            "brut",
+            "journaux",
+            "http",
+            "log"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "erreurs-apache",
+          "name": "Erreurs",
+          "description": "Erreurs serveur",
+          "url": "https://faq.o2switch.fr/cpanel/mesures/erreurs-apache/",
+          "keywords": [
+            "erreurs",
+            "serveur",
+            "apache"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "analytics-awstats",
+          "name": "AWStats",
+          "description": "Statistiques serveur",
+          "url": "https://faq.o2switch.fr/cpanel/mesures/analytics-awstats/",
+          "keywords": [
+            "awstats",
+            "statistiques",
+            "serveur",
+            "analytics"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "visiteurs",
+          "name": "Visiteurs",
+          "description": "Visites récentes",
+          "url": "https://faq.o2switch.fr/cpanel/mesures/visiteurs/",
+          "keywords": [
+            "visiteurs",
+            "visites",
+            "recentes"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "usage-bande-passante",
+          "name": "Bande passante",
+          "description": "Usage réseau",
+          "url": "https://faq.o2switch.fr/cpanel/mesures/usage-bande-passante/",
+          "keywords": [
+            "bande",
+            "passante",
+            "usage",
+            "reseau"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    },
+    {
+      "id": "preferences",
+      "title": "Préférences",
+      "doc_url": "https://faq.o2switch.fr/cpanel/preferences/",
+      "tools": [
+        {
+          "id": "coordonnees",
+          "name": "Coordonnées",
+          "description": "Contacts et notifications",
+          "url": "https://faq.o2switch.fr/cpanel/preferences/coordonnees/",
+          "keywords": [
+            "coordonnees",
+            "contacts",
+            "notifications"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "langage",
+          "name": "Modifier la langue",
+          "description": "Langue de cPanel",
+          "url": "https://faq.o2switch.fr/cpanel/preferences/langage/",
+          "keywords": [
+            "modifier",
+            "langue",
+            "cpanel",
+            "langage"
+          ],
+          "account_activation": "not_verified"
+        },
+        {
+          "id": "mot-de-passe",
+          "name": "Mot de passe et sécurité",
+          "description": "Sécuriser son accès",
+          "url": "https://faq.o2switch.fr/cpanel/preferences/mot-de-passe/",
+          "keywords": [
+            "mot",
+            "passe",
+            "securite",
+            "securiser",
+            "son",
+            "acces"
+          ],
+          "account_activation": "not_verified"
+        }
+      ]
+    }
+  ]
+}

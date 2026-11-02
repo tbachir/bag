@@ -19,10 +19,10 @@ export function buildZip(entries) {
   return Buffer.concat([...parts,...central,end]);
 }
 export async function writeSkillsArchives({root,output,files}) {
-  const slugs=[...new Set(files.map(f=>f.match(/^skill-tree\/skills\/([a-z0-9-]+)\/SKILL\.md$/)?.[1]).filter(Boolean))];
+  const slugs=[...new Set(files.map(f=>f.match(/^(?:skill-tree\/skills|skills)\/([a-z0-9-]+)\/SKILL\.md$/)?.[1]).filter(Boolean))];
   await mkdir(output,{recursive:true});
   for(const slug of slugs) {
-    const prefix=`skill-tree/skills/${slug}/`;
+    const prefix = files.some(f => f.startsWith(`skills/${slug}/`)) ? `skills/${slug}/` : `skill-tree/skills/${slug}/`;
     const source=files.filter(f=>f.startsWith(prefix) && !f.endsWith('/')).sort();
     const members=await Promise.all(source.map(async f=>({name:`${slug}/${f.slice(prefix.length)}`,data:await readFile(path.join(root,f))})));
     await writeFile(path.join(output,`${slug}.zip`),buildZip(members));

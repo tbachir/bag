@@ -1,0 +1,25 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": [
+    "api",
+    "hono",
+    "typescript"
+  ],
+  "tags": [
+    "agents",
+    "workflow"
+  ],
+  "technologies": [],
+  "useCases": [
+    "quality",
+    "automation"
+  ],
+  "prompts": [
+    {
+      "title": "Document current API contracts",
+      "text": "Use api-documentation-quality to inventory real API endpoints, auth, validation schemas, examples and error cases, then generate documentation that matches implemented behavior."
+    }
+  ]
+}

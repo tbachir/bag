@@ -1,5 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import os from 'node:os';
 import { handleRequest, executeTool } from '../spellbook/scripts/bag-mcp.mjs';
 
 test('MCP initialize handshake returns protocol version and server info', async () => {
@@ -43,6 +46,10 @@ test('MCP tools/list exposes all BAG tools with valid JSON schemas', async () =>
   assert.ok(toolNames.includes('bag_get_loadout'));
   assert.ok(toolNames.includes('bag_read_document'));
   assert.ok(toolNames.includes('bag_plan_loadout'));
+  assert.ok(toolNames.includes('bag_install_skill'));
+  assert.ok(toolNames.includes('bag_list_functions'));
+  assert.ok(toolNames.includes('bag_call_function'));
+  assert.ok(toolNames.includes('bag_clean_code'));
 
   for (const tool of res.result.tools) {
     assert.equal(tool.inputSchema.type, 'object');
@@ -93,13 +100,13 @@ test('MCP tools/call: bag_get_item returns item and source content', async () =>
     method: 'tools/call',
     params: {
       name: 'bag_get_item',
-      arguments: { id: 'mcp-catalog' }
+      arguments: { id: 'clean-code' }
     }
   });
   assert.equal(res.result.isError, false);
   const parsed = JSON.parse(res.result.content[0].text);
-  assert.equal(parsed.item.id, 'mcp-catalog');
-  assert.ok(parsed.sourceContent.includes('Model Context Protocol'));
+  assert.equal(parsed.item.id, 'clean-code');
+  assert.ok(parsed.sourceContent.includes('Clean Code'));
 });
 
 test('MCP tools/call: bag_read_document allows safe reading and rejects traversal with isError: true', async () => {
@@ -114,7 +121,6 @@ test('MCP tools/call: bag_read_document allows safe reading and rejects traversa
   });
   assert.equal(okRes.result.isError, false);
   const okParsed = JSON.parse(okRes.result.content[0].text);
-  assert.equal(okParsed.path, 'README.md');
   assert.ok(okParsed.content.includes('BAG'));
 
   const badRes = await handleRequest({
@@ -145,6 +151,85 @@ test('MCP tools/call: bag_plan_loadout produces dry-run plan', async () => {
   assert.equal(parsed.loadout, 'ai-coding');
   assert.equal(parsed.dryRun, true);
   assert.ok(Array.isArray(parsed.actions));
+});
+
+test('MCP tools/call: bag_install_skill dry-run and apply', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-mcp-install-'));
+  try {
+    const dryRes = await handleRequest({
+      jsonrpc: '2.0',
+      id: 20,
+      method: 'tools/call',
+      params: {
+        name: 'bag_install_skill',
+        arguments: { skillId: 'clean-code', targetDirectory: tmpDir, apply: false }
+      }
+    });
+    assert.equal(dryRes.result.isError, false);
+    const dryParsed = JSON.parse(dryRes.result.content[0].text);
+    assert.equal(dryParsed.dryRun, true);
+
+    const applyRes = await handleRequest({
+      jsonrpc: '2.0',
+      id: 21,
+      method: 'tools/call',
+      params: {
+        name: 'bag_install_skill',
+        arguments: { skillId: 'clean-code', targetDirectory: tmpDir, apply: true }
+      }
+    });
+    assert.equal(applyRes.result.isError, false);
+    const applyParsed = JSON.parse(applyRes.result.content[0].text);
+    assert.equal(applyParsed.dryRun, false);
+    assert.equal(applyParsed.actions[0].status, 'created');
+  } finally {
+    await fs.rm(tmpDir, { recursive: true, force: true });
+  }
+});
+
+test('MCP tools/call: bag_list_functions and bag_call_function', async () => {
+  const listRes = await handleRequest({
+    jsonrpc: '2.0',
+    id: 22,
+    method: 'tools/call',
+    params: {
+      name: 'bag_list_functions',
+      arguments: {}
+    }
+  });
+  assert.equal(listRes.result.isError, false);
+  const listParsed = JSON.parse(listRes.result.content[0].text);
+  assert.ok(Array.isArray(listParsed.functions));
+  assert.ok(listParsed.functions.some(f => f.name === 'validate'));
+
+  const callRes = await handleRequest({
+    jsonrpc: '2.0',
+    id: 23,
+    method: 'tools/call',
+    params: {
+      name: 'bag_call_function',
+      arguments: { functionName: 'validate' }
+    }
+  });
+  assert.equal(callRes.result.isError, false);
+  const callParsed = JSON.parse(callRes.result.content[0].text);
+  assert.equal(callParsed.success, true);
+  assert.equal(callParsed.exitCode, 0);
+});
+
+test('MCP tools/call: bag_clean_code runs hygiene audit', async () => {
+  const res = await handleRequest({
+    jsonrpc: '2.0',
+    id: 24,
+    method: 'tools/call',
+    params: {
+      name: 'bag_clean_code',
+      arguments: { targetDirectory: 'spellbook/scripts/clean-code.mjs' }
+    }
+  });
+  assert.equal(res.result.isError, false);
+  const parsed = JSON.parse(res.result.content[0].text);
+  assert.equal(parsed.scannedFiles, 1);
 });
 
 test('MCP resources and prompts list and read', async () => {

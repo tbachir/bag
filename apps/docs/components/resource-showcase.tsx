@@ -11,7 +11,8 @@ const colors:Record<string,string>={mandatory:'text-fd-primary bg-fd-accent',rec
 export function ResourceShowcase({item}: {item:BagItem}) {
   // Task-enabled items should expose their composer even without a visual template hint.
   if ((!item.template && !item.taskManifest) || !item.sourcePath) return null;
-  const skillSlug=item.template==='skill'?item.sourcePath.split('/')[2]:null;
+  const match = item.sourcePath.match(/^(?:skill-tree\/skills|skills)\/([a-z0-9-]+)\//);
+  const skillSlug = item.template === 'skill' && match ? match[1] : null;
   const tags=[...(item.contexts??[]),...item.tags].filter((x,i,a)=>a.indexOf(x)===i).slice(0,8);
   return <aside aria-label="Resource details" className="not-prose my-6 overflow-hidden rounded-2xl border border-fd-border bg-fd-card shadow-sm">
     <div className="border-b border-fd-border bg-[radial-gradient(ellipse_at_top_right,color-mix(in_oklch,var(--fd-primary)_13%,transparent),transparent_65%)] p-5 sm:p-7">

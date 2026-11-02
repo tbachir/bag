@@ -2,14 +2,16 @@
  * BAG catalog reader, validator, and safe local-file equip planner.
  * No network, package installation, external execution, or dependencies.
  */
-import { readFile, readdir, lstat, realpath, mkdir, copyFile } from 'node:fs/promises';
+import { readFile, readdir, lstat, realpath, mkdir, copyFile, writeFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { execFile } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const ZONES = new Set(['inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot']);
-const KINDS = new Set(['library', 'repository', 'resource', 'tool', 'config', 'skill', 'agent', 'plugin', 'mcp', 'script', 'guide']);
+const ZONES = new Set(['inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot', 'skills', 'mcp', 'recipes', 'templates', 'packs', 'guides']);
+const KINDS = new Set(['library', 'repository', 'resource', 'tool', 'config', 'skill', 'agent', 'plugin', 'mcp', 'script', 'guide', 'pack', 'recipe', 'template']);
 const STATUSES = new Set(['evaluating', 'ready', 'archived']);
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -194,4 +196,187 @@ export async function applyPlan(catalog, id, target, root = ROOT) {
     }
   }
   return {...plan, dryRun: false, actions};
+}
+
+export function resolveAgentSkillPath(skillId, agent = 'agents') {
+  switch (agent) {
+    case 'gemini': return `.gemini/skills/${skillId}/SKILL.md`;
+    case 'cursor': return `.cursor/skills/${skillId}/SKILL.md`;
+    case 'claude': return `.claude/skills/${skillId}/SKILL.md`;
+    case 'root': return `skills/${skillId}/SKILL.md`;
+    case 'agents':
+    default:
+      return `.agents/skills/${skillId}/SKILL.md`;
+  }
+}
+
+export async function planItem(catalog, id, target, root = ROOT, options = {}) {
+  check(nonempty(target), 'Pass --target <existing project directory>');
+  const destRoot = await checkTarget(path.resolve(target));
+  const item = catalog.items.get(id);
+  check(item, `Unknown item: ${id}`);
+  const actions = [];
+  if (item.kind === 'skill') {
+    const destRel = resolveAgentSkillPath(item.id, options.agent);
+    const dest = await checkDestination(destRoot, destRel);
+    actions.push({
+      item: item.id,
+      mode: 'skill',
+      source: item.source.path,
+      destination: destRel,
+      status: dest.exists ? 'exists-skip' : 'create'
+    });
+  } else if (item.mode === 'copy') {
+    for (const mapping of item.files || []) {
+      const dest = await checkDestination(destRoot, mapping.to);
+      actions.push({
+        item: item.id,
+        mode: 'copy',
+        source: mapping.from,
+        destination: mapping.to,
+        status: dest.exists ? 'exists-skip' : 'create'
+      });
+    }
+  } else {
+    actions.push({
+      item: item.id,
+      mode: 'reference',
+      source: item.source.path,
+      status: 'reference-only'
+    });
+  }
+  return { item: id, target: destRoot, dryRun: true, actions };
+}
+
+export async function installSkill(catalog, id, target, options = {}, root = ROOT) {
+  const item = catalog.items.get(id);
+  check(item, `Unknown item: ${id}`);
+  check(item.kind === 'skill', `Item "${id}" is not a skill (kind: ${item.kind})`);
+  const plan = await planItem(catalog, id, target, root, options);
+  if (!options.apply) return plan;
+
+  const actions = [];
+  let installedHash = null;
+  let installedPath = null;
+
+  for (const action of plan.actions) {
+    if (action.status !== 'create') {
+      actions.push(action);
+      continue;
+    }
+    const from = await safeSource(root, action.source);
+    const dest = await checkDestination(plan.target, action.destination);
+    if (dest.exists) {
+      actions.push({ ...action, status: 'exists-skip' });
+      continue;
+    }
+    await mkdir(path.dirname(dest.full), { recursive: true });
+    await checkDestination(plan.target, action.destination);
+    try {
+      await copyFile(from, dest.full, constants.COPYFILE_EXCL);
+      actions.push({ ...action, status: 'created' });
+      const content = await readFile(from);
+      installedHash = createHash('sha256').update(content).digest('hex');
+      installedPath = action.source;
+    } catch (error) {
+      if (error.code === 'EEXIST') actions.push({ ...action, status: 'exists-skip' });
+      else throw error;
+    }
+  }
+
+  let lockfileUpdated = false;
+  if (installedHash && options.lockfile !== false) {
+    const lockPath = path.join(plan.target, 'skills-lock.json');
+    let lockData = { version: 1, skills: {} };
+    try {
+      const raw = await readFile(lockPath, 'utf8');
+      lockData = JSON.parse(raw);
+      if (!lockData.skills) lockData.skills = {};
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+    }
+    lockData.skills[id] = {
+      source: 'tbachir/bag',
+      sourceType: 'github',
+      skillPath: installedPath,
+      computedHash: installedHash
+    };
+    const sortedSkills = {};
+    for (const k of Object.keys(lockData.skills).sort()) {
+      sortedSkills[k] = lockData.skills[k];
+    }
+    lockData.skills = sortedSkills;
+    await writeFile(lockPath, JSON.stringify(lockData, null, 2) + '\n', 'utf8');
+    lockfileUpdated = true;
+  }
+
+  return { ...plan, dryRun: false, actions, lockfileUpdated };
+}
+
+export const FUNCTION_REGISTRY = new Map([
+  ['clean-code', {
+    script: 'spellbook/scripts/clean-code.mjs',
+    description: 'Audit code hygiene, style, and code smells, with optional fix mode'
+  }],
+  ['ui-studio', {
+    script: 'spellbook/scripts/ui-studio.mjs',
+    description: 'Generate interactive HTML prototype and route/component audit'
+  }],
+  ['skill-audit', {
+    script: 'spellbook/scripts/check-skill-freshness.mjs',
+    description: 'Audit skill freshness policy and review statuses'
+  }],
+  ['validate', {
+    script: 'spellbook/scripts/validate.mjs',
+    description: 'Validate repository structure, zones, and local links'
+  }]
+]);
+
+export function listFunctions() {
+  return [...FUNCTION_REGISTRY.entries()].map(([name, meta]) => ({
+    name,
+    script: meta.script,
+    description: meta.description
+  }));
+}
+
+export async function executeFunction(name, args = [], options = {}, root = ROOT) {
+  const fn = FUNCTION_REGISTRY.get(name);
+  check(fn, `Unknown or unauthorized function: "${name}". Allowed: ${[...FUNCTION_REGISTRY.keys()].join(', ')}`);
+  const scriptPath = inRoot(root, fn.script);
+  check((await lstat(scriptPath)).isFile(), `Script file missing: ${fn.script}`);
+
+  let cwd = root;
+  const finalArgs = [...args];
+
+  if (options.target) {
+    const fullTarget = path.resolve(options.target);
+    const st = await statOrNull(fullTarget);
+    if (!st || st.isSymbolicLink()) fail(`Target must be an existing, real directory or file: ${options.target}`);
+    if (st.isDirectory()) {
+      cwd = await realpath(fullTarget);
+    } else {
+      cwd = path.dirname(await realpath(fullTarget));
+    }
+    if (!finalArgs.includes('--target')) {
+      finalArgs.push('--target', fullTarget);
+    }
+  }
+
+  return new Promise((resolve) => {
+    execFile(process.execPath, [scriptPath, ...finalArgs], {
+      cwd,
+      env: process.env,
+      maxBuffer: 10 * 1024 * 1024
+    }, (error, stdout, stderr) => {
+      resolve({
+        function: name,
+        exitCode: error ? (typeof error.code === 'number' ? error.code : 1) : 0,
+        success: !error,
+        stdout: stdout || '',
+        stderr: stderr || '',
+        error: error ? error.message : null
+      });
+    });
+  });
 }

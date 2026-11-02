@@ -39,7 +39,13 @@
         "skill-tree",
         "spellbook",
         "maps-and-guides",
-        "loot"
+        "loot",
+        "skills",
+        "mcp",
+        "recipes",
+        "templates",
+        "packs",
+        "guides"
       ]
     },
     "kind": {
@@ -54,7 +60,10 @@
         "plugin",
         "mcp",
         "script",
-        "guide"
+        "guide",
+        "pack",
+        "recipe",
+        "template"
       ]
     },
     "status": {
