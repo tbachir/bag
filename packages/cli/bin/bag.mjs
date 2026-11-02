@@ -171,12 +171,82 @@ async function main() {
           fail(`MCP server guide not found: ${serverId}`);
         }
       } else if (action === 'add') {
-        if (!serverId) fail('mcp add requires a server id');
-        output = {
-          status: 'ready',
-          server: serverId,
-          instructions: `Inspect mcp/servers/${serverId}/README.md and configure your client.`
+        if (!serverId) fail('mcp add requires a server id (bag-mcp, supabase, context7, ui-skills)');
+        const mcpConfigs = {
+          'bag-mcp': {
+            name: 'bag',
+            config: { command: 'node', args: [path.resolve(ROOT, 'spellbook/scripts/bag-mcp.mjs')] }
+          },
+          'bag': {
+            name: 'bag',
+            config: { command: 'node', args: [path.resolve(ROOT, 'spellbook/scripts/bag-mcp.mjs')] }
+          },
+          'supabase': {
+            name: 'supabase',
+            config: {
+              command: 'npx',
+              args: ['-y', '@supabase/mcp-server'],
+              env: { SUPABASE_ACCESS_TOKEN: '<your-personal-access-token>' }
+            }
+          },
+          'context7': {
+            name: 'context7',
+            config: { command: 'npx', args: ['-y', '@context7/mcp-server'] }
+          },
+          'ui-skills': {
+            name: 'ui-skills',
+            config: { command: 'npx', args: ['-y', '@ui-skills/mcp-server'] }
+          }
         };
+
+        const serverEntry = mcpConfigs[serverId];
+        if (!serverEntry) fail(`Unknown MCP server: ${serverId}. Available: ${Object.keys(mcpConfigs).join(', ')}`);
+
+        const adapter = flags.adapter || 'cursor';
+        let relConfigFile = '.cursor/mcp.json';
+        if (adapter === 'cursor') relConfigFile = '.cursor/mcp.json';
+        else if (adapter === 'claude' || adapter === 'claude-code') relConfigFile = '.claude/mcp.json';
+        else if (adapter === 'gemini' || adapter === 'antigravity') relConfigFile = '.gemini/mcp.json';
+        else if (adapter === 'vscode') relConfigFile = '.vscode/mcp.json';
+
+        if (flags.target) {
+          const targetDir = path.resolve(flags.target);
+          const targetConfigFile = path.join(targetDir, relConfigFile);
+
+          if (!flags.apply) {
+            output = {
+              status: 'dry-run',
+              adapter,
+              targetFile: targetConfigFile,
+              server: serverEntry.name,
+              configuration: serverEntry.config,
+              message: 'Run with --apply to write configuration to target.'
+            };
+          } else {
+            await fs.mkdir(path.dirname(targetConfigFile), { recursive: true });
+            let existing = { mcpServers: {} };
+            try {
+              const prev = await fs.readFile(targetConfigFile, 'utf8');
+              existing = JSON.parse(prev);
+              if (!existing.mcpServers) existing.mcpServers = {};
+            } catch {}
+            existing.mcpServers[serverEntry.name] = serverEntry.config;
+            await fs.writeFile(targetConfigFile, JSON.stringify(existing, null, 2) + '\n', 'utf8');
+            output = {
+              status: 'installed',
+              adapter,
+              targetFile: targetConfigFile,
+              server: serverEntry.name,
+              configuration: serverEntry.config
+            };
+          }
+        } else {
+          output = {
+            server: serverEntry.name,
+            configuration: serverEntry.config,
+            instructions: `Add to ${relConfigFile} or specify --target <dir> --apply`
+          };
+        }
       } else {
         fail(`Unknown mcp action: ${action}`);
       }
@@ -201,7 +271,12 @@ async function main() {
         const recipeReadme = path.join(recipesDir, recipeId, 'README.md');
         try {
           const content = await fs.readFile(recipeReadme, 'utf8');
-          output = { recipe: recipeId, description: content };
+          if (flags.prompt) {
+            const promptMatch = content.match(/```(?:text|markdown)?\s*\n([\s\S]*?)```/);
+            output = { recipe: recipeId, prompt: promptMatch ? promptMatch[1].trim() : content };
+          } else {
+            output = { recipe: recipeId, description: content };
+          }
         } catch {
           fail(`Recipe not found: ${recipeId}`);
         }
@@ -225,9 +300,57 @@ async function main() {
           { id: 'boilerplates/fumadocs-starter', path: 'templates/boilerplates/fumadocs-starter' }
         ];
       } else if (action === 'apply') {
-        if (!tmplId) fail('template apply requires a template id');
+        if (!tmplId) fail('template apply requires a template id (e.g. configs/editorconfig, configs/node-gitignore)');
         if (!flags.target) fail('template apply requires --target <directory>');
-        output = { status: 'applied', template: tmplId, target: flags.target };
+        const targetDir = path.resolve(flags.target);
+
+        const templateMap = {
+          'configs/editorconfig': { src: 'templates/configs/.editorconfig.template', dest: '.editorconfig' },
+          'editorconfig': { src: 'templates/configs/.editorconfig.template', dest: '.editorconfig' },
+          'configs/node-gitignore': { src: 'templates/configs/.gitignore.template', dest: '.gitignore' },
+          'gitignore': { src: 'templates/configs/.gitignore.template', dest: '.gitignore' },
+          'skills/template': { src: 'templates/skills/SKILL.md', dest: '.agents/skills/new-skill/SKILL.md' },
+          'boilerplates/fumadocs-starter': { src: 'templates/boilerplates/fumadocs-starter', dest: 'docs' }
+        };
+
+        const entry = templateMap[tmplId];
+        if (!entry) fail(`Unknown template: ${tmplId}. Available: ${Object.keys(templateMap).join(', ')}`);
+
+        const srcPath = path.join(ROOT, entry.src);
+        const destPath = path.join(targetDir, entry.dest);
+
+        let exists = false;
+        try {
+          await fs.access(destPath);
+          exists = true;
+        } catch {}
+
+        if (exists) {
+          fail(`Destination already exists: ${destPath}. Template application will not overwrite.`);
+        }
+
+        if (!flags.apply) {
+          output = {
+            status: 'dry-run',
+            template: tmplId,
+            source: entry.src,
+            destination: destPath,
+            message: 'Run with --apply to copy template file.'
+          };
+        } else {
+          await fs.mkdir(path.dirname(destPath), { recursive: true });
+          const stat = await fs.stat(srcPath);
+          if (stat.isDirectory()) {
+            await copyDirSafe(srcPath, destPath);
+          } else {
+            await fs.copyFile(srcPath, destPath);
+          }
+          output = {
+            status: 'applied',
+            template: tmplId,
+            destination: destPath
+          };
+        }
       } else {
         fail(`Unknown template action: ${action}`);
       }
@@ -301,6 +424,12 @@ async function main() {
     if (output.dryRun) {
       console.log('\nTo copy files explicitly: bag pack equip <id> --target <directory> --apply');
     }
+  } else if (output && typeof output.prompt === 'string') {
+    console.log(output.prompt);
+  } else if (output && typeof output.guide === 'string') {
+    console.log(output.guide);
+  } else if (output && typeof output.description === 'string') {
+    console.log(output.description);
   } else if (output && typeof output.content === 'string') {
     console.log(output.content);
   } else {

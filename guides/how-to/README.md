@@ -9,3 +9,4 @@ Task-oriented guides to accomplish specific goals with BAG.
 - [Writing Inline Prompts](inline-prompts.md): Principles for reliable agent prompts in markdown.
 - [Intelligent Catalog & Loadouts](catalog-and-loadouts.md): How to search, plan, and equip curated loadouts.
 - [Resource Exposure](resource-exposure.md): How BAG resources are exposed to CLI, docs, and MCP.
+- [Storybook: Fondations & Automatisation IA](storybook-fondations.md): Guide pratique pour structurer votre UI et automatiser Storybook avec des agents et MCP.

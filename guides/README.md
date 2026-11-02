@@ -29,11 +29,13 @@ ORIENTED│   (Goal-driven tasks)   │  (Information, schemas  │
    - [Writing Inline Delegation Prompts](how-to/inline-prompts.md)
    - [Intelligent Catalog & Loadouts](how-to/catalog-and-loadouts.md)
    - [Resource Exposure](how-to/resource-exposure.md)
+   - [Storybook: Fondations & Automatisation IA](how-to/storybook-fondations.md)
 
 3. **[🧠 Concepts & Architecture](concepts/README.md)**: Explanations, architectural principles, and foundational protocols.
    - [Agent Delegation Protocol (v1)](concepts/agent-delegation-protocol.md)
    - [Skill Freshness & Evidence Policy](concepts/skill-freshness-policy.md)
-   - [Best Practices & Invariants](concepts/README.md)
+   - [Best Practices & Architectural Invariants](concepts/best-practices.md)
+   - [Fumadocs Inventory Architecture](concepts/fumadocs-inventory-explorer.md)
 
 4. **[🗞️ Reference](reference/README.md)**: Precise technical specifications, CLI commands, and machine contracts.
    - [CLI Commands Reference](reference/cli-commands.md)
