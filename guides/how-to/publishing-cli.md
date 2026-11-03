@@ -10,12 +10,15 @@ The GitHub Actions workflow [`.github/workflows/publish-cli.yml`](../../.github/
 
 ### Prerequisites (One-time setup)
 
-1. Generate a Granular Access Token or Automation Token on [npmjs.com](https://www.npmjs.com/) with Publish permissions for the `@tbachir` scope.
+1. Generate a **Classic Automation Token** on [npmjs.com](https://www.npmjs.com/):
+   - Go to **Access Tokens** in your npm account settings (`https://www.npmjs.com/settings/<username>/tokens`).
+   - Click **Generate New Token** → **Classic Token**.
+   - Select the type: **Automation** (⚠️ **Important:** Do *not* select "Publish" or standard token; only "Automation" tokens bypass the 2FA one-time password prompt in headless CI).
 2. Add the token to your GitHub repository secrets:
    - Go to your repository on GitHub: **Settings** → **Secrets and variables** → **Actions**
    - Click **New repository secret**
    - Name: `NPM_TOKEN`
-   - Secret: `<your-npm-token>`
+   - Secret: `<your-npm-automation-token>`
 
 ### Triggering a Release
 

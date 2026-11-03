@@ -40,8 +40,8 @@ jobs:
           node --test tests/*.test.mjs
 
       - name: Verify package contents and prepack sync
+        working-directory: packages/cli
         run: |
-          cd packages/cli
           npm run sync
           npm pack --dry-run
 
@@ -53,8 +53,7 @@ jobs:
 
       - name: Publish to npm
         if: ${{ !inputs.dry_run }}
-        run: |
-          cd packages/cli
-          npm publish --provenance --access public
+        working-directory: packages/cli
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
