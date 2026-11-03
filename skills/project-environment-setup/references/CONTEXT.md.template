@@ -1,0 +1,19 @@
+# Context & Architecture
+
+## 1. Vision du Produit
+{{HIGH_LEVEL_PRODUCT_PITCH}}
+
+## 2. User Stories Principales
+1. {{USER_STORY_1}}
+2. {{USER_STORY_2}}
+3. {{USER_STORY_3}}
+
+## 3. Décisions d'Architecture Actées (ADR Append-Only)
+
+| ID | Décision | Statut | Date | Impact Technique |
+|---|---|---|---|---|
+| D-01 | {{DECISION_TITLE}} | Validé | {{DATE}} | {{TECHNICAL_IMPACT}} |
+
+## 4. Ce que le Produit n'est Pas (Anti-Scope)
+- {{OUT_OF_SCOPE_1}}
+- {{OUT_OF_SCOPE_2}}

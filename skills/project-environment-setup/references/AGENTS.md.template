@@ -1,0 +1,26 @@
+# Instructions pour les Agents IA
+
+## 1. Contexte du Dépôt
+- **Nom du projet** : {{PROJECT_NAME}}
+- **Type d'architecture** : {{MONOREPO_OR_STANDARD}}
+- **Gestionnaire de paquets** : pnpm
+- **Stack principale** : {{PRIMARY_STACK}}
+
+## 2. Commandes de Validation Obligatoires
+Avant de soumettre toute modification, l'agent DOIT exécuter et vérifier :
+```bash
+# Vérification du format et des règles de lint
+pnpm check
+
+# Vérification du typage strict TypeScript
+pnpm typecheck
+
+# Compilation de production
+pnpm build
+```
+
+## 3. Garde-Fous & Règles d'Or
+1. **Recherche amont** : Avant d'écrire un nouveau composant ou une logique utilitaire, vérifier si une librairie déjà installée ou un standard ne répond pas au besoin.
+2. **Intégrité de la documentation** : Préserver tous les commentaires et docstrings existants.
+3. **Isolation client / serveur** : Ne jamais importer de modules Node-only (`pg`, `fs`, `crypto`) dans des composants marqués `"use client"`.
+4. **Append-only pour les décisions** : Toute décision d'architecture structurante doit être ajoutée dans `CONTEXT.md` sous forme d'ADR immuable.
