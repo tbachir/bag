@@ -9,9 +9,14 @@
 bag search setup
 bag search template
 
-# Appliquer le skill pour démarrer un projet
-bag skill apply project-environment-setup
+# Prévisualiser l'installation du skill dans un projet (dry-run, rien n'est écrit)
+bag skill add project-environment-setup --target ./mon-projet
+
+# Installer réellement le skill (après relecture du dry-run)
+bag skill add project-environment-setup --target ./mon-projet --apply
 ```
+
+`skill add` copie uniquement le skill dans `.agents/skills/` du projet cible. Pour lancer le workflow d'initialisation, demandez ensuite à votre agent d'appliquer `project-environment-setup` : c'est lui qui exécute les étapes décrites dans `SKILL.md`.
 
 ## Contenu
 
