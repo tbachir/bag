@@ -63,6 +63,32 @@ test('CLI: skill add requires --apply and returns dry-run by default', async () 
   }
 });
 
+test('CLI: skill add honors --adapter and labels dry-run in text output', async () => {
+  const tmpTarget = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-cli-adapter-'));
+  try {
+    const { stdout: json } = await exec(process.execPath, [
+      CLI, 'skill', 'add', 'clean-code', '--target', tmpTarget, '-a', 'claude-code', '--json'
+    ]);
+    const plan = JSON.parse(json);
+    assert.equal(plan.status, 'dry-run');
+    assert.ok(plan.actions.every(a => a.destination.startsWith('.claude/skills/clean-code/')));
+
+    const { stdout: text } = await exec(process.execPath, [
+      CLI, 'skill', 'add', 'clean-code', '--target', tmpTarget, '-a', 'claude-code'
+    ]);
+    assert.match(text, /PREVIEW \(dry-run, no files written\)/);
+    assert.doesNotMatch(text, /APPLIED|undefined/);
+    assert.deepEqual(await fs.readdir(tmpTarget), []);
+
+    await exec(process.execPath, [
+      CLI, 'skill', 'add', 'clean-code', '--target', tmpTarget, '-a', 'claude-code', '--apply'
+    ]);
+    await fs.access(path.join(tmpTarget, '.claude/skills/clean-code/SKILL.md'));
+  } finally {
+    await fs.rm(tmpTarget, { recursive: true, force: true });
+  }
+});
+
 test('CLI: skill add rejects symlinked destination directory', async () => {
   const tmpTarget = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-cli-target-'));
   const outsideDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-cli-outside-'));

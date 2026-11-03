@@ -14,7 +14,7 @@ import {
   planLoadout,
   applyPlan,
   installSkill,
-  planItem,
+  resolveAgentSkillPath,
   checkTarget,
   checkDestination,
   fail,
@@ -175,50 +175,28 @@ async function main() {
           fail(`Skill not found: ${skillId}`);
         }
 
-        const agentFolder = flags.adapter === 'claude-code' ? '.claude/skills' : (flags.adapter === 'gemini' ? '.gemini/skills' : (flags.adapter === 'cursor' ? '.cursor/skills' : '.agents/skills'));
-        const relSkillDir = `${agentFolder}/${skillId}`;
+        const relSkillDir = path.posix.dirname(resolveAgentSkillPath(skillId, flags.adapter || undefined));
         const destSkill = path.join(destRoot, relSkillDir);
 
-        if (catalog.items.has(skillId) && catalog.items.get(skillId).kind === 'skill') {
+        const base = {
+          skill: skillId,
+          adapter: flags.adapter || 'agents',
+          destination: destSkill
+        };
+        let result = {};
+        if (catalog.items.get(skillId)?.kind === 'skill') {
           const res = await installSkill(catalog, skillId, destRoot, {
-            adapter: flags.adapter,
+            agent: flags.adapter || undefined,
             apply: flags.apply,
             lockfile: true
           });
-          if (!flags.apply) {
-            output = {
-              status: 'dry-run',
-              skill: skillId,
-              adapter: flags.adapter || 'agents',
-              destination: destSkill,
-              actions: res.actions,
-              message: 'Run with --apply to write changes to disk.'
-            };
-          } else {
-            output = {
-              status: 'installed',
-              skill: skillId,
-              adapter: flags.adapter || 'agents',
-              destination: destSkill,
-              actions: res.actions,
-              lockfile: res.lockfile
-            };
-          }
+          result = { actions: res.actions, ...(flags.apply && { lockfile: res.lockfile }) };
         } else {
-          if (!flags.apply) {
-            await copyDirSafe(sourceSkill, destRoot, relSkillDir, false);
-            output = {
-              status: 'dry-run',
-              skill: skillId,
-              adapter: flags.adapter || 'agents',
-              destination: destSkill,
-              message: 'Run with --apply to write changes to disk.'
-            };
-          } else {
-            await copyDirSafe(sourceSkill, destRoot, relSkillDir, true);
-            output = { status: 'installed', skill: skillId, destination: destSkill };
-          }
+          await copyDirSafe(sourceSkill, destRoot, relSkillDir, !!flags.apply);
         }
+        output = flags.apply
+          ? { status: 'installed', ...base, ...result }
+          : { status: 'dry-run', ...base, ...result, message: 'Run with --apply to write changes to disk.' };
       } else {
         fail(`Unknown skill action: ${action}`);
       }
@@ -423,12 +401,7 @@ async function main() {
         } else {
           await fs.mkdir(path.dirname(dest.full), { recursive: true });
           await checkDestination(targetDir, entry.dest);
-          const stat = await fs.stat(srcPath);
-          if (stat.isDirectory()) {
-            await copyDirSafe(srcPath, targetDir, entry.dest, true);
-          } else {
-            await fs.copyFile(srcPath, dest.full, fs.constants.COPYFILE_EXCL);
-          }
+          await fs.copyFile(srcPath, dest.full, fs.constants.COPYFILE_EXCL);
           output = {
             status: 'applied',
             template: tmplId,
@@ -501,7 +474,8 @@ async function main() {
     }
     console.log(`\n${output.length} result(s).`);
   } else if (output && output.actions) {
-    console.log(`${output.dryRun ? 'PREVIEW (dry-run, no files written)' : 'APPLIED'} · ${output.loadout} → ${output.target}`);
+    const dryRun = output.dryRun || output.status === 'dry-run';
+    console.log(`${dryRun ? 'PREVIEW (dry-run, no files written)' : 'APPLIED'} · ${output.loadout || output.skill} → ${output.target || output.destination}`);
     for (const a of output.actions) {
       console.log(`  ${a.status.padEnd(14)} ${a.item}: ${a.destination || a.source}`);
     }
