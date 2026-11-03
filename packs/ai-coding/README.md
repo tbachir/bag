@@ -11,6 +11,7 @@
 | Project rules | [AGENTS.md example](../../skill-tree/agents/AGENTS.example.md) | State architecture, commands, boundaries, and test evidence |
 | Repo guardrails | [BAG agent conventions](../../AGENTS.md) | Example of scope-limited instructions |
 | Reusable capability | [SKILL.md template](../../skill-tree/skills/_template/SKILL.md) | Define a narrow, verifiable skill |
+| Environment setup | [Project environment setup](../../skills/project-environment-setup/README.md) | Upstream research, library-first architecture, and baseline governance |
 | Integrations | [MCP catalog](../../skill-tree/mcp/README.md) | Review servers, access scope, compatibility |
 | Plugins | [Plugin catalog](../../skill-tree/plugins/README.md) | Assess available actions and data permissions |
 | Checks | [Validation script](../../spellbook/scripts/README.md) | Validate BAG's own docs, not arbitrary project tests |

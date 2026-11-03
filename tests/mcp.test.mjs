@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
+import { fileURLToPath } from 'node:url';
 import { handleRequest, executeTool } from '../spellbook/scripts/bag-mcp.mjs';
 
 test('MCP initialize handshake returns protocol version and server info', async () => {
@@ -224,7 +225,7 @@ test('MCP tools/call: bag_clean_code runs hygiene audit', async () => {
     method: 'tools/call',
     params: {
       name: 'bag_clean_code',
-      arguments: { targetDirectory: 'spellbook/scripts/clean-code.mjs' }
+      arguments: { targetDirectory: fileURLToPath(new URL('../spellbook/scripts/clean-code.mjs', import.meta.url)) }
     }
   });
   assert.equal(res.result.isError, false);

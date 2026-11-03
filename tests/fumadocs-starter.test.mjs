@@ -4,8 +4,9 @@ import { existsSync, mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
-const cli = path.resolve('equipment/fumadocs-starter/create.mjs');
+const cli = fileURLToPath(new URL('../equipment/fumadocs-starter/create.mjs', import.meta.url));
 
 test('fumadocs starter previews a new app without modifying disk or contacting npm', () => {
   const base = mkdtempSync(path.join(tmpdir(), 'bag-fumadocs-'));

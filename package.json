@@ -1,0 +1,24 @@
+{
+  "name": "bag",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Developer inventory, skills, and tools for AI coding agents",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:docs": "pnpm --dir apps/docs test:unit",
+    "test:all": "node --test tests/*.test.mjs && pnpm --dir apps/docs test:unit",
+    "validate": "node spellbook/scripts/validate.mjs && node spellbook/scripts/bag.mjs validate --json",
+    "sync": "node spellbook/scripts/sync-cli.mjs",
+    "bag": "node packages/cli/bin/bag.mjs",
+    "clean-code": "node spellbook/scripts/clean-code.mjs",
+    "freshness": "node spellbook/scripts/check-skill-freshness.mjs",
+    "docs:dev": "pnpm --dir apps/docs dev",
+    "docs:build": "pnpm --dir apps/docs build",
+    "docs:generate": "pnpm --dir apps/docs content:generate",
+    "docs:check": "pnpm --dir apps/docs content:check"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

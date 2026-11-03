@@ -28,9 +28,11 @@ bag skill add addbag -a claude-code
 | [bag-author-metadata](bag-author-metadata/README.md) | Define item metadata and navigation | [SKILL.md](bag-author-metadata/SKILL.md) |
 | [bag-author-task](bag-author-task/README.md) | Write actionable task guides and manifests | [SKILL.md](bag-author-task/SKILL.md) |
 | [bag-inventory](bag-inventory/README.md) | Discover and evaluate items from the BAG catalog | [SKILL.md](bag-inventory/SKILL.md) |
+| [clean-code](clean-code/README.md) | Syntax-aware code hygiene, dead code analysis, and safe whitespace cleanup | [SKILL.md](clean-code/SKILL.md) |
 | [docs-architect](docs-architect/README.md) | Plan and audit task-oriented documentation architecture | [SKILL.md](docs-architect/SKILL.md) |
 | [fumadocs-engineer](fumadocs-engineer/README.md) | Design and maintain Fumadocs/Next.js documentation sites | [SKILL.md](fumadocs-engineer/SKILL.md) |
 | [o2switch-cloud](o2switch-cloud/README.md) | Cloud hosting & deployment guidance for o2switch | [SKILL.md](o2switch-cloud/SKILL.md) |
+| [project-environment-setup](project-environment-setup/README.md) | Upstream research, library-first architecture, and governance baseline (AGENTS.md, design.md) | [SKILL.md](project-environment-setup/SKILL.md) |
 | [prompt-quality-reviewer](prompt-quality-reviewer/README.md) | Evaluate and iteratively improve prompts | [SKILL.md](prompt-quality-reviewer/SKILL.md) |
 | [repository-auditor](repository-auditor/README.md) | Audit repositories for reusable, safe assets | [SKILL.md](repository-auditor/SKILL.md) |
 | [reusable-component-extractor](reusable-component-extractor/README.md) | Extract portable components and configs | [SKILL.md](reusable-component-extractor/SKILL.md) |
