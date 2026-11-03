@@ -216,7 +216,8 @@ export function resolveAgentSkillPath(skillId, agent = 'agents') {
   switch (agent) {
     case 'gemini': return `.gemini/skills/${skillId}/SKILL.md`;
     case 'cursor': return `.cursor/skills/${skillId}/SKILL.md`;
-    case 'claude': return `.claude/skills/${skillId}/SKILL.md`;
+    case 'claude':
+    case 'claude-code': return `.claude/skills/${skillId}/SKILL.md`;
     case 'root': return `skills/${skillId}/SKILL.md`;
     case 'agents':
     default:
