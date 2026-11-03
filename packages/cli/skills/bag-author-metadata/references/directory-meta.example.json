@@ -1,9 +1,0 @@
-{
-  "title": "React",
-  "pages": ["index", "tutorials", "..."],
-  "bag": {
-    "type": "library",
-    "tags": ["react", "frontend"],
-    "links": { "official": "https://react.dev" }
-  }
-}
