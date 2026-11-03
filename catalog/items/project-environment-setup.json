@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "project-environment-setup",
+  "title": "Project Environment Setup",
+  "summary": "Upstream research of templates and libraries, minimal custom code, and zero-day governance setup (AGENTS.md, design.md, CONTEXT.md).",
+  "zone": "skills",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "bootstrap",
+    "governance",
+    "agents",
+    "scaffold",
+    "skills",
+    "turborepo"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skills/project-environment-setup/SKILL.md"
+  },
+  "mode": "reference"
+}

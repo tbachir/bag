@@ -1,0 +1,40 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": [
+    "scaffold",
+    "monorepo",
+    "architecture",
+    "bootstrap"
+  ],
+  "tags": [
+    "bootstrap",
+    "governance",
+    "agents",
+    "templates",
+    "scaffold"
+  ],
+  "technologies": [
+    "turborepo",
+    "pnpm",
+    "nextjs",
+    "drizzle",
+    "biome"
+  ],
+  "useCases": [
+    "project-setup",
+    "governance-setup",
+    "template-discovery"
+  ],
+  "prompts": [
+    {
+      "title": "Setup a new project environment with governance",
+      "text": "Use the project-environment-setup skill to research upstream starters, templates and libraries, scaffold the repository base, and generate AGENTS.md, design.md, and CONTEXT.md with zero manual boilerplate."
+    },
+    {
+      "title": "Audit and reinforce repository governance",
+      "text": "Use project-environment-setup to review our project root, verify that AGENTS.md, design.md, and CONTEXT.md are up to date, and eliminate unnecessary custom code by replacing it with established libraries."
+    }
+  ]
+}

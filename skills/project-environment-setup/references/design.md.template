@@ -1,0 +1,50 @@
+# Design System & UI Guidelines
+
+## 1. Tokens de Couleurs (Mode Clair & Sombre)
+
+```css
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --sunk: #eef0f3;
+  --line: #dde1e7;
+  --fg: #1c2129;
+  --muted: #667080;
+  --accent: #3b5bdb;
+  --accent-soft: #e7ecfd;
+  --ok: #2f9e44;
+  --ok-soft: #e6f4ea;
+  --warn: #e67700;
+  --warn-soft: #fff1db;
+  --bad: #c92a2a;
+  --bad-soft: #fdecec;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14171c;
+    --panel: #1b1f26;
+    --sunk: #22272f;
+    --line: #30363f;
+    --fg: #e4e8ee;
+    --muted: #9099a6;
+    --accent: #7c95f5;
+    --accent-soft: #252d4a;
+    --ok: #5cc070;
+    --ok-soft: #1d3324;
+    --warn: #f0a040;
+    --warn-soft: #3a2b17;
+    --bad: #f06a6a;
+    --bad-soft: #3b1f1f;
+  }
+}
+```
+
+## 2. Typographie
+- **Sans-serif (Interface)** : `"IBM Plex Sans"`, system-ui, sans-serif
+- **Monospace (Code & IDs)** : `"IBM Plex Mono"`, ui-monospace, monospace
+
+## 3. Primitives de Composants
+- Utiliser les composants headless de `@radix-ui` stylés avec Tailwind CSS.
+- Iconographie standardisée avec `lucide-react`.
+- Graphes et toiles interactives avec `@xyflow/react` (React Flow).
