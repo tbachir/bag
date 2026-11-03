@@ -12,7 +12,9 @@ import { findTaskManifests } from './task-manifest.mjs';
 
 export const appDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const repoRoot = path.resolve(appDir, '../..');
-const zones = ['inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot', 'loadouts'];
+export const primaryZones = ['skills', 'mcp', 'recipes', 'templates', 'packs', 'guides'];
+export const legacyZones = ['inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot', 'loadouts'];
+const zones = [...primaryZones, ...legacyZones];
 const scopes = [...zones, 'catalog', 'templates', 'demo'];
 export function inScope(file) {
   return scopes.some((scope) => file.startsWith(`${scope}/`)) || (!file.includes('/') && file.endsWith('.md'));
@@ -52,7 +54,7 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     const name = path.posix.basename(file);
     const privateEnv = /^\.env(?:\.|$)/i.test(name) && !/^\.env\.(example|sample|template)$/i.test(name);
     if (privateEnv || /\.(pem|key|p12|pfx|secret)$/i.test(name)) throw new Error(`Secret-like source is not publishable: ${file}`);
-    if (!/\.(md|mdx)$/i.test(file)) {
+    if (!/\.(md|mdx)$/i.test(file) || file.startsWith('equipment/fumadocs-starter/overlay/')) {
       assets.push({ sourcePath: file, url: `/files/${encodePath(file)}` });
       continue;
     }
@@ -192,7 +194,22 @@ export async function generate({ root = repoRoot, app = appDir, files } = {}) {
     const disk = path.join(generated, 'content', dir);
     const children = await readdir(disk, { withFileTypes: true });
     const names = children.map((child) => child.isDirectory() ? child.name : child.name.replace(/\.md$/, '')).sort();
-    const order = dir ? ['index'] : ['index', 'zones', ...zones, 'catalog', 'templates', 'demo', 'downloads'];
+    const order = dir ? ['index'] : [
+      'index',
+      'zones',
+      '---Primitives---',
+      ...primaryZones,
+      '---Registry & Downloads---',
+      'catalog',
+      'downloads',
+      'demo',
+      '---Governance---',
+      'agents',
+      'contributing',
+      'security',
+      '---Legacy Zones---',
+      ...legacyZones
+    ];
     const configured = folderConfigs.get(dir);
     await write(path.join(disk, 'meta.json'), `${JSON.stringify(folderNavigation(configured, names, order), null, 2)}\n`);
   }

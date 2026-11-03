@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "markdown-search",
+  "title": "BAG Markdown finder",
+  "summary": "Read-only search script for free-text notes outside the structured catalog.",
+  "zone": "spellbook",
+  "kind": "script",
+  "status": "ready",
+  "tags": [
+    "search",
+    "node",
+    "markdown"
+  ],
+  "source": {
+    "type": "local",
+    "path": "spellbook/scripts/find.mjs"
+  },
+  "mode": "reference"
+}

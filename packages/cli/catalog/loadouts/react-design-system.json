@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "react-design-system",
+  "title": "React · Coherent Design System",
+  "summary": "Standardise React and Next.js design with shadcn primitives, ReUI patterns, DESIGN.md and an accessibility review. Avoid duplicate headless stacks.",
+  "items": [
+    {
+      "id": "shadcn-ui"
+    },
+    {
+      "id": "reui"
+    },
+    {
+      "id": "design-md"
+    },
+    {
+      "id": "ui-ux-design-review"
+    },
+    {
+      "id": "reusable-component-extractor"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "recipe",
+  "tags": [
+    "recipes",
+    "workflows",
+    "tasks",
+    "blueprints"
+  ],
+  "navigation": {
+    "title": "Recipes & Workflows",
+    "pages": [
+      "index",
+      "auth",
+      "mobile"
+    ]
+  }
+}

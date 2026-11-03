@@ -1,0 +1,37 @@
+{
+  "name": "@tbachir/bag",
+  "version": "1.0.0",
+  "description": "BAG CLI — Agent-first developer inventory and scaffolding tool",
+  "type": "module",
+  "bin": {
+    "bag": "./bin/bag.mjs"
+  },
+  "scripts": {
+    "sync": "node ../../spellbook/scripts/sync-cli.mjs",
+    "prepack": "node ../../spellbook/scripts/sync-cli.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "catalog",
+    "skills",
+    "mcp",
+    "recipes",
+    "templates",
+    "packs"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "ai-agents",
+    "developer-inventory",
+    "agent-skills",
+    "mcp",
+    "recipes",
+    "templates"
+  ],
+  "author": "tbachir",
+  "license": "MIT"
+}

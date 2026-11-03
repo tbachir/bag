@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "bag-mcp",
+  "title": "BAG MCP Server",
+  "summary": "Model Context Protocol (MCP) server providing AI agents direct, read-only access to the BAG catalog, documentation, skills, and loadouts.",
+  "zone": "spellbook",
+  "kind": "mcp",
+  "status": "ready",
+  "tags": [
+    "mcp",
+    "agents",
+    "discovery",
+    "search",
+    "tools"
+  ],
+  "source": {
+    "type": "local",
+    "path": "spellbook/scripts/bag-mcp.mjs"
+  },
+  "mode": "reference"
+}

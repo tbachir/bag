@@ -9,10 +9,20 @@ import readline from 'node:readline';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { readCatalog, searchItems, describeLoadout, planLoadout, safeRelative, ROOT } from '../../catalog/lib.mjs';
+import {
+  readCatalog,
+  searchItems,
+  describeLoadout,
+  planLoadout,
+  installSkill,
+  listFunctions,
+  executeFunction,
+  safeRelative,
+  ROOT
+} from '../../catalog/lib.mjs';
 
 const SERVER_NAME = 'bag-mcp';
-const SERVER_VERSION = '1.0.0';
+const SERVER_VERSION = '1.1.0';
 const DEFAULT_PROTOCOL_VERSION = '2024-11-05';
 
 const HELP = `BAG MCP Server — Model Context Protocol endpoint for BAG Developer Inventory.
@@ -67,7 +77,7 @@ const TOOLS = [
       properties: {
         query: {
           type: 'string',
-          description: 'Keywords to search for (e.g. "mcp", "skill", "git", "nextjs")'
+          description: 'Keywords to search for (e.g. "mcp", "skill", "git", "nextjs", "clean-code")'
         }
       },
       required: ['query'],
@@ -82,8 +92,8 @@ const TOOLS = [
       properties: {
         zone: {
           type: 'string',
-          description: 'RPG zone filter: inventory, equipment, skill-tree, spellbook, maps-and-guides, loot',
-          enum: ['inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot']
+          description: 'Zone filter: skills, mcp, recipes, templates, packs, guides, inventory, equipment, skill-tree, spellbook, maps-and-guides, loot',
+          enum: ['skills', 'mcp', 'recipes', 'templates', 'packs', 'guides', 'inventory', 'equipment', 'skill-tree', 'spellbook', 'maps-and-guides', 'loot']
         },
         kind: {
           type: 'string',
@@ -110,7 +120,7 @@ const TOOLS = [
       properties: {
         id: {
           type: 'string',
-          description: 'Unique item ID (e.g. "addbag", "mcp-catalog", "agent-rules")'
+          description: 'Unique item ID (e.g. "clean-code", "addbag", "mcp-catalog", "agent-rules")'
         }
       },
       required: ['id'],
@@ -176,6 +186,87 @@ const TOOLS = [
     }
   },
   {
+    name: 'bag_install_skill',
+    description: 'Install a skill from the BAG inventory into a target project directory, configuring the agent skill path (.agents/skills, .gemini/skills, etc.) and updating skills-lock.json with SHA-256 hash.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        skillId: {
+          type: 'string',
+          description: 'Item ID of the skill to install (e.g. "clean-code")'
+        },
+        targetDirectory: {
+          type: 'string',
+          description: 'Existing destination project directory on local filesystem'
+        },
+        agentClient: {
+          type: 'string',
+          description: 'Agent client directory style',
+          enum: ['agents', 'gemini', 'cursor', 'claude', 'root']
+        },
+        apply: {
+          type: 'boolean',
+          description: 'Set to true to write files and update lockfile. If false (default), dry-run plan only.'
+        }
+      },
+      required: ['skillId', 'targetDirectory'],
+      additionalProperties: false
+    }
+  },
+  {
+    name: 'bag_list_functions',
+    description: 'List all callable functions and system scripts registered in BAG.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      additionalProperties: false
+    }
+  },
+  {
+    name: 'bag_call_function',
+    description: 'Execute a curated, allowlisted system function or script in BAG (e.g. clean-code, ui-studio, skill-audit, validate).',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        functionName: {
+          type: 'string',
+          description: 'Name of the allowlisted function to execute',
+          enum: ['clean-code', 'ui-studio', 'skill-audit', 'validate']
+        },
+        targetDirectory: {
+          type: 'string',
+          description: 'Optional target directory for execution'
+        },
+        args: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Optional arguments to pass to the function script'
+        }
+      },
+      required: ['functionName'],
+      additionalProperties: false
+    }
+  },
+  {
+    name: 'bag_clean_code',
+    description: 'Run the BAG Clean Code scanner on a target codebase to audit code hygiene, dead code, excessive nesting, and stray debug statements, with optional auto-fix.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        targetDirectory: {
+          type: 'string',
+          description: 'Target directory or file path to analyze'
+        },
+        fix: {
+          type: 'boolean',
+          description: 'Set to true to automatically fix safe whitespace issues'
+        }
+      },
+      required: ['targetDirectory'],
+      additionalProperties: false
+    }
+  },
+  {
     name: 'bag_ui_studio',
     description: 'Generate an interactive HTML UI Studio prototype, screen specs, Storybook catalog, and dead-features audit for any project with a design/DESIGN.md or auto-discovered routes.',
     inputSchema: {
@@ -231,10 +322,8 @@ export async function executeTool(name, args = {}) {
           summary: item.summary,
           zone: item.zone,
           kind: item.kind,
-          status: item.status,
           tags: item.tags,
-          mode: item.mode,
-          sourcePath: item.source.path
+          mode: item.mode
         }))
       };
     }
@@ -252,8 +341,8 @@ export async function executeTool(name, args = {}) {
           summary: i.summary,
           zone: i.zone,
           kind: i.kind,
-          status: i.status,
-          tags: i.tags
+          tags: i.tags,
+          mode: i.mode
         }))
       };
     }
@@ -265,7 +354,7 @@ export async function executeTool(name, args = {}) {
       try {
         sourceContent = await safeReadDocument(item.source.path);
       } catch (err) {
-        sourceContent = `(Could not read source document: ${err.message})`;
+        sourceContent = `Error reading source file: ${err.message}`;
       }
       return {
         item,
@@ -274,6 +363,7 @@ export async function executeTool(name, args = {}) {
     }
     case 'bag_list_loadouts': {
       return {
+        total: catalog.loadouts.size,
         loadouts: [...catalog.loadouts.values()].map(l => ({
           id: l.id,
           title: l.title,
@@ -298,6 +388,31 @@ export async function executeTool(name, args = {}) {
       if (!args.loadoutId) throw new Error('loadoutId is required');
       if (!args.targetDirectory) throw new Error('targetDirectory is required');
       return await planLoadout(catalog, args.loadoutId, args.targetDirectory);
+    }
+    case 'bag_install_skill': {
+      if (!args.skillId) throw new Error('skillId is required');
+      if (!args.targetDirectory) throw new Error('targetDirectory is required');
+      return await installSkill(catalog, args.skillId, args.targetDirectory, {
+        agent: args.agentClient || 'agents',
+        apply: args.apply === true
+      });
+    }
+    case 'bag_list_functions': {
+      return { functions: listFunctions() };
+    }
+    case 'bag_call_function': {
+      if (!args.functionName) throw new Error('functionName is required');
+      return await executeFunction(args.functionName, args.args || [], {
+        target: args.targetDirectory
+      });
+    }
+    case 'bag_clean_code': {
+      if (!args.targetDirectory) throw new Error('targetDirectory is required');
+      const { runCleanCode } = await import('./clean-code.mjs');
+      return await runCleanCode({
+        target: args.targetDirectory,
+        fix: args.fix === true
+      });
     }
     case 'bag_ui_studio': {
       if (!args.targetDirectory) throw new Error('targetDirectory is required');
@@ -343,7 +458,7 @@ export async function handleRequest(message) {
             name: SERVER_NAME,
             version: SERVER_VERSION
           },
-          instructions: 'BAG (Bag of Holding) Developer Inventory MCP Server. Provides read-only access to search, discover, inspect, and plan loadouts from the BAG repository.'
+          instructions: 'BAG (Bag of Holding) Developer Inventory MCP Server. Provides tools to search, discover, inspect, plan loadouts, install skills, and execute curated system tasks and clean code audits from the BAG repository.'
         }
       };
     }
@@ -602,7 +717,6 @@ export function startServer() {
       const message = JSON.parse(trimmed);
       const response = await handleRequest(message);
       if (response) {
-        // Enforce single-line JSON formatting on stdout
         process.stdout.write(JSON.stringify(response) + '\n');
       }
     } catch (err) {

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "pick-ui-library",
+  "title": "Pick UI Library (Emil Kowalski)",
+  "summary": "Opinionated frontend library selection (Base UI, Sonner, motion primitives) to prevent custom reinventing.",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "react",
+    "ui",
+    "libraries",
+    "frontend",
+    "skills"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/pick-ui-library/README.md"
+  },
+  "mode": "reference",
+  "notes": "Upstream source: https://www.ui-skills.com/skills/emilkowalski/pick-ui-library. Reference only, not vendored."
+}

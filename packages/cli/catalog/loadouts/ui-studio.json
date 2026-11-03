@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "ui-studio",
+  "title": "Universal UI Studio & Prototype Suite",
+  "summary": "Equip any project with design/DESIGN.md, interactive prototype studio, route specifications, component storybook, and dead-features audit.",
+  "items": [
+    {
+      "id": "ui-studio"
+    },
+    {
+      "id": "design-md"
+    }
+  ]
+}

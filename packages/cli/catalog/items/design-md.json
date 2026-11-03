@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "design-md",
+  "title": "DESIGN.md",
+  "summary": "Design tokens for AI agents",
+  "zone": "inventory",
+  "kind": "resource",
+  "status": "ready",
+  "tags": [
+    "design",
+    "agents"
+  ],
+  "source": {
+    "type": "local",
+    "path": "inventory/resources/design-md/README.md"
+  },
+  "mode": "reference"
+}

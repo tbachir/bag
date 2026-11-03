@@ -1,0 +1,17 @@
+{
+  "type": "mcp",
+  "tags": [
+    "mcp",
+    "model-context-protocol",
+    "tools",
+    "servers"
+  ],
+  "navigation": {
+    "title": "MCP Hub",
+    "pages": [
+      "index",
+      "servers",
+      "adapters"
+    ]
+  }
+}

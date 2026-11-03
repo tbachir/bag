@@ -1,0 +1,15 @@
+{
+  "type": "skill",
+  "tags": [
+    "ai-skills",
+    "agent-skills",
+    "automation",
+    "prompts"
+  ],
+  "navigation": {
+    "title": "Agent Skills",
+    "pages": [
+      "index"
+    ]
+  }
+}

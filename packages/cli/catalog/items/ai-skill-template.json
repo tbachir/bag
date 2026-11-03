@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "ai-skill-template",
+  "title": "SKILL.md starter",
+  "summary": "Generic task-focused AI skill template, to adapt to the intended client's current conventions.",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "skills",
+    "agents",
+    "ai"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/_template/SKILL.md"
+  },
+  "mode": "reference",
+  "notes": "Reference-only: do not assume an install directory across agent products."
+}

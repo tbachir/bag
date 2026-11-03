@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "item": "o2switch-cloud",
-  "canonical": "skill-tree/skills/o2switch-cloud/SKILL.md",
+  "canonical": "skills/o2switch-cloud/SKILL.md",
   "docs": [
-    "skill-tree/skills/o2switch-cloud/SKILL.md",
-    "skill-tree/skills/o2switch-cloud/references/00-plan-cpanel.md"
+    "skills/o2switch-cloud/SKILL.md",
+    "skills/o2switch-cloud/references/00-plan-cpanel.md"
   ],
   "consumers": [
     {

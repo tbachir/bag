@@ -1,0 +1,20 @@
+{
+  "type": "template",
+  "tags": [
+    "templates",
+    "scaffolding",
+    "configs",
+    "boilerplates"
+  ],
+  "navigation": {
+    "title": "Templates & Scaffolding",
+    "pages": [
+      "index",
+      "configs",
+      "boilerplates",
+      "skills",
+      "item",
+      "delegable-item"
+    ]
+  }
+}

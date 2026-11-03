@@ -1,0 +1,21 @@
+{
+  "type": "guide",
+  "tags": [
+    "documentation",
+    "diataxis",
+    "guides",
+    "tutorials",
+    "references",
+    "concepts"
+  ],
+  "navigation": {
+    "title": "Guides & Docs",
+    "pages": [
+      "index",
+      "tutorials",
+      "how-to",
+      "concepts",
+      "reference"
+    ]
+  }
+}

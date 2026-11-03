@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "mobile-boilerplate",
+  "title": "Expo/Next/Hono Boilerplate",
+  "summary": "Cross-app starter and branding patterns",
+  "zone": "inventory",
+  "kind": "repository",
+  "status": "ready",
+  "tags": [
+    "expo",
+    "monorepo",
+    "mobile"
+  ],
+  "source": {
+    "type": "local",
+    "path": "inventory/repositories/sb-mobile-app-boilerplate/README.md"
+  },
+  "mode": "reference"
+}

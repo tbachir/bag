@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "reui",
+  "title": "ReUI",
+  "summary": "Composed shadcn UI patterns",
+  "zone": "inventory",
+  "kind": "library",
+  "status": "ready",
+  "tags": [
+    "react",
+    "ui"
+  ],
+  "source": {
+    "type": "local",
+    "path": "inventory/libraries/reui/README.md"
+  },
+  "mode": "reference"
+}

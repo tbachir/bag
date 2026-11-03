@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "node-project",
+  "title": "Node/TypeScript Project Starter",
+  "summary": "Portable project formatting and ignore defaults; no package installation.",
+  "items": [
+    {
+      "id": "editorconfig"
+    },
+    {
+      "id": "node-gitignore"
+    }
+  ]
+}

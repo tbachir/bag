@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "reusable-component-extractor",
+  "title": "Reusable Component Extractor",
+  "summary": "Safe component extraction",
+  "zone": "skill-tree",
+  "kind": "skill",
+  "status": "ready",
+  "tags": [
+    "components",
+    "reuse"
+  ],
+  "source": {
+    "type": "local",
+    "path": "skill-tree/skills/reusable-component-extractor/SKILL.md"
+  },
+  "mode": "reference"
+}

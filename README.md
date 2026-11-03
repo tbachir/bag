@@ -8,45 +8,56 @@ It's not just a bookmark collection. It's a **searchable, reusable, AI-friendly 
 
 **Collect what matters. Equip what you need. Keep leveling up.**
 
-## 🔎 Find and use an item
+---
 
-**BAG is a recursive, item-first inventory.** Every directory can represent a resource,
-a skill, a workflow or a guide, with optional metadata and nested items of any depth.
-The seven original zones are internal organization conventions, not mandatory item types.
+## ⚡ The Five First-Class Primitives
 
-Start with [Explore BAG](apps/docs/content/docs/zones.mdx) for task-oriented navigation.
-The documentation website renders the canonical Markdown; do not edit generated files.
+BAG organizes resources into five core primitives and comprehensive Diátaxis guides, fully accessible via CLI, web documentation, and MCP:
 
-| Your goal | Canonical entrypoint |
-| --- | --- |
-| Find a library, repository or service | [Resources](inventory/README.md) |
-| Use an AI skill or agent integration | [Skills](skill-tree/skills/README.md) |
-| Reuse a command or automation | [Scripts](spellbook/scripts/README.md) |
-| Learn or document a process | [Guides](maps-and-guides/README.md) |
-| Assemble resources for a project | [Loadouts](loadouts/README.md) |
-| Author a new item or nested resource | [Authoring skills](maps-and-guides/bag-authoring-skills.md) |
-| Reuse lessons from an AI conversation | [Add to BAG skill](skill-tree/skills/addbag/README.md) |
+| Primitive | Directory | Purpose |
+| --- | --- | --- |
+| 🛠️ **Skills** | [`skills/`](skills/README.md) | 27 portable agent skills (`SKILL.md`) for Codex, Claude Code, Cursor, Antigravity |
+| 🔌 **MCP Hub** | [`mcp/`](mcp/README.md) | Model Context Protocol servers (`bag-mcp`, `supabase`, `context7`, `ui-skills`) & client adapters |
+| 📋 **Recipes** | [`recipes/`](recipes/README.md) | Actionable, multi-step task blueprints with composer manifests (`auth`, `mobile`) |
+| 📦 **Templates** | [`templates/`](templates/README.md) | Clean boilerplates and configuration defaults (`.editorconfig`, `.gitignore`, `fumadocs-starter`) |
+| 🎒 **Packs** | [`packs/`](packs/README.md) | Curated loadouts for immediate adoption (`ai-coding`, `fumadocs-knowledge-base`, `ui-studio`) |
+| 🗺️ **Guides** | [`guides/`](guides/README.md) | Diátaxis documentation: [Tutorials](guides/tutorials/README.md), [How-To](guides/how-to/README.md), [Concepts](guides/concepts/README.md), [Reference](guides/reference/README.md) |
 
-Equipment and Loot remain available as [configuration](equipment/README.md) and
-[discovery](loot/README.md) collections, but no longer compete for top-level attention.
+*(The original seven RPG zones — `inventory/`, `equipment/`, `skill-tree/`, `spellbook/`, `maps-and-guides/`, `loot/`, `loadouts/` — remain fully indexed and preserved for backward compatibility).*
 
-## 🧠 Intelligent catalog (V2)
+---
 
-BAG also exposes a [versioned, machine-readable catalog](catalog/README.md) that AI agents can search, inspect, and compose into safe local loadouts.
+## 🛠️ BAG CLI (`@tbachir/bag`)
+
+BAG includes a modern, zero-dependency command-line interface matching the primitives:
 
 ```bash
-node spellbook/scripts/bag.mjs search "agents" --json
-node spellbook/scripts/bag.mjs loadout ai-coding --json
-node spellbook/scripts/bag.mjs plan ai-coding --target ../my-project --json
-# After reviewing the plan and approving the change:
-node spellbook/scripts/bag.mjs equip ai-coding --target ../my-project --apply
+# Search and discover
+node packages/cli/bin/bag.mjs search "supabase"
+node packages/cli/bin/bag.mjs skill list
+node packages/cli/bin/bag.mjs skill show clean-code
+
+# Equip agent skills
+node packages/cli/bin/bag.mjs skill add clean-code --target ../my-project -a claude-code
+
+# Setup MCP servers in your editor
+node packages/cli/bin/bag.mjs mcp add supabase -a cursor --target ../my-project --apply
+
+# Inspect recipe prompts
+node packages/cli/bin/bag.mjs recipe show auth --prompt
+
+# Equip complete packs (dry-run first, safe by default)
+node packages/cli/bin/bag.mjs pack plan ai-coding --target ../my-project
+node packages/cli/bin/bag.mjs pack equip ai-coding --target ../my-project --apply
 ```
 
-**Safe by design:** no automatic installations, external commands, network access, secret handling, or overwrites. Applying only copies explicitly listed local templates into an existing project directory. Read the [agent and user field guide](maps-and-guides/catalog-and-loadouts.md) for limitations and approval rules.
+**Safe by design:** Zero automatic installations, external commands, secret handling, or destructive overwrites. Applying only copies explicitly reviewed files into your target workspace.
+
+---
 
 ## 🚀 Quick start
 
-**Browsing:** choose a zone above. **Looking for something:** run the built-in search.
+**Browsing:** choose a primitive above or explore the docs web app.
 
 ```bash
 git clone https://github.com/tbachir/bag.git
@@ -55,7 +66,7 @@ node spellbook/scripts/find.mjs "mcp"
 node spellbook/scripts/validate.mjs
 ```
 
-No dependencies required for these scripts; use Node.js 20+ (the repository CI uses Node.js 24).
+No dependencies required for these scripts; use Node.js 20+ (CI uses Node.js 24).
 
 ### Documentation website
 
@@ -68,18 +79,9 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://localhost:3000/docs. The app has its own lockfile. `pnpm build`
-compiles the tracked BAG content into static files in `out/` for any static host.
-The app README covers permanent Playwright setup, automatic GitHub Pages publishing after merges to `main`,
-and optional Vercel hosting. Existing Markdown remains the source of truth.
+Open http://localhost:3000/docs. `pnpm build` compiles tracked content into static files in `out/` for static hosting (GitHub Pages, Vercel, or custom servers).
 
-### The gameplay loop
-
-1. **Find loot** → drop a promising discovery in [Loot](loot/README.md).
-2. **Identify it** → check quality, official docs, security, licensing, and relevance.
-3. **Store it** → move the useful item into the right permanent zone.
-4. **Equip it** → assemble it into a [Loadout](loadouts/README.md) when it solves a repeatable problem.
-5. **Level up** → update examples, caveats, and compatibility as you learn.
+---
 
 ## 🧭 Rules of the bag
 
@@ -90,16 +92,17 @@ and optional Vercel hosting. Existing Markdown remains the source of truth.
 - **Make it discoverable.** Favor descriptive names, relative links, short summaries, and reproducible examples.
 - **Humans and agents welcome.** Start with [AGENTS.md](AGENTS.md) for automation and [CONTRIBUTING.md](CONTRIBUTING.md) to add items.
 
+---
+
 ## 🎯 Starter quests
 
-- [Learn how to pack a new item](maps-and-guides/getting-started.md)
+- [Learn how to pack a new item](guides/tutorials/getting-started.md)
 - [Open the item card template](templates/item.md)
-- [Set up an AI coding loadout](loadouts/ai-coding/README.md)
-- [Use the skill template](skill-tree/skills/_template/SKILL.md)
-- [Equip the BAG discovery skill (opt-in)](skill-tree/skills/bag-inventory/SKILL.md)
-- [Explore the o2switch Cloud Expert skill](skill-tree/skills/o2switch-cloud/SKILL.md)
-- [Explore the local search script](spellbook/scripts/README.md)
-- [Read the BAG pitch and technical specification (French)](maps-and-guides/vision/README.md)
+- [Explore AI coding pack](packs/ai-coding/README.md)
+- [Use the skill template](templates/skills/SKILL.md)
+- [Inspect the Clean Code skill](skills/clean-code/SKILL.md)
+- [Explore the o2switch Cloud Expert skill](skills/o2switch-cloud/SKILL.md)
+- [Storybook: Fondations & Automatisation IA](guides/how-to/storybook-fondations.md)
 
 ### 🇫🇷 En bref
 
@@ -107,27 +110,12 @@ and optional Vercel hosting. Existing Markdown remains the source of truth.
 
 ---
 
-*An inventory is never finished. There's always another quest.*
-
 ## 🤖 Delegate an item to your own AI agent
 
-Each reusable item can offer short prompts to copy into Codex, Claude Code, or another agent running in **your target project**. The prompt links directly to the BAG item; the agent reads BAG's root and nested `AGENTS.md` instructions, relevant docs and references, inspects your project, then asks only necessary questions before execution. No website-based interview module is required.
+Each reusable item can offer short prompts to copy into Codex, Claude Code, or another agent running in **your target project**. The prompt links directly to the BAG item; the agent reads BAG's root and nested `AGENTS.md` instructions, relevant docs and references, inspects your project, then asks only necessary questions before execution.
 
-- [Delegation protocol](maps-and-guides/agent-delegation-protocol.md)
-- [Inline prompts anywhere in Markdown](maps-and-guides/inline-prompts.md)
+- [Delegation protocol](guides/concepts/agent-delegation-protocol.md)
+- [Inline prompts anywhere in Markdown](guides/how-to/inline-prompts.md)
 - [Delegable item template](templates/delegable-item.md)
-- [Supabase Auth example with generic and tutorial prompts](inventory/supabase/auth/README.md)
-
-
-
-## 🧩 Task Composer
-
-BAG items can offer task trees alongside their documentation. Select capabilities, add required prerequisites, and copy a minimal agent prompt. See the [task composition guide](maps-and-guides/task-composer.md), [Supabase Auth task manifest](inventory/supabase/auth/tasks/index.json), and [standalone composer demo](demo/task-composer.html).
-
-## 🔗 One canonical resource, many uses
-
-A BAG skill, config, script or workflow can be documented by this inventory and separately consumed by projects or compatible agents without maintaining duplicate source files. Optional [resource exposure descriptors](catalog/exposures/o2switch-cloud.json) record canonical sources, docs references and opt-in consumer strategies; see [the practical guide](maps-and-guides/resource-exposure.md). This is documentation, not an installer. Validate descriptors with `node spellbook/scripts/validate-exposures.mjs`.
-
-## Author and curate BAG items
-
-Optional agent workflows cover [general items](skill-tree/skills/bag-author-item/SKILL.md), [task-oriented guides](skill-tree/skills/bag-author-task/SKILL.md), [libraries](skill-tree/skills/bag-author-library/SKILL.md) and [metadata](skill-tree/skills/bag-author-metadata/SKILL.md). See the [authoring guide](maps-and-guides/bag-authoring-skills.md). These skills describe a flexible future item model without migrating the current tree.
+- [Supabase Auth recipe with composer](recipes/auth/README.md)
+- [Task Composer guide](guides/how-to/task-composer.md)
