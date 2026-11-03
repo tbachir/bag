@@ -23,7 +23,7 @@ BAG organizes resources into five core primitives and comprehensive Diátaxis gu
 | 🎒 **Packs** | [`packs/`](packs/README.md) | Curated loadouts for immediate adoption (`ai-coding`, `fumadocs-knowledge-base`, `ui-studio`) |
 | 🗺️ **Guides** | [`guides/`](guides/README.md) | Diátaxis documentation: [Tutorials](guides/tutorials/README.md), [How-To](guides/how-to/README.md), [Concepts](guides/concepts/README.md), [Reference](guides/reference/README.md) |
 
-*(The original seven RPG zones — `inventory/`, `equipment/`, `skill-tree/`, `spellbook/`, `maps-and-guides/`, `loot/`, `loadouts/` — remain fully indexed and preserved for backward compatibility).*
+*(The original seven RPG zones — [`inventory/`](inventory/README.md), `equipment/`, `skill-tree/`, `spellbook/`, `maps-and-guides/`, `loot/`, `loadouts/` — remain fully indexed and preserved for backward compatibility).*
 
 ---
 
