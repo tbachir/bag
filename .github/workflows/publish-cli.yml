@@ -1,0 +1,60 @@
+name: Publish BAG CLI to npm
+
+on:
+  release:
+    types: [published]
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (verify and package without publishing to npm)'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Build, test, and publish @tbachir/bag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24 with npm registry
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@tbachir'
+
+      - name: Run repository validation and tests
+        run: |
+          node spellbook/scripts/validate.mjs
+          node spellbook/scripts/bag.mjs validate --json
+          node --test tests/*.test.mjs
+
+      - name: Verify package contents and prepack sync
+        run: |
+          cd packages/cli
+          npm run sync
+          npm pack --dry-run
+
+      - name: Publish to npm (Dry Run)
+        if: ${{ inputs.dry_run }}
+        run: |
+          echo "Dry run mode active: skipping npm publish."
+          echo "Package validation and pack simulation succeeded."
+
+      - name: Publish to npm
+        if: ${{ !inputs.dry_run }}
+        run: |
+          cd packages/cli
+          npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

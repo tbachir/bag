@@ -6,6 +6,18 @@
   "bin": {
     "bag": "./bin/bag.mjs"
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tbachir/bag.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/tbachir/bag#readme",
+  "bugs": {
+    "url": "https://github.com/tbachir/bag/issues"
+  },
   "scripts": {
     "sync": "node ../../spellbook/scripts/sync-cli.mjs",
     "prepack": "node ../../spellbook/scripts/sync-cli.mjs"

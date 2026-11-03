@@ -42,6 +42,10 @@ bag pack plan ai-coding --target ./my-project
 bag pack equip ai-coding --target ./my-project --apply
 ```
 
+## Publishing
+
+See [How to publish the BAG CLI](../../guides/how-to/publishing-cli.md) for automated GitHub Actions workflows and local packaging details.
+
 ## License
 
 MIT
