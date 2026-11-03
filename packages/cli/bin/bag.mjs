@@ -7,7 +7,19 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { readCatalog, searchItems, describeLoadout, planLoadout, applyPlan, fail, ROOT } from '../src/lib.mjs';
+import {
+  readCatalog,
+  searchItems,
+  describeLoadout,
+  planLoadout,
+  applyPlan,
+  installSkill,
+  planItem,
+  checkTarget,
+  checkDestination,
+  fail,
+  ROOT
+} from '../src/lib.mjs';
 
 const HELP = `BAG — Agent-first Developer Inventory & CLI
 
@@ -54,17 +66,39 @@ function parse(argv) {
   return { flags, positional };
 }
 
-async function copyDirSafe(src, dest) {
-  await fs.mkdir(dest, { recursive: true });
-  const entries = await fs.readdir(src, { withFileTypes: true });
-  for (const entry of entries) {
-    const srcPath = path.join(src, entry.name);
-    const destPath = path.join(dest, entry.name);
-    if (entry.isDirectory()) {
-      await copyDirSafe(srcPath, destPath);
-    } else if (entry.isFile()) {
+async function copyDirSafe(src, targetRoot, relDestDir, apply = true) {
+  async function scanFiles(dir, prefix = '') {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    const files = [];
+    for (const entry of entries) {
+      const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) {
+        if (!entry.name.startsWith('.')) {
+          files.push(...await scanFiles(path.join(dir, entry.name), rel));
+        }
+      } else if (entry.isFile()) {
+        files.push(rel);
+      }
+    }
+    return files;
+  }
+
+  const files = await scanFiles(src);
+  for (const file of files) {
+    const relFile = `${relDestDir}/${file}`;
+    await checkDestination(targetRoot, relFile);
+  }
+
+  if (!apply) return;
+
+  for (const file of files) {
+    const relFile = `${relDestDir}/${file}`;
+    const dest = await checkDestination(targetRoot, relFile);
+    if (!dest.exists) {
+      await fs.mkdir(path.dirname(dest.full), { recursive: true });
+      await checkDestination(targetRoot, relFile);
       try {
-        await fs.copyFile(srcPath, destPath, fs.constants.COPYFILE_EXCL);
+        await fs.copyFile(path.join(src, file), dest.full, fs.constants.COPYFILE_EXCL);
       } catch (err) {
         if (err.code !== 'EEXIST') throw err;
       }
@@ -133,26 +167,57 @@ async function main() {
       } else if (action === 'add') {
         if (!skillId) fail('skill add requires a skill id');
         if (!flags.target) fail('skill add requires --target <directory>');
+        const destRoot = await checkTarget(path.resolve(flags.target));
         const sourceSkill = path.join(skillsDir, skillId);
         try {
           await fs.access(sourceSkill);
         } catch {
           fail(`Skill not found: ${skillId}`);
         }
-        const agentFolder = flags.adapter === 'claude-code' ? '.claude/skills' : '.agents/skills';
-        const destSkill = path.join(path.resolve(flags.target), agentFolder, skillId);
 
-        if (!flags.apply) {
-          output = {
-            status: 'dry-run',
-            skill: skillId,
-            adapter: flags.adapter || 'agents',
-            destination: destSkill,
-            message: 'Run with --apply to write changes to disk.'
-          };
+        const agentFolder = flags.adapter === 'claude-code' ? '.claude/skills' : (flags.adapter === 'gemini' ? '.gemini/skills' : (flags.adapter === 'cursor' ? '.cursor/skills' : '.agents/skills'));
+        const relSkillDir = `${agentFolder}/${skillId}`;
+        const destSkill = path.join(destRoot, relSkillDir);
+
+        if (catalog.items.has(skillId) && catalog.items.get(skillId).kind === 'skill') {
+          const res = await installSkill(catalog, skillId, destRoot, {
+            adapter: flags.adapter,
+            apply: flags.apply,
+            lockfile: true
+          });
+          if (!flags.apply) {
+            output = {
+              status: 'dry-run',
+              skill: skillId,
+              adapter: flags.adapter || 'agents',
+              destination: destSkill,
+              actions: res.actions,
+              message: 'Run with --apply to write changes to disk.'
+            };
+          } else {
+            output = {
+              status: 'installed',
+              skill: skillId,
+              adapter: flags.adapter || 'agents',
+              destination: destSkill,
+              actions: res.actions,
+              lockfile: res.lockfile
+            };
+          }
         } else {
-          await copyDirSafe(sourceSkill, destSkill);
-          output = { status: 'installed', skill: skillId, destination: destSkill };
+          if (!flags.apply) {
+            await copyDirSafe(sourceSkill, destRoot, relSkillDir, false);
+            output = {
+              status: 'dry-run',
+              skill: skillId,
+              adapter: flags.adapter || 'agents',
+              destination: destSkill,
+              message: 'Run with --apply to write changes to disk.'
+            };
+          } else {
+            await copyDirSafe(sourceSkill, destRoot, relSkillDir, true);
+            output = { status: 'installed', skill: skillId, destination: destSkill };
+          }
         }
       } else {
         fail(`Unknown skill action: ${action}`);
@@ -221,8 +286,9 @@ async function main() {
         else if (adapter === 'vscode') relConfigFile = '.vscode/mcp.json';
 
         if (flags.target) {
-          const targetDir = path.resolve(flags.target);
+          const targetDir = await checkTarget(path.resolve(flags.target));
           const targetConfigFile = path.join(targetDir, relConfigFile);
+          await checkDestination(targetDir, relConfigFile);
 
           if (!flags.apply) {
             output = {
@@ -234,13 +300,27 @@ async function main() {
               message: 'Run with --apply to write configuration to target.'
             };
           } else {
-            await fs.mkdir(path.dirname(targetConfigFile), { recursive: true });
             let existing = { mcpServers: {} };
             try {
               const prev = await fs.readFile(targetConfigFile, 'utf8');
-              existing = JSON.parse(prev);
-              if (!existing.mcpServers) existing.mcpServers = {};
-            } catch {}
+              try {
+                existing = JSON.parse(prev);
+                if (!existing || typeof existing !== 'object' || Array.isArray(existing)) {
+                  fail(`Existing MCP configuration at ${targetConfigFile} is not a valid JSON object`);
+                }
+                if (!existing.mcpServers || typeof existing.mcpServers !== 'object' || Array.isArray(existing.mcpServers)) {
+                  existing.mcpServers = {};
+                }
+              } catch (parseErr) {
+                fail(`Failed to parse existing MCP configuration at ${targetConfigFile}: ${parseErr.message}`);
+              }
+            } catch (readErr) {
+              if (readErr.code !== 'ENOENT') {
+                fail(`Failed to read existing MCP configuration at ${targetConfigFile}: ${readErr.message}`);
+              }
+            }
+            await fs.mkdir(path.dirname(targetConfigFile), { recursive: true });
+            await checkDestination(targetDir, relConfigFile);
             existing.mcpServers[serverEntry.name] = serverEntry.config;
             await fs.writeFile(targetConfigFile, JSON.stringify(existing, null, 2) + '\n', 'utf8');
             output = {
@@ -307,37 +387,29 @@ async function main() {
         output = [
           { id: 'configs/editorconfig', path: 'templates/configs/.editorconfig.template' },
           { id: 'configs/node-gitignore', path: 'templates/configs/.gitignore.template' },
-          { id: 'skills/template', path: 'templates/skills/SKILL.md' },
-          { id: 'boilerplates/fumadocs-starter', path: 'templates/boilerplates/fumadocs-starter' }
+          { id: 'skills/template', path: 'templates/skills/SKILL.md' }
         ];
       } else if (action === 'apply') {
         if (!tmplId) fail('template apply requires a template id (e.g. configs/editorconfig, configs/node-gitignore)');
         if (!flags.target) fail('template apply requires --target <directory>');
-        const targetDir = path.resolve(flags.target);
+        const targetDir = await checkTarget(path.resolve(flags.target));
 
         const templateMap = {
           'configs/editorconfig': { src: 'templates/configs/.editorconfig.template', dest: '.editorconfig' },
           'editorconfig': { src: 'templates/configs/.editorconfig.template', dest: '.editorconfig' },
           'configs/node-gitignore': { src: 'templates/configs/.gitignore.template', dest: '.gitignore' },
           'gitignore': { src: 'templates/configs/.gitignore.template', dest: '.gitignore' },
-          'skills/template': { src: 'templates/skills/SKILL.md', dest: '.agents/skills/new-skill/SKILL.md' },
-          'boilerplates/fumadocs-starter': { src: 'templates/boilerplates/fumadocs-starter', dest: 'docs' }
+          'skills/template': { src: 'templates/skills/SKILL.md', dest: '.agents/skills/new-skill/SKILL.md' }
         };
 
         const entry = templateMap[tmplId];
         if (!entry) fail(`Unknown template: ${tmplId}. Available: ${Object.keys(templateMap).join(', ')}`);
 
         const srcPath = path.join(ROOT, entry.src);
-        const destPath = path.join(targetDir, entry.dest);
+        const dest = await checkDestination(targetDir, entry.dest);
 
-        let exists = false;
-        try {
-          await fs.access(destPath);
-          exists = true;
-        } catch {}
-
-        if (exists) {
-          fail(`Destination already exists: ${destPath}. Template application will not overwrite.`);
+        if (dest.exists) {
+          fail(`Destination already exists: ${dest.full}. Template application will not overwrite.`);
         }
 
         if (!flags.apply) {
@@ -345,21 +417,22 @@ async function main() {
             status: 'dry-run',
             template: tmplId,
             source: entry.src,
-            destination: destPath,
+            destination: dest.full,
             message: 'Run with --apply to copy template file.'
           };
         } else {
-          await fs.mkdir(path.dirname(destPath), { recursive: true });
+          await fs.mkdir(path.dirname(dest.full), { recursive: true });
+          await checkDestination(targetDir, entry.dest);
           const stat = await fs.stat(srcPath);
           if (stat.isDirectory()) {
-            await copyDirSafe(srcPath, destPath);
+            await copyDirSafe(srcPath, targetDir, entry.dest, true);
           } else {
-            await fs.copyFile(srcPath, destPath);
+            await fs.copyFile(srcPath, dest.full, fs.constants.COPYFILE_EXCL);
           }
           output = {
             status: 'applied',
             template: tmplId,
-            destination: destPath
+            destination: dest.full
           };
         }
       } else {

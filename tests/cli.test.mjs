@@ -63,6 +63,28 @@ test('CLI: skill add requires --apply and returns dry-run by default', async () 
   }
 });
 
+test('CLI: skill add rejects symlinked destination directory', async () => {
+  const tmpTarget = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-cli-target-'));
+  const outsideDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-cli-outside-'));
+  try {
+    await fs.mkdir(path.join(tmpTarget, '.agents'), { recursive: true });
+    await fs.symlink(outsideDir, path.join(tmpTarget, '.agents/skills'), 'dir');
+
+    await assert.rejects(
+      exec(process.execPath, [
+        CLI, 'skill', 'add', 'clean-code', '--target', tmpTarget, '--apply'
+      ]),
+      /Destination contains a symbolic link/
+    );
+
+    const entries = await fs.readdir(outsideDir);
+    assert.equal(entries.length, 0, 'No skill files should be written through symlink');
+  } finally {
+    await fs.rm(tmpTarget, { recursive: true, force: true });
+    await fs.rm(outsideDir, { recursive: true, force: true });
+  }
+});
+
 test('CLI: mcp list and add with dry-run and apply', async () => {
   const { stdout: listOut } = await exec(process.execPath, [CLI, 'mcp', 'list', '--json']);
   const list = JSON.parse(listOut);
@@ -96,6 +118,29 @@ test('CLI: mcp list and add with dry-run and apply', async () => {
   }
 });
 
+test('CLI: mcp add preserves existing configuration and aborts when parsing fails', async () => {
+  const tmpTarget = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-cli-mcp-invalid-'));
+  try {
+    const cursorDir = path.join(tmpTarget, '.cursor');
+    await fs.mkdir(cursorDir, { recursive: true });
+    const mcpFile = path.join(cursorDir, 'mcp.json');
+    const invalidContent = '{\n  "mcpServers": {\n    "custom": { "command": "custom" },\n  },\n}\n';
+    await fs.writeFile(mcpFile, invalidContent, 'utf8');
+
+    await assert.rejects(
+      exec(process.execPath, [
+        CLI, 'mcp', 'add', 'bag-mcp', '-a', 'cursor', '--target', tmpTarget, '--apply'
+      ]),
+      /Failed to parse existing MCP configuration/
+    );
+
+    const after = await fs.readFile(mcpFile, 'utf8');
+    assert.equal(after, invalidContent, 'Invalid configuration must be left untouched');
+  } finally {
+    await fs.rm(tmpTarget, { recursive: true, force: true });
+  }
+});
+
 test('CLI: recipe list and show', async () => {
   const { stdout: listOut } = await exec(process.execPath, [CLI, 'recipe', 'list', '--json']);
   const list = JSON.parse(listOut);
@@ -113,9 +158,19 @@ test('CLI: template list and apply (no overwrite)', async () => {
   const list = JSON.parse(listOut);
   assert.ok(Array.isArray(list));
   assert.ok(list.some(t => t.id === 'configs/editorconfig'));
+  assert.equal(list.some(t => t.id === 'boilerplates/fumadocs-starter'), false);
+  assert.ok(list.every(t => t.id && t.path));
 
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'bag-cli-tmpl-'));
   try {
+    // Attempt unknown template -> should fail
+    await assert.rejects(
+      exec(process.execPath, [
+        CLI, 'template', 'apply', 'boilerplates/fumadocs-starter', '--target', tmpDir, '--apply'
+      ]),
+      /Unknown template/
+    );
+
     // Apply template
     const { stdout: applyOut } = await exec(process.execPath, [
       CLI, 'template', 'apply', 'configs/editorconfig', '--target', tmpDir, '--apply', '--json'

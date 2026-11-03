@@ -155,12 +155,12 @@ export function describeLoadout(catalog, id) {
   check(loadout, `Unknown loadout: ${id}`);
   return {...loadout, resolvedItems: loadout.items.map(ref => ({...ref, item: catalog.items.get(ref.id)}))};
 }
-async function checkTarget(root) {
+export async function checkTarget(root) {
   const st = await statOrNull(root);
   check(st && st.isDirectory() && !st.isSymbolicLink(), `Target must be an existing, real directory: ${root}`);
   return await realpath(root);
 }
-async function checkDestination(root, rel) {
+export async function checkDestination(root, rel) {
   const full = inRoot(root, rel);
   const parts = rel.split('/');
   let current = root;
