@@ -206,6 +206,8 @@ test('CLI: distributable package contains runtime and inventory in npm pack', as
   const cliDir = path.join(ROOT, 'packages/cli');
   const { exec: execShell } = await import('node:child_process');
   const execAsync = promisify(execShell);
+  // The package copies are generated (git-ignored), as `prepack` does.
+  await execAsync('npm run sync --silent', { cwd: cliDir });
   const { stdout } = await execAsync('npm pack --dry-run --json --ignore-scripts --offline', {
     cwd: cliDir
   });
