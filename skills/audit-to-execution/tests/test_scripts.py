@@ -47,6 +47,18 @@ class SkillTests(unittest.TestCase):
             errors, _ = validate(root, "PRJ")
             self.assertTrue(any("missing skills" in e for e in errors))
 
+    def test_symlinked_docs_destination_is_rejected_before_writes(self):
+        with tempfile.TemporaryDirectory() as project, tempfile.TemporaryDirectory() as outside:
+            root = Path(project)
+            try:
+                (root / "docs").symlink_to(Path(outside), target_is_directory=True)
+            except (OSError, NotImplementedError):
+                self.skipTest("Symlinks unavailable on this platform")
+            with self.assertRaisesRegex(ValueError, "Symlink destination ancestor"):
+                run(root, "Example", "PRJ", True)
+            self.assertFalse((root / "TODO.md").exists())
+            self.assertEqual(list(Path(outside).iterdir()), [])
+
     def test_candidate_skill_link_is_not_completion_proof(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

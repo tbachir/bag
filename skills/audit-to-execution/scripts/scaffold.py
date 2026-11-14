@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import date
+import os
 from pathlib import Path
 import re
 import sys
@@ -31,6 +32,20 @@ def run(root: Path, project: str, prefix: str, write: bool) -> tuple[int, int]:
         raise ValueError("Project name must not be blank")
     if not re.fullmatch(r"[A-Z]{2,6}", prefix):
         raise ValueError("Prefix must contain 2–6 uppercase ASCII letters (e.g., PRJ)")
+    # Preflight *all* output paths before writing anything. Exclusive file creation
+    # alone does not stop a docs/ symlink from escaping the intended project.
+    root = root.resolve()
+    for relative_path in TEMPLATES.values():
+        destination = root / relative_path
+        if not destination.is_relative_to(root):
+            raise ValueError(f"Destination outside project: {destination}")
+        current = destination
+        while current != root:
+            if current.is_symlink():
+                raise ValueError(f"Symlink destination ancestor rejected: {current}")
+            current = current.parent
+        if not destination.resolve(strict=False).is_relative_to(root):
+            raise ValueError(f"Destination resolves outside project: {destination}")
     created = 0
     skipped = 0
     values = {"{{PROJECT}}": project, "{{PREFIX}}": prefix, "{{DATE}}": date.today().isoformat()}
@@ -47,7 +62,13 @@ def run(root: Path, project: str, prefix: str, write: bool) -> tuple[int, int]:
         if write:
             destination.parent.mkdir(parents=True, exist_ok=True)
             try:
-                with destination.open("x", encoding="utf-8", newline="\n") as stream:
+                flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+                # Protect the final component against symlink substitution when
+                # supported. A hostile concurrent parent rename still needs
+                # sandbox/permissions isolation at the operating-system level.
+                flags |= getattr(os, "O_NOFOLLOW", 0)
+                fd = os.open(destination, flags, 0o644)
+                with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as stream:
                     stream.write(text)
             except FileExistsError:
                 print(f"SKIP race: {destination}")

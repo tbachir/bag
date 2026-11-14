@@ -19,3 +19,9 @@ Source verification: Agent Skills specification, Vercel Skills CLI, official Cod
 - Integrated portable skill with BAG catalogue metadata and canonical template/installation guide references.
 - Rechecked upstream skill installation paths for Codex, Claude Code, Antigravity, and ChatGPT using official documentation (see `references/installation.md`).
 - The skill's Python unit tests and structural validation are separate from client-level use; no real remote agent execution is implied.
+
+## 2026-11-14 — Codex PR review fixes
+
+- Added a self-contained BAG delegation prompt to the skill README and entrypoint READMEs for permanent subfolders.
+- Hardened scaffold writes with symlink-ancestor preflight and exclusive/no-follow file creation when supported; added a regression test for a linked `docs/` directory.
+- Kept completion claims separate from reference links and actual client-level usage evidence.

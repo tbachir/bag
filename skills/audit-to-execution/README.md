@@ -41,6 +41,18 @@ The skill is meant to **trigger naturally** on requests for feasibility audits, 
 
 For one-click copy/paste workflows, see [12+ example prompts](references/prompts.md).
 
+## Delegate directly from BAG (no prior installation required)
+
+Copy this **self-contained** prompt into an agent operating in your target repository:
+
+```text
+Use the Audit to Execution skill from https://github.com/tbachir/bag/tree/main/skills/audit-to-execution to audit this project, then prepare an evidence-based specification, implementation plan, checkable ROADMAP.md and TODO.md with task-specific skill discovery.
+
+First read https://github.com/tbachir/bag/blob/main/AGENTS.md and all applicable nested BAG AGENTS.md files down to this skill, then its README.md, SKILL.md and relevant references. Read this project's own instructions and existing status before editing anything. Preserve completed work and approved decisions, run actual checks, report unverified items, and use a branch/PR only if authorized. Do not merge or deploy without permission.
+```
+
+This works as a **reference-reading request** when the agent can access GitHub; it does not install the skill or grant repository access. For actual persistent installation, see [the installation guide](references/installation.md).
+
 ## Files
 
 - `SKILL.md`: main agent instructions, short enough to load by default
