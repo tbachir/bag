@@ -2,7 +2,7 @@
 
 **Date:** {{DATE}} · **Not yet implemented.**
 
-[ROADMAP](ROADMAP.md) · [Spec](docs/PROJECT-SPEC.md) · [Plan](docs/PROJECT-PLAN.md) · [Skills](docs/SKILLS.md)
+Roadmap: `ROADMAP.md` · Spec: `docs/PROJECT-SPEC.md` · Plan: `docs/PROJECT-PLAN.md` · Skills: `docs/SKILLS.md`
 
 ## {{PREFIX}}-001 — Feasibility
 
