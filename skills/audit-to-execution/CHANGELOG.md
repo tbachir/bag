@@ -6,7 +6,7 @@
 - Added dependency-safe wave scheduler with critical-path sorting, optional parallel file ownership, status checkpointing, environment deferral and bounded attempts (no autonomous code execution in helper).
 - **One-tract requirement:** `run-all` continues every safe feasible task in the active session; noncritical missing Mac/iOS/Android/device/GPU/network/access constraints are recorded, postponed to a final pass and never represented as completed. Mandatory security/release approvals remain blocking.
 - Added minimal worker mission packets, coordinator/worktree isolation, metrics evaluation and an optional installed-only Spec Kit adapter.
-- Added deterministic execution tests and behavioral evaluation cases for deferral, conflict, cycles, retries and resume. Neither offline tests nor skills instructions prove live multi-agent throughput improvements.
+- Added deterministic execution tests and behavioral evaluation cases for deferral, exact/prefix-glob and active-worker ownership conflicts, occupied worker capacity, cycles, retries and resume. Neither offline tests nor skills instructions prove live multi-agent throughput improvements.
 - Preserved earlier audited/approved project evidence, task IDs and safety policy; no automatic merge or deployment permission added.
 
 ## 2026-11-14 — v1.1.0 (portable installation and BAG integration)

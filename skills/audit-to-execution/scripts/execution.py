@@ -222,7 +222,14 @@ def _longest_remaining(tasks: dict[str, Task]) -> dict[str, int]:
 
 def _scope_root(pattern: str) -> str:
     """Conservative overlap approximation, never treats overlapping wildcards as independent."""
-    return pattern.replace('\\', '/').split('*', 1)[0].rstrip('/')
+    normalized = pattern.replace('\\', '/')
+    wildcard = re.search(r'[?*\[]', normalized)
+    if wildcard is None:
+        return normalized.rstrip('/')
+    # Wildcard inside a filename segment (src/foo*.py) cannot prove
+    # independence from another file in that same directory.
+    before = normalized[:wildcard.start()]
+    return (before.rstrip('/') if before.endswith('/') else before.rsplit('/', 1)[0])
 
 
 def _scope_overlap(a: str, b: str) -> bool:
@@ -275,17 +282,26 @@ def plan(root: Path, unavailable: set[str] | None = None, max_parallel: int = 1,
     waves: list[list[dict]] = []
     simulated = set(completed)
     future = remaining - excluded
+    active = [tasks[ident] for ident in in_progress]
+    active_owned = set().union(*(task.files for task in active)) if active else set()
+    # When an active worker lacks explicit safe ownership, serialize until it
+    # finishes. Max_parallel is the total number of workers, not just new ones.
+    active_parallel_safe = all(task.parallel_safe and task.files for task in active)
+    available_slots = max_parallel - len(active)
     while future and (max_waves == 0 or len(waves) < max_waves):
         ready = [tasks[tid] for tid in future if tasks[tid].dependencies <= simulated]
-        if not ready:
+        if active:
+            ready = [task for task in ready if active_parallel_safe and available_slots > 0 and
+                     task.parallel_safe and task.files and not _owned_conflict(active_owned, task.files)]
+        if not ready or available_slots <= 0:
             break
         ready.sort(key=lambda t: _rank(t, depth))
         first = ready[0]
         selected: list[Task] = [first]
         owned = set(first.files)
-        if first.parallel_safe and first.files and max_parallel > 1:
+        if first.parallel_safe and first.files and available_slots > 1:
             for candidate in ready[1:]:
-                if len(selected) >= max_parallel:
+                if len(selected) >= available_slots:
                     break
                 if candidate.parallel_safe and candidate.files and not _owned_conflict(owned, candidate.files):
                     selected.append(candidate)
@@ -295,17 +311,27 @@ def plan(root: Path, unavailable: set[str] | None = None, max_parallel: int = 1,
         future.difference_update(t.id for t in selected)
         simulated.update(t.id for t in selected)
     waiting: list[dict] = []
+    waiting_active: list[dict] = []
+    next_wave: list[str] = []
     for ident in sorted(future, key=lambda tid: _rank(tasks[tid], depth)):
-        dep = sorted(tasks[ident].dependencies - simulated)
-        waiting.append({"id": ident, "waitingFor": dep})
+        task = tasks[ident]
+        dep = sorted(task.dependencies - simulated)
+        if dep:
+            waiting.append({"id": ident, "waitingFor": dep})
+        elif active and (available_slots <= 0 or not active_parallel_safe or not task.parallel_safe or
+                         not task.files or _owned_conflict(active_owned, task.files)):
+            waiting_active.append({"id": ident, "activeWorkers": in_progress})
+        else:
+            next_wave.append(ident)
     return {
         "schemaVersion": SCHEMA_VERSION,
         "mode": "forecast_only_not_execution",
         "summary": {"total": len(tasks), "checked": len(completed), "open": len(remaining),
                     "forecastWaves": len(waves), "deferred": len(deferred), "criticalBlockers": len(critical_blockers),
-                    "inProgress": len(in_progress), "waiting": len(waiting)},
+                    "inProgress": len(in_progress), "waiting": len(waiting) + len(waiting_active) + len(next_wave)},
         "waves": waves, "deferredNoncritical": deferred, "criticalBlockers": critical_blockers,
         "inProgress": in_progress, "waitingForDependencies": waiting,
+        "waitingForActiveWorkers": waiting_active, "nextUnscheduledWave": next_wave,
         "next": "Perform first executable wave, verify, update TODO evidence and checkpoint, then rerun planner. Retry deferred items after all independent work."
     }
 

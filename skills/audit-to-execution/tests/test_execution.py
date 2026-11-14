@@ -84,6 +84,41 @@ class ExecutionTests(unittest.TestCase):
         p3 = plan(root, max_parallel=3)
         self.assertEqual(len(p3['waves'][0]), 2, 'parent wildcard must overlap nested file scope')
 
+    def test_filename_prefix_glob_conflicts(self):
+        root = self.project()
+        source = (root / 'TODO.md').read_text(encoding='utf-8')
+        source = source.replace('**Files:** packages/schema/**', '**Files:** src/foo*.py')
+        source = source.replace('**Files:** apps/web/ui/**', '**Files:** src/foobar.py')
+        (root / 'TODO.md').write_text(source, encoding='utf-8')
+        p = plan(root, max_parallel=3)
+        first = {item['id'] for item in p['waves'][0]}
+        self.assertFalse({'DEM-001.1', 'DEM-001.2'} <= first)
+
+    def test_active_worker_reserves_file_and_parallel_slot(self):
+        root = self.project()
+        source = (root / 'TODO.md').read_text(encoding='utf-8')
+        source = source.replace('**Files:** packages/schema/**', '**Files:** src/shared.py')
+        source = source.replace('**Files:** apps/web/ui/**', '**Files:** src/shared.py')
+        (root / 'TODO.md').write_text(source, encoding='utf-8')
+        record(root, 'DEM-001.1', 'in_progress')
+        # With one worker capacity there is no space for another task.
+        serial = plan(root, max_parallel=1)
+        self.assertEqual(serial['waves'], [])
+        self.assertTrue(serial['waitingForActiveWorkers'])
+        parallel = plan(root, max_parallel=2)
+        ids = [x['id'] for wave in parallel['waves'] for x in wave]
+        self.assertNotIn('DEM-001.2', ids, 'same file is held by active worker')
+        self.assertIn('DEM-001.3', ids, 'disjoint independent work can proceed')
+        self.assertIn('DEM-001.2', [x['id'] for x in parallel['waitingForActiveWorkers']])
+
+    def test_active_task_with_unknown_file_scope_serializes(self):
+        root = self.project()
+        source = (root / 'TODO.md').read_text(encoding='utf-8')
+        source = source.replace('**Files:** packages/schema/**', '**Files:** none')
+        (root / 'TODO.md').write_text(source, encoding='utf-8')
+        record(root, 'DEM-001.1', 'in_progress')
+        self.assertEqual(plan(root, max_parallel=4)['waves'], [])
+
     def test_defer_and_revisit_at_tail(self):
         root = self.project()
         saved = record(root, 'DEM-001.4', 'deferred', 'No signed device', 'environment')
