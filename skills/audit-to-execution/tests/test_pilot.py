@@ -102,7 +102,11 @@ class PilotTests(unittest.TestCase):
             record(self.root, 'DEM-001.2', 'ready')
         closing = pilot_action(self.root, 'stop', write=True)
         self.assertEqual(closing['pilot']['status'], 'closed')
-        self.assertEqual(plan(self.root)['waves'], [])
+        closed_forecast = plan(self.root)
+        self.assertEqual(closed_forecast['waves'], [])
+        self.assertEqual(closed_forecast['summary']['open'], 4, 'closing the pilot must not erase unchecked backlog')
+        self.assertEqual(closed_forecast['summary']['pilotOpen'], 0)
+        self.assertEqual(closed_forecast['summary']['scheduledOpen'], 0)
         with self.assertRaisesRegex(ValueError, 'Pilot is closed'):
             record(self.root, 'DEM-001.2', 'ready')
 

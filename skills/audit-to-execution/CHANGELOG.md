@@ -1,5 +1,11 @@
 # Changelog — audit-to-execution
 
+## 2026-11-14 — v2.1.2 (pilot closure reporting)
+
+- Corrected `plan.summary.open` to report every unchecked TODO even after a bounded pilot is closed; added `pilotOpen` and `scheduledOpen` to distinguish unfinished pilot tasks from dispatch eligibility. Prevents misleading zero-open reports after early closure.
+- Exercised the closed-pilot state against the previous five-task Studio pilot fixture, retaining the pending Windows check and zero scheduled waves.
+
+
 ## 2026-11-14 — v2.1.1 (independent Codex review fixes)
 
 - `bun run test` invokes the configured package script rather than Bun's built-in test command.

@@ -4,7 +4,7 @@
 
 A real November 2026 pilot on `tbachir/mobile-app-website-template` delivered four narrowly scoped test additions on a separate draft PR. It needed **three CI runs**: one typecheck failure, one formatting failure, and one green full pipeline (unit, build, Playwright, Lighthouse). That observation motivated a **fast check before full CI**. It was **not** an A/B comparison, a token measurement, or proof that the agent executed parallel workers; the prior scheduler only forecast waves.
 
-This version keeps the difference explicit: the planner **does not write application code**, and pilot stop conditions guide the coding agent. A checkpoint is not an OS-level permission boundary. Use branch/worktree isolation, the target repository's AGENTS rules, and ordinary authorization checks.
+This version keeps the difference explicit: the planner **does not write application code**, and pilot stop conditions guide the coding agent. A closed pilot intentionally dispatches no more work, but the summary **still reports the global number of unchecked TODO tasks** (`open`); `pilotOpen` counts unfinished selected IDs and `scheduledOpen` counts permitted dispatch candidates. A checkpoint is not an OS-level permission boundary. Use branch/worktree isolation, the target repository's AGENTS rules, and ordinary authorization checks.
 
 ## Mode `run-all --pilot`: hard scope and automatic stopping
 

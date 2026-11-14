@@ -274,12 +274,14 @@ def plan(root: Path, unavailable: set[str] | None = None, max_parallel: int = 1,
     unavailable = unavailable or set()
     depth = _longest_remaining(tasks)
     remaining = {tid for tid, task in tasks.items() if not task.done}
+    global_open = len(remaining)
     completed = {tid for tid, task in tasks.items() if task.done}
     pilot = pilot_scope(state, tasks)
     selected = set(pilot["selectedIds"]) if pilot else set(tasks)
+    pilot_open = len(remaining & selected)
     remaining &= selected
     if pilot and pilot["status"] == "closed":
-        remaining = set()
+        remaining = set()  # No more dispatch; global backlog remains visibly open.
     deferred: list[dict] = []
     critical_blockers: list[dict] = []
     in_progress: list[str] = []
@@ -347,7 +349,8 @@ def plan(root: Path, unavailable: set[str] | None = None, max_parallel: int = 1,
     return {
         "schemaVersion": SCHEMA_VERSION,
         "mode": "forecast_only_not_execution",
-        "summary": {"total": len(tasks), "checked": len(completed), "open": len(remaining),
+        "summary": {"total": len(tasks), "checked": len(completed), "open": global_open,
+                    "pilotOpen": pilot_open, "scheduledOpen": len(remaining),
                     "forecastWaves": len(waves), "deferred": len(deferred), "criticalBlockers": len(critical_blockers),
                     "inProgress": len(in_progress), "waiting": len(waiting) + len(waiting_active) + len(next_wave)},
         "waves": waves, "deferredNoncritical": deferred, "criticalBlockers": critical_blockers,
