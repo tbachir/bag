@@ -7,8 +7,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
-import re
+import signal
 import subprocess
 import sys
 import time
@@ -46,6 +47,46 @@ def select_checks(package: dict, raw: str) -> list[str]:
     return [name for name in names if name in scripts]
 
 
+def _terminate_tree(process: subprocess.Popen) -> None:
+    """Stop a timed-out package runner and descendants, not just its parent."""
+    if os.name == "nt":
+        try:
+            subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                           timeout=5, check=False)
+        except (OSError, subprocess.TimeoutExpired):
+            process.kill()
+    else:
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    if process.poll() is None:
+        process.kill()
+
+
+def _run_grouped(argv: list[str], *, cwd: Path, capture_output: bool,
+                 text: bool, timeout: float, check: bool) -> subprocess.CompletedProcess:
+    """No shell. Kill the *whole process group* on deadline, then reap it."""
+    if not capture_output or not text or check:
+        raise ValueError("Unsupported grouped runner options")
+    platform_options = ({"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+                        if os.name == "nt" else {"start_new_session": True})
+    process = subprocess.Popen(argv, cwd=cwd, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE, text=True, **platform_options)
+    try:
+        stdout, stderr = process.communicate(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        _terminate_tree(process)
+        try:
+            process.communicate(timeout=5)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.communicate()
+        raise
+    return subprocess.CompletedProcess(argv, process.returncode, stdout, stderr)
+
+
 def preflight(root: Path, checks: str = ",".join(ALLOWED_CHECKS), manager: str = "auto",
               run: bool = False, max_seconds: int = 180, runner=None) -> dict:
     root = root.resolve()
@@ -61,14 +102,14 @@ def preflight(root: Path, checks: str = ",".join(ALLOWED_CHECKS), manager: str =
                     "results": [], "passed": None, "elapsedSeconds": 0.0}
     if not run:
         return result
-    runner = runner or subprocess.run
+    runner = runner or _run_grouped
     started = time.monotonic()
     for name in chosen:
         remaining = max_seconds - (time.monotonic() - started)
         if remaining <= 0:
             result["results"].append({"check": name, "status": "budget-exhausted"})
             break
-        argv = [resolved, "run", name] if resolved == "npm" else [resolved, name]
+        argv = [resolved, "run", name] if resolved in {"npm", "bun"} else [resolved, name]
         try:
             cp = runner(argv, cwd=root, capture_output=True, text=True,
                         timeout=max(0.001, remaining), check=False)

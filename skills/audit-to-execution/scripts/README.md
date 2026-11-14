@@ -33,6 +33,6 @@ The coordinator executes, tests and records proof in TODO/STATUS. This helper ne
 - `python scripts/execution.py --root /project metadata --json`: read-only empty metadata skeleton. Curate dependencies and file ownership; never infer them blindly.
 - `python scripts/execution.py --root /project pilot start --task PRJ-001.1 --max-tasks 1 --json`: dry-run and check open prerequisites. Add `--write` for an explicit scope checkpoint.
 - `python scripts/execution.py --root /project pilot status --json` then `pilot stop --write`: inspect stop condition and close. The record helper rejects out-of-scope IDs.
-- [`preflight.py`](preflight.py): `python scripts/preflight.py --root /project --run --json` runs **only** allowlisted `typecheck`, `lint`, `format:check`, `test` package scripts in order; the default without `--run` is dry-run. No shell or dependency installation.
+- [`preflight.py`](preflight.py): `python scripts/preflight.py --root /project --run --json` runs **only** allowlisted `typecheck`, `lint`, `format:check`, `test` package scripts in order; the default without `--run` is dry-run. No explicit shell or dependency installation; Bun runs the configured script via `bun run`, and timed-out process trees are terminated.
 
 See [full pilot and preflight guide](../references/pilot-and-preflight.md). Pilot scope is a **coordinator checkpoint** and cannot enforce file-system or cloud resource permissions; use an isolated branch/worktree and target repo rules. Missing package scripts or real-environment checks never equal validated success.

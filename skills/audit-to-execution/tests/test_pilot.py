@@ -111,6 +111,16 @@ class PilotTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'other tasks have active workers'):
             pilot_action(self.root, 'start', ['DEM-001.2'], 1, write=True)
 
+    def test_finished_pilot_does_not_block_another_from_stale_worker_checkpoint(self):
+        pilot_action(self.root, 'start', ['DEM-001.1'], 1, write=True)
+        record(self.root, 'DEM-001.1', 'in_progress')
+        todo = (self.root / 'TODO.md').read_text()
+        (self.root / 'TODO.md').write_text(todo.replace('- [ ] **DEM-001.1**', '- [x] **DEM-001.1**'))
+        pilot_action(self.root, 'stop', write=True)
+        new = pilot_action(self.root, 'start', ['DEM-001.2'], 1, write=True)
+        self.assertEqual(new['pilot']['selectedIds'], ['DEM-001.2'])
+        self.assertFalse(plan(self.root)['pilot']['stopNow'])
+
     def test_pilot_deferral_is_nonfatal_and_exhausted_pilot_stops(self):
         text = (self.root / 'TODO.md').read_text().replace('- [ ] **DEM-001.2**', '- [x] **DEM-001.2**')
         (self.root / 'TODO.md').write_text(text)
@@ -167,6 +177,32 @@ class PreflightTests(unittest.TestCase):
         self.assertFalse(out['passed'])
         self.assertIn('lint', out['skippedAbsent'])
         self.assertEqual(out['results'][0]['status'], 'passed')
+
+    def test_bun_uses_the_inspected_package_script_not_built_in_test(self):
+        (self.root / 'package.json').write_text(json.dumps({
+            'packageManager': 'bun@1.2.14', 'scripts': {'test': 'exit 42'}
+        }))
+        fake = Mock(return_value=Mock(returncode=42, stdout='', stderr='configured script failed'))
+        out = preflight(self.root, checks='test', run=True, runner=fake)
+        self.assertFalse(out['passed'])
+        self.assertEqual(fake.call_args.args[0], ['bun', 'run', 'test'])
+
+    def test_timeout_kills_posix_process_group_including_child(self):
+        import os
+        import subprocess
+        import sys
+        import time
+        from preflight import _run_grouped
+        if os.name == 'nt':
+            self.skipTest('Windows process-tree termination is platform-specific')
+        marker = self.root / 'orphan-marker'
+        child = 'import pathlib,time;time.sleep(0.9);pathlib.Path(' + repr(str(marker)) + ').write_text("orphan")'
+        parent = 'import subprocess,sys,time;subprocess.Popen([sys.executable,"-c",' + repr(child) + ']);time.sleep(3)'
+        with self.assertRaises(subprocess.TimeoutExpired):
+            _run_grouped([sys.executable, '-c', parent], cwd=self.root,
+                         capture_output=True, text=True, timeout=0.2, check=False)
+        time.sleep(1.1)
+        self.assertFalse(marker.exists(), 'child process escaped preflight timeout')
 
     def test_timeout_and_missing_tool_are_reported_without_pass(self):
         from subprocess import TimeoutExpired

@@ -123,7 +123,7 @@ def create_pilot(tasks: dict[str, Any], state: dict, selected: list[str], max_ta
         raise ValueError(f"Pilot references unknown IDs: {', '.join(unknown)}")
     if pilot_scope(state, tasks) and state["pilot"]["status"] == "active":
         raise ValueError("A pilot is already active; close it explicitly first")
-    busy = {ident for ident, entry in state.get("tasks", {}).items() if isinstance(entry, dict) and entry.get("status") == "in_progress"}
+    busy = {ident for ident, entry in state.get("tasks", {}).items() if isinstance(entry, dict) and entry.get("status") == "in_progress" and (ident not in tasks or not tasks[ident].done)}
     if busy - set(selected):
         raise ValueError("Pilot cannot begin while other tasks have active workers; reconcile/close their checkpoints first")
     for ident in selected:

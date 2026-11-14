@@ -1,5 +1,13 @@
 # Changelog — audit-to-execution
 
+## 2026-11-14 — v2.1.1 (independent Codex review fixes)
+
+- `bun run test` invokes the configured package script rather than Bun's built-in test command.
+- Timeout now terminates the check process **and child process tree** (POSIX process group / Windows taskkill fallback) before returning, preventing orphan background checks.
+- New bounded pilots ignore stale `in_progress` checkpoints of TODO tasks already verified complete, so a second pilot can start without manual checkpoint edits.
+- Three regression tests added: Bun script command, real orphan-child timeout, and closed-pilot restart.
+
+
 ## 2026-11-14 — v2.1.0 (measured bounded pilots, fast preflight, structured backlog)
 
 - Added `run-all --pilot` to execute only explicit task IDs (default cap four) with persistent scope, stop conditions and refused out-of-scope records. No agent execution is claimed by the CLI.
