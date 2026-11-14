@@ -2,7 +2,7 @@
 
 **Date:** {{DATE}} · **Status:** proposed milestones.
 
-[Specification](docs/PROJECT-SPEC.md) · [Plan](docs/PROJECT-PLAN.md) · [Tasks](TODO.md) · [Skills](docs/SKILLS.md)
+Specification: `docs/PROJECT-SPEC.md` · Plan: `docs/PROJECT-PLAN.md` · Tasks: `TODO.md` · Skills: `docs/SKILLS.md`
 
 ## M0 — Baseline
 
