@@ -51,3 +51,13 @@ test('generator rejects invalid names and symlinked targets',t=>{
     assert.notEqual(run(creator,['--name','demo-flow','--target',symlink,'--description','Use when a specific workflow needs a repeatable procedure','--write']).status,0);
   }
 });
+
+
+test('generator safely quotes YAML description without claiming source verification',t=>{
+  const tmp=makeTemp();t.after(()=>fs.rmSync(tmp,{recursive:true,force:true}));
+  const a=run(creator,['--name','quoted-flow','--description','Use when a review includes "quoted" statements and special # syntax','--target',tmp,'--write']);
+  assert.equal(a.status,0,a.stderr);
+  const content=fs.readFileSync(path.join(tmp,'quoted-flow','SKILL.md'),'utf8');
+  assert.match(content, /\\"quoted\\"/);
+  assert.doesNotMatch(content,/bag-last-verified:/);
+});

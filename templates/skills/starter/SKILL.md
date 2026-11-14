@@ -5,7 +5,6 @@ license: MIT
 metadata:
   bag-freshness-policy: standard
   bag-review-interval-days: "90"
-  bag-last-verified: "__CREATION_DATE__"
 ---
 
 # __SKILL_TITLE__

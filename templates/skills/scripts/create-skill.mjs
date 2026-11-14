@@ -57,7 +57,10 @@ try {
     for (const item of out) {
       const source = fs.readFileSync(path.join(base,item.rel),'utf8');
       let transformed = source;
-      for (const [needle,val] of Object.entries(values)) transformed=transformed.split(needle).join(val);
+      for (const [needle,val] of Object.entries(values)) {
+        const replacement = needle === "__SKILL_DESCRIPTION__" && item.rel === "SKILL.md" ? val.replaceAll("\\", "\\\\").replaceAll("\"", "\\\"") : val;
+        transformed = transformed.split(needle).join(replacement);
+      }
       fs.mkdirSync(path.dirname(item.path),{recursive:true});
       fs.writeFileSync(item.path,transformed,{flag:'wx',encoding:'utf8'});
     }
