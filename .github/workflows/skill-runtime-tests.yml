@@ -1,0 +1,24 @@
+name: Verify audit-to-execution runtime helpers
+on:
+  pull_request:
+    paths:
+      - 'skills/audit-to-execution/**'
+      - '.github/workflows/skill-runtime-tests.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  python-skill-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile helper scripts
+        run: python -m compileall -q skills/audit-to-execution/scripts
+      - name: Validate portable skill structure
+        run: python skills/audit-to-execution/scripts/validate_skill.py
+      - name: Unit regression suite
+        run: python -m unittest discover -s skills/audit-to-execution/tests -v

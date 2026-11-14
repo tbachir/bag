@@ -7,3 +7,5 @@ python -m unittest discover -s tests -v
 ```
 
 Do not equate these tests with end-to-end behavior in Codex, Claude Code, ChatGPT or Antigravity.
+
+- [`test_pilot.py`](test_pilot.py) verifies hard bounded pilot scopes, exact dependency validation, sidecar conflicts, fast preflight fail-early behavior, dry-run and missing-environment handling.

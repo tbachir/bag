@@ -1,5 +1,27 @@
 # Changelog — audit-to-execution
 
+## 2026-11-14 — v2.1.2 (pilot closure reporting)
+
+- Corrected `plan.summary.open` to report every unchecked TODO even after a bounded pilot is closed; added `pilotOpen` and `scheduledOpen` to distinguish unfinished pilot tasks from dispatch eligibility. Prevents misleading zero-open reports after early closure.
+- Exercised the closed-pilot state against the previous five-task Studio pilot fixture, retaining the pending Windows check and zero scheduled waves.
+
+
+## 2026-11-14 — v2.1.1 (independent Codex review fixes)
+
+- `bun run test` invokes the configured package script rather than Bun's built-in test command.
+- Timeout now terminates the check process **and child process tree** (POSIX process group / Windows taskkill fallback) before returning, preventing orphan background checks.
+- New bounded pilots ignore stale `in_progress` checkpoints of TODO tasks already verified complete, so a second pilot can start without manual checkpoint edits.
+- Three regression tests added: Bun script command, real orphan-child timeout, and closed-pilot restart.
+
+
+## 2026-11-14 — v2.1.0 (measured bounded pilots, fast preflight, structured backlog)
+
+- Added `run-all --pilot` to execute only explicit task IDs (default cap four) with persistent scope, stop conditions and refused out-of-scope records. No agent execution is claimed by the CLI.
+- Added `scripts/preflight.py`: read-only preview, allowlisted typecheck/lint/format/unit execution, finite budget, early exit and explicit missing-check reporting. No shell or third-party install.
+- Added optional `docs/EXECUTION-METADATA.json` contract for per-task dependencies, ownership, priority and environment; rejects unknown IDs, malformed fields, cycles and conflicting TODO entries. Does not change TODO state.
+- Added isolated Python regression coverage, examples and reproducible commands from the four-task Studio pilot. Actual live-agent speed/token improvements **remain unmeasured**; CI timing and failures are reported without fabricated A/B claims.
+
+
 ## 2026-11-14 — v2.0.0 (continuous execution and deferred-blocker orchestration)
 
 - Added explicit `execute`, `run-all`, `resume`, `converge` and `optimize` modes; `full` remains planning unless implementation is requested.

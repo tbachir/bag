@@ -17,7 +17,7 @@ python scripts/validate_project.py --root /path/to/repo --prefix PRJ
 
 Never write into an untrusted workspace containing attacker-controlled symlinks; project filesystem permissions and sandboxing remain necessary against concurrent replacement attacks.
 
-## Continuous execution helper (V2)
+## Continuous execution helper (V2.1)
 
 - [`execution.py`](execution.py): read-only wave forecast from TODO, explicit transient checkpoint, no code execution or PR side effects.
 - Preview: `python scripts/execution.py --root /path/to/project plan --max-parallel 3 --json`.
@@ -26,3 +26,13 @@ Never write into an untrusted workspace containing attacker-controlled symlinks;
 - Revisit deferred work at the end: `python scripts/execution.py --root /path/to/project plan --retry-deferred --json`.
 
 The coordinator executes, tests and records proof in TODO/STATUS. This helper never auto-completes tasks or runs code. Use one checkpoint writer at a time.
+
+## Bounded pilots, metadata and fast preflight
+
+- [`pilot_runtime.py`](pilot_runtime.py): strict optional `docs/EXECUTION-METADATA.json` schema, sidecar/inline conflict detection and pilot cap validation (imported by the scheduler).
+- `python scripts/execution.py --root /project metadata --json`: read-only empty metadata skeleton. Curate dependencies and file ownership; never infer them blindly.
+- `python scripts/execution.py --root /project pilot start --task PRJ-001.1 --max-tasks 1 --json`: dry-run and check open prerequisites. Add `--write` for an explicit scope checkpoint.
+- `python scripts/execution.py --root /project pilot status --json` then `pilot stop --write`: inspect stop condition and close. The record helper rejects out-of-scope IDs.
+- [`preflight.py`](preflight.py): `python scripts/preflight.py --root /project --run --json` runs **only** allowlisted `typecheck`, `lint`, `format:check`, `test` package scripts in order; the default without `--run` is dry-run. No explicit shell or dependency installation; Bun runs the configured script via `bun run`, and timed-out process trees are terminated.
+
+See [full pilot and preflight guide](../references/pilot-and-preflight.md). Pilot scope is a **coordinator checkpoint** and cannot enforce file-system or cloud resource permissions; use an isolated branch/worktree and target repo rules. Missing package scripts or real-environment checks never equal validated success.

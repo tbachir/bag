@@ -174,7 +174,7 @@ class ExecutionTests(unittest.TestCase):
             (root / 'docs').symlink_to(outside, target_is_directory=True)
         except (OSError, NotImplementedError):
             self.skipTest('No symlinks')
-        with self.assertRaisesRegex(ValueError, 'Unsafe state path'):
+        with self.assertRaisesRegex(ValueError, 'Unsafe (state|metadata) path'):
             record(root, 'DEM-001.2', 'deferred', 'missing emulator', 'environment')
         self.assertFalse((outside / 'EXECUTION-STATE.json').exists())
 
