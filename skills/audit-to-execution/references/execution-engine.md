@@ -70,6 +70,14 @@ Input fields are optional except task ID/checkbox. In `TODO.md` use per-task met
 
 When metadata is not present, execute a short bounded manual dependency analysis or run serially. A full green test suite is not sufficient if a required manual verification is missing.
 
+## V2.1: pilot cap, fast checks and sidecar dependencies
+
+A request such as **“test run-all on four tasks without finishing the project”** is `run-all --pilot`, not full run-all. Select explicit unchecked IDs and a task cap, verify prerequisites, then persist a narrow pilot checkpoint. The planner will not schedule unrelated TODO tasks and its recorder rejects them. Close the checkpoint once all selected tasks are verified or nothing safely feasible remains. See [pilot and preflight](pilot-and-preflight.md).
+
+Before a full CI/build/E2E/Lighthouse cycle, execute cheap scoped checks with `python scripts/preflight.py --root /project --run --json` when the repository uses a supported JS package manager; non-JS projects use equivalent project-native checks. Do not treat skipped checks as passing.
+
+`docs/EXECUTION-METADATA.json` is an **optional** JSON sidecar for explicit dependencies, file scopes, capabilities and priority of stable TODO IDs. It preserves TODO proof/checkboxes and rejects conflicting inline data. Missing fields default conservatively to serial. Generate a read-only skeleton with `python scripts/execution.py --root /project metadata --json`.
+
 ## Bounded convergence policy
 
 - No infinite retries: default **2 attempts per failed task**; the recorder refuses further `in_progress` transitions beyond the cap unless a responsible user sets a different explicit cap. Log the exact failure and choose an alternative or defer.

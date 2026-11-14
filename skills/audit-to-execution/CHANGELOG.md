@@ -1,5 +1,13 @@
 # Changelog — audit-to-execution
 
+## 2026-11-14 — v2.1.0 (measured bounded pilots, fast preflight, structured backlog)
+
+- Added `run-all --pilot` to execute only explicit task IDs (default cap four) with persistent scope, stop conditions and refused out-of-scope records. No agent execution is claimed by the CLI.
+- Added `scripts/preflight.py`: read-only preview, allowlisted typecheck/lint/format/unit execution, finite budget, early exit and explicit missing-check reporting. No shell or third-party install.
+- Added optional `docs/EXECUTION-METADATA.json` contract for per-task dependencies, ownership, priority and environment; rejects unknown IDs, malformed fields, cycles and conflicting TODO entries. Does not change TODO state.
+- Added isolated Python regression coverage, examples and reproducible commands from the four-task Studio pilot. Actual live-agent speed/token improvements **remain unmeasured**; CI timing and failures are reported without fabricated A/B claims.
+
+
 ## 2026-11-14 — v2.0.0 (continuous execution and deferred-blocker orchestration)
 
 - Added explicit `execute`, `run-all`, `resume`, `converge` and `optimize` modes; `full` remains planning unless implementation is requested.

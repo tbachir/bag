@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Read-only dependency scheduler plus explicit, safe execution checkpoint updates.
+"""Dependency-wave forecasts, explicit bounded pilots and safe checkpoint updates.
 
 Does NOT implement tasks, run arbitrary commands, merge PRs or certify acceptance.
 The coding agent follows SKILL.md and reports changes; this script decides which
-independent tasks are ready and which environment blockers can be deferred.
+independent tasks are ready, what belongs to a limited pilot, and which blockers can be deferred.
 """
 from __future__ import annotations
 
@@ -16,6 +16,8 @@ from pathlib import Path
 import re
 import sys
 import tempfile
+
+from pilot_runtime import apply_metadata, create_pilot, pilot_scope, utcnow
 
 SCHEMA_VERSION = 1
 TASK_RE = re.compile(r'^\s*- \[(?P<done>[ xX])\]\s+\*\*(?P<id>[A-Z]{2,6}-\d{3}\.\d+)\*\*(?P<title>[^\n]*)$', re.M)
@@ -37,6 +39,7 @@ class Task:
     impact: int = 3
     critical: bool = False
     parallel_safe: bool = False
+    metadata_source: str = "todo_or_defaults"
 
 
 def _field(meta: dict[str, str], *names: str) -> str:
@@ -73,6 +76,7 @@ def read_tasks(root: Path) -> dict[str, Task]:
     if not found:
         raise ValueError("No actionable checkbox task IDs in TODO.md")
     tasks: dict[str, Task] = {}
+    inline_fields: dict[str, set[str]] = {}
     for i, match in enumerate(found):
         ident = match.group("id")
         if ident in tasks:
@@ -81,6 +85,7 @@ def read_tasks(root: Path) -> dict[str, Task]:
         # Avoid consuming unrelated new headings or parent list rows.
         part = contents[match.end():stop].split("\n## ", 1)[0]
         meta = {m.group("key").strip().lower(): m.group("value").strip() for m in META_RE.finditer(part)}
+        inline_fields[ident] = set(meta)
         dep = _field(meta, "depends on", "dependencies", "dépendances")
         files = _field(meta, "files", "owned files", "file ownership", "fichiers")
         env = _field(meta, "environment", "requires environment", "environnement")
@@ -102,6 +107,9 @@ def read_tasks(root: Path) -> dict[str, Task]:
             critical=critical in {"yes", "true", "oui"},
             parallel_safe=parallel in {"yes", "true", "oui"},
         )
+    mapped_ids = apply_metadata(root, tasks, inline_fields)
+    for ident in mapped_ids:
+        tasks[ident].metadata_source = "sidecar"
     for task in tasks.values():
         for dependency in task.dependencies:
             if dependency not in tasks:
@@ -184,6 +192,14 @@ def record(root: Path, ident: str, status: str, reason: str = "", category: str 
     if tasks[ident].done and status != "ready":
         raise ValueError(f"{ident} is checked complete in TODO; do not mark in-progress/deferred")
     state = read_state(root)
+    pilot = pilot_scope(state, tasks)
+    if pilot:
+        if pilot["status"] != "active":
+            raise ValueError("Pilot is closed: no further work until an explicit new pilot")
+        if ident not in pilot["selectedIds"]:
+            raise ValueError(f"{ident} is outside the active pilot scope")
+        if all(tasks[x].done for x in pilot["selectedIds"]):
+            raise ValueError("Pilot tasks are verified complete; stop before continuing")
     timestamp = datetime.now(timezone.utc).isoformat()
     prior = state["tasks"].get(ident, {})
     attempts = int(prior.get("attempts", 0))
@@ -259,6 +275,11 @@ def plan(root: Path, unavailable: set[str] | None = None, max_parallel: int = 1,
     depth = _longest_remaining(tasks)
     remaining = {tid for tid, task in tasks.items() if not task.done}
     completed = {tid for tid, task in tasks.items() if task.done}
+    pilot = pilot_scope(state, tasks)
+    selected = set(pilot["selectedIds"]) if pilot else set(tasks)
+    remaining &= selected
+    if pilot and pilot["status"] == "closed":
+        remaining = set()
     deferred: list[dict] = []
     critical_blockers: list[dict] = []
     in_progress: list[str] = []
@@ -332,8 +353,51 @@ def plan(root: Path, unavailable: set[str] | None = None, max_parallel: int = 1,
         "waves": waves, "deferredNoncritical": deferred, "criticalBlockers": critical_blockers,
         "inProgress": in_progress, "waitingForDependencies": waiting,
         "waitingForActiveWorkers": waiting_active, "nextUnscheduledWave": next_wave,
-        "next": "Perform first executable wave, verify, update TODO evidence and checkpoint, then rerun planner. Retry deferred items after all independent work."
+        "pilot": ({"status": pilot["status"], "selectedIds": pilot["selectedIds"],
+                   "maxTasks": pilot["maxTasks"], "verifiedCount": sum(tasks[x].done for x in pilot["selectedIds"]),
+                   "stopNow": pilot["status"] == "closed" or (not waves and not in_progress and not next_wave and not waiting_active),
+                   "stopReason": ("closed" if pilot["status"] == "closed" else
+                                  "all-selected-verified" if all(tasks[x].done for x in pilot["selectedIds"]) else
+                                  "no-independent-feasible-work" if not waves and not in_progress and not next_wave and not waiting_active else
+                                  "continue-bounded-pilot")}
+                  if pilot else None),
+        "metadataCoverage": {"sidecarTasks": sum(x.metadata_source == "sidecar" for x in tasks.values()),
+                             "withoutFileOwnership": [x.id for x in tasks.values() if not x.done and not x.files]},
+        "next": ("STOP AT PILOT SCOPE — do not select other TODO tasks." if pilot else
+                 "Perform first executable wave, verify, update TODO evidence and checkpoint, then rerun planner. Retry deferred items after all independent work.")
     }
+
+
+def pilot_action(root: Path, action: str, selected: list[str] | None = None,
+                 max_tasks: int = 4, write: bool = False) -> dict:
+    """Preview/start/close a bounded pilot; never execute implementation tasks."""
+    tasks = read_tasks(root)
+    state = read_state(root)
+    current = pilot_scope(state, tasks)
+    if action == "status":
+        return {"pilot": current, "forecast": plan(root) if current else None}
+    if action == "start":
+        candidate = create_pilot(tasks, state, selected or [], max_tasks)
+        if write:
+            state["pilot"] = candidate
+            _save_state(root, state)
+        return {"pilot": candidate, "written": write,
+                "note": "Only explicit task IDs are permitted; no implementation performed"}
+    if action == "stop":
+        if not current or current["status"] != "active":
+            raise ValueError("No active pilot to close")
+        if not write:
+            return {"pilot": current, "written": False, "note": "Dry run: add --write to close"}
+        current["status"] = "closed"
+        current["closedAt"] = utcnow()
+        _save_state(root, state)
+        return {"pilot": current, "written": True}
+    raise ValueError("Unknown pilot action")
+
+
+def metadata_skeleton(root: Path) -> dict:
+    """Read-only skeleton: empty objects deliberately avoid inventing dependencies."""
+    return {"schemaVersion": 1, "tasks": {ident: {} for ident, task in read_tasks(root).items() if not task.done}}
 
 
 def main() -> int:
@@ -346,6 +410,14 @@ def main() -> int:
     sched.add_argument("--retry-deferred", action="store_true")
     sched.add_argument("--max-waves", type=int, default=0, help="0 previews all possible waves")
     sched.add_argument("--json", action="store_true")
+    pilot_parser = sub.add_parser("pilot", help="Preview/start/close an explicit bounded pilot")
+    pilot_parser.add_argument("phase", choices=["start", "status", "stop"])
+    pilot_parser.add_argument("--task", action="append", default=[], help="Explicit permitted task ID; repeatable")
+    pilot_parser.add_argument("--max-tasks", type=int, default=4, help="Upper bound, 1..20 (default 4)")
+    pilot_parser.add_argument("--write", action="store_true", help="Explicitly write the pilot checkpoint")
+    pilot_parser.add_argument("--json", action="store_true")
+    metadata_parser = sub.add_parser("metadata", help="Output an optional sidecar metadata skeleton; never writes")
+    metadata_parser.add_argument("--json", action="store_true")
     rec = sub.add_parser("record", help="Atomically store progress/deferred issue only; never completion")
     rec.add_argument("--task", required=True)
     rec.add_argument("--status", required=True, choices=["in_progress", "deferred", "blocked", "failed", "ready"])
@@ -364,6 +436,10 @@ def main() -> int:
             else:
                 print("FORECAST ONLY — tasks are not executed by this scheduler")
                 print(json.dumps(result, indent=2, ensure_ascii=False))
+        elif args.action == "pilot":
+            print(json.dumps(pilot_action(root, args.phase, args.task, args.max_tasks, args.write), indent=2, ensure_ascii=False))
+        elif args.action == "metadata":
+            print(json.dumps(metadata_skeleton(root), indent=2, ensure_ascii=False))
         else:
             print(json.dumps(record(root, args.task, args.status, args.reason, args.category, args.ref, args.max_attempts), indent=2, ensure_ascii=False))
         return 0

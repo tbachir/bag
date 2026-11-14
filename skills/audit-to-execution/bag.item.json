@@ -12,7 +12,10 @@
     "autonomous-execution",
     "dependency-scheduling",
     "multi-agent",
-    "deferred-blockers"
+    "deferred-blockers",
+    "bounded-pilot",
+    "fast-preflight",
+    "backlog-metadata"
   ],
   "tags": [
     "audit",
@@ -23,7 +26,10 @@
     "continuous-execution",
     "spec-kit",
     "parallelization",
-    "verification"
+    "verification",
+    "pilot",
+    "preflight",
+    "task-dependencies"
   ],
   "technologies": [],
   "useCases": [
@@ -36,7 +42,10 @@
     "run-all-project",
     "resume-execution",
     "convergence",
-    "environment-blocker-triage"
+    "environment-blocker-triage",
+    "bounded-run-all-pilot",
+    "fast-quality-gates",
+    "structured-task-metadata"
   ],
   "prompts": [
     {
@@ -58,6 +67,10 @@
     {
       "title": "Resume a partial multi-agent implementation",
       "text": "Use audit-to-execution resume + converge from https://github.com/tbachir/bag/tree/main/skills/audit-to-execution. Recheck Git, reviews, TODO, STATUS and EXECUTION-STATE, continue ready waves with minimal task contexts, avoid unsafe overlap and validate current deliverables. Finish with verified evidence and a deferred-only tail."
+    },
+    {
+      "title": "Run a bounded four-task pilot with cheap-first checks",
+      "text": "Use audit-to-execution run-all --pilot on exactly 4 selected TODO IDs of this repository. Read its AGENTS and current status, verify open prerequisites, persist scoped checkpoint only when authorized, implement and test selected tasks, run fast preflight before expensive CI, stop at pilot cap, leave unrelated TODO untouched, and do not merge/deploy without separate approval. Report actual evidence and deferred environment checks; never invent speed/token savings."
     }
   ]
 }

@@ -12,3 +12,5 @@ These are **starting points**, not source-of-truth declarations. The optional `s
 - `DECISIONS.md` — append-only architecture/business decisions
 
 Do **not** treat a copied skeleton as a finished project plan. Do not overwrite AGENTS.md, README.md or CHANGELOG.md automatically: reconcile these manually, preserving prior rules and historical work.
+
+- [EXECUTION-METADATA.example.json](EXECUTION-METADATA.example.json): **example only** optional structured metadata for existing TODO IDs; adapt and review before saving to `docs/EXECUTION-METADATA.json`.

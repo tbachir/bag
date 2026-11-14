@@ -38,6 +38,10 @@ npx skills add https://github.com/tbachir/bag --skill audit-to-execution -a anti
 
 Use the [installation guide](references/installation.md) for manual Windows paths, Antigravity App vs CLI differences, and ChatGPT Skills/private plugin support. **Before the BAG PR is merged**, install the extracted folder locally with `npx skills add ./audit-to-execution` instead of the remote source. A discussion or GitHub reference is not a persistent ChatGPT skill installation.
 
+## Pilot run-all without finishing the project
+
+See [bounded pilot, fast preflight and JSON dependency metadata](references/pilot-and-preflight.md). A pilot is **explicitly limited to chosen task IDs**, stops when they are verified or no work remains feasible, and does not merge/deploy or start the wider backlog. `scripts/execution.py` only forecasts/records; a coding agent still implements and verifies. `scripts/preflight.py` runs allowlisted low-cost scripts before a full CI.
+
 ## Usage examples
 
 - `Use audit-to-execution to audit this repo and create a complete spec + roadmap with skills and an implementation plan.`
@@ -70,7 +74,9 @@ This works as a **reference-reading request** when the agent can access GitHub; 
 - `assets/`: safe starter templates (not final decisions)
 - `examples/`: example modes, including non-software and existing projects
 - `scripts/scaffold.py`: dry-run by default, creates only absent files when `--write` is supplied
-- `scripts/execution.py`: read-only dependency-wave forecasting + explicit atomic checkpoint writing; does **not** implement tasks
+- `scripts/execution.py`: read-only dependency-wave forecasting, bounded pilot scope, sidecar metadata + explicit atomic checkpoint writing; does **not** implement tasks
+- `scripts/pilot_runtime.py`: strict JSON metadata and bounded pilot state validation; no command execution
+- `scripts/preflight.py`: opt-in, no-shell, allowlisted cheap checks before full CI
 - `scripts/validate_project.py`: checks task IDs, roadmap linkage, discovery guidance and evidence placeholders
 - `scripts/validate_skill.py`: local skill structure/frontmatter check
 - `tests/`: offline unit tests; `evals/evals.json`: prompts for future agent-level behavioral evaluation
@@ -87,6 +93,8 @@ python scripts/scaffold.py --root /path/to/existing-project --project "My Produc
 python scripts/scaffold.py --root /path/to/existing-project --project "My Product" --prefix PRJ --write
 python scripts/validate_project.py --root /path/to/existing-project --prefix PRJ
 python scripts/execution.py --root /path/to/existing-project plan --max-parallel 3 --json
+python scripts/execution.py --root /path/to/existing-project metadata --json
+python scripts/preflight.py --root /path/to/existing-project --json  # no execution by default
 ```
 
 The scaffold **never overwrites files** and never alters AGENTS.md, README.md or CHANGELOG.md automatically; the agent reconciles them against project conventions and preserved instructions. Structural validation does not replace code tests, functional review, links verification, or permission/security review.

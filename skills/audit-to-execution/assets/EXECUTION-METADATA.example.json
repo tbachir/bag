@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "tasks": {
+    "PRJ-001.1": {
+      "dependsOn": [],
+      "files": ["docs/specs/**"],
+      "environment": [],
+      "priority": "P0",
+      "effort": 2,
+      "impact": 4,
+      "critical": false,
+      "parallelSafe": false
+    },
+    "PRJ-001.2": {
+      "dependsOn": ["PRJ-001.1"],
+      "files": ["src/feature/**", "tests/feature/**"],
+      "environment": [],
+      "priority": "P1",
+      "effort": 3,
+      "impact": 5,
+      "critical": false,
+      "parallelSafe": true
+    }
+  }
+}
