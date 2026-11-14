@@ -1,0 +1,23 @@
+{
+  "type": "skill",
+  "template": "skill",
+  "recommendation": "recommended",
+  "contexts": ["project-planning", "architecture", "requirements", "governance", "agent-workflows"],
+  "tags": ["audit", "requirements", "roadmap", "skills-discovery", "project-management"],
+  "technologies": [],
+  "useCases": ["project-audit", "project-specification", "implementation-plan", "roadmap-refresh", "agent-skill-discovery"],
+  "prompts": [
+    {
+      "title": "Audit and plan a project end to end",
+      "text": "Use the audit-to-execution skill from https://github.com/tbachir/bag/tree/main/skills/audit-to-execution. Read BAG's root AGENTS.md and the skill, and my project's instructions. Audit the current state, research alternatives, create a verifiable cahier des charges, ROADMAP.md and TODO.md with stable IDs, recommended skills per task, implementation plan and reviewable PR when authorized. Do not merge or deploy."
+    },
+    {
+      "title": "Reconcile existing roadmap and work status",
+      "text": "Use audit-to-execution from https://github.com/tbachir/bag/tree/main/skills/audit-to-execution after reading BAG root AGENTS.md and the target project's instructions. Reconcile STATUS.md, current CI/PR, TODO.md, ROADMAP.md and ADRs against actual evidence. Preserve completed work and stable IDs; do not check unverified tasks."
+    },
+    {
+      "title": "Discover skills for every task",
+      "text": "Use audit-to-execution from https://github.com/tbachir/bag/tree/main/skills/audit-to-execution after reading BAG root AGENTS.md. Search the open skills ecosystem via find-skills and primary docs, not only BAG. For each actionable TODO task, recommend up to two reviewed skills and a discovery query, distinguishing installed vs suggested. Do not install unreviewed scripts."
+    }
+  ]
+}

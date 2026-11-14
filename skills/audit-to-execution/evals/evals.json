@@ -1,0 +1,29 @@
+{
+  "skill_name": "audit-to-execution",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Analyze my mature Next.js website and propose the safest way to add a configurable content studio. Update specs, roadmap and TODO and put suitable skills beside each task. Prepare a PR but do not merge.",
+      "expected_output": "Current-state audit with evidence, options comparison, separate new-direction spec, plan, stable IDs/checkable tasks with skills discovery, governance updates, verified docs-only diff and PR only if authorized.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We run a small nonprofit. Research the best volunteer onboarding process, give me a cahier des charges and an actionable roadmap with checkboxes and relevant skills; there is no code repository.",
+      "expected_output": "Domain-appropriate process audit, alternative tools and costs, acceptance criteria, non-software milestones and tasks, optional skill search with source quality; standalone deliverable without invented code/CI or a GitHub PR.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Continue my existing data migration plan. Half of the tasks are done, but regulations have changed. Keep prior decisions and evidence, revise the next tasks and update skill recommendations without installing anything.",
+      "expected_output": "Current baseline re-read, checked tasks preserved only where evidence exists, append-only ADR/updated references, refreshed regulatory research, updated dependencies and skill searches; no installation, push or false completion.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Find the right skills for the 36 existing TODO items. Use find-skills and look beyond my private internal repo; don't rewrite their completion status.",
+      "expected_output": "Skill-only mode: each task receives task-specific suggestions or an explained none, targeted find query, trustworthy source and review notes, original checkboxes unchanged.",
+      "files": []
+    }
+  ]
+}
