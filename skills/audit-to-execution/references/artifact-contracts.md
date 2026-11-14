@@ -11,6 +11,7 @@
 | Work queue | `TODO.md` | Atomic IDs, checkboxes, skill recommendations |
 | Skill sourcing | `docs/SKILLS.md` | Sourcing policy and current candidates |
 | Verified truth | `docs/STATUS.md` | Real evidence and remaining gaps |
+| Optional active execution checkpoint | `docs/EXECUTION-STATE.json` | Transient progress, bounded attempts and deferred blockers; never a second done ledger |
 | Architecture history | `docs/DECISIONS.md` | Append-only ADRs |
 | Agent instructions | `AGENTS.md` | Repository-specific workflow, guardrails |
 | Context retention | `docs/HANDOFF.md` | Starting point for next agent |
@@ -49,3 +50,12 @@ Never add `Proof when done` as if it were an actual proof. In a completed task r
 ## Template usage
 
 See `assets/README.md` for available skeletons. Scaffold with `python scripts/scaffold.py --root <target> --project "..." --prefix ABC` (dry-run by default); use `--write` to create **missing files only**. Always read the repo first, and manually reconcile existing documents.
+
+
+## V2 execution metadata and source-of-truth boundary
+
+- Optional per-task fields: `Depends on`, `Priority`, `Effort`, `Impact`, `Environment`, `Files`, `Critical`, `Parallel safe`. Use documented stable IDs and explicit dependency edges; never infer safe parallelism from an absence of metadata.
+- `TODO.md` owns the `- [x]` completion decision, which still requires current proof and acceptance. The machine checkpoint never auto-checks tasks.
+- A missing platform, emulator or external credential becomes a deferred entry **only if other work is safe without it**. Keep the original task unchecked, preserve dependency edges, and return to it after other executable work.
+- The final status is `CONVERGED` or `PARTIALLY_COMPLETE`, not a misleading percentage. A mandatory pending real-device check cannot be promoted to a green release by substituting a mock or earlier run.
+- See [execution engine and task example](execution-engine.md).

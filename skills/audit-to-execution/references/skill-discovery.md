@@ -49,3 +49,7 @@ Official CLI guide: https://github.com/vercel-labs/skills/blob/main/docs/command
 ## Freshness
 
 At task start, refresh tool/skill docs when stack is fast-moving or last inspection exceeds ~30 days; re-check severe security advisories, breaking changes and required credentials. Record provenance and use in the PR. A project may configure its own freshness threshold.
+
+## On-demand discovery during an execution run
+
+At planning time attach credible candidate skills **or a relevant discovery query** to each task, without downloading every candidate's full instructions. At the beginning of a scheduled wave, inspect only skills needed for its tasks; cache source/version/verification dates in the current project. Re-search when missing, stale, security-relevant or poor fit. Spending more time reading 40 SKILL.md files than completing 4 tasks is a failure of the optimization goal, not a requirement of this skill.

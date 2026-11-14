@@ -1,8 +1,16 @@
 # Audit to Execution — portable Agent Skill
 
-A reusable, **cross-project** skill capturing an evidence-based workflow from idea or existing repository to audit, solution comparison, requirements, implementation plan, checkable roadmap/TODO, task-specific skill discovery, governance updates, and a reviewable PR when authorized.
+A reusable, **cross-project** skill capturing an evidence-based workflow from idea or existing repository to audit, solution comparison, requirements, implementation plan, checkable roadmap/TODO, task-specific skill discovery, governance updates, **and continuous execution to convergence when requested**.
 
 It is **not limited** to website templates or to software projects. It also handles operations, design, research, process improvement and project pivots.
+
+## V2 — finish the plan in one go
+
+Say **"Use audit-to-execution in run-all mode: implement as much of the entire plan as safely possible in this session, without stopping between tasks. If macOS/simulators/devices or external access are unavailable, defer those noncritical checks to the end, continue every independent task, and report remaining blockers explicitly. Do not merge/publish without my authorization."**
+
+Under the hood, the skill prioritizes dependency-safe waves and can delegate work to independent agents/worktrees, but **doesn't ask for approval for every wave**. It bounds retries, checkpoints state, runs quality gates, and revisits deferred items at the end. Actual implementation still requires a coding agent with repository tools; the bundled Python planner forecasts work but **doesn't execute code**. There is no unattended background execution unless an authorized scheduler supports it.
+
+See [continuous execution and deferred blockers](references/execution-engine.md), [minimal agent packets](references/context-contract.md), [optional Spec Kit](references/spec-kit-adapter.md) and [metrics](references/metrics-and-optimization.md).
 
 ## What it produces
 
@@ -13,6 +21,7 @@ It is **not limited** to website templates or to software projects. It also hand
 - Recommended **agent skills per task**, task-specific `npx skills find` queries and source/safety review
 - Preserved status, history, decisions, instructions and handoff
 - Optional branch/PR workflow only if explicitly authorized and possible
+- When requested: ongoing implementation, bounded tests/reviews/convergence and a clearly identified deferred environment/permission tail
 
 ## Install in your chosen agent
 
@@ -32,6 +41,7 @@ Use the [installation guide](references/installation.md) for manual Windows path
 ## Usage examples
 
 - `Use audit-to-execution to audit this repo and create a complete spec + roadmap with skills and an implementation plan.`
+- `Use audit-to-execution run-all. Finish the entire feasible plan without asking me at each step. Put unavailable iOS/macOS/device checks at the end; keep completing independent work; verify and report evidence.`
 - `Audit several architectures, preserve our existing decisions and update ROADMAP.md/TODO.md. No pushes.`
 - `Turn our onboarding process notes into a cahier des charges, checkable delivery plan and validated skills shortlist.`
 - `Continue the current PR and add find-skills recommendations to every unchecked task without changing completion states.`
@@ -60,6 +70,7 @@ This works as a **reference-reading request** when the agent can access GitHub; 
 - `assets/`: safe starter templates (not final decisions)
 - `examples/`: example modes, including non-software and existing projects
 - `scripts/scaffold.py`: dry-run by default, creates only absent files when `--write` is supplied
+- `scripts/execution.py`: read-only dependency-wave forecasting + explicit atomic checkpoint writing; does **not** implement tasks
 - `scripts/validate_project.py`: checks task IDs, roadmap linkage, discovery guidance and evidence placeholders
 - `scripts/validate_skill.py`: local skill structure/frontmatter check
 - `tests/`: offline unit tests; `evals/evals.json`: prompts for future agent-level behavioral evaluation
@@ -75,6 +86,7 @@ python scripts/scaffold.py --root /path/to/existing-project --project "My Produc
 # Review the dry-run output, then (only if safe):
 python scripts/scaffold.py --root /path/to/existing-project --project "My Product" --prefix PRJ --write
 python scripts/validate_project.py --root /path/to/existing-project --prefix PRJ
+python scripts/execution.py --root /path/to/existing-project plan --max-parallel 3 --json
 ```
 
 The scaffold **never overwrites files** and never alters AGENTS.md, README.md or CHANGELOG.md automatically; the agent reconciles them against project conventions and preserved instructions. Structural validation does not replace code tests, functional review, links verification, or permission/security review.

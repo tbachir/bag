@@ -2,10 +2,42 @@
   "type": "skill",
   "template": "skill",
   "recommendation": "recommended",
-  "contexts": ["project-planning", "architecture", "requirements", "governance", "agent-workflows"],
-  "tags": ["audit", "requirements", "roadmap", "skills-discovery", "project-management"],
+  "contexts": [
+    "project-planning",
+    "architecture",
+    "requirements",
+    "governance",
+    "agent-workflows",
+    "implementation",
+    "autonomous-execution",
+    "dependency-scheduling",
+    "multi-agent",
+    "deferred-blockers"
+  ],
+  "tags": [
+    "audit",
+    "requirements",
+    "roadmap",
+    "skills-discovery",
+    "project-management",
+    "continuous-execution",
+    "spec-kit",
+    "parallelization",
+    "verification"
+  ],
   "technologies": [],
-  "useCases": ["project-audit", "project-specification", "implementation-plan", "roadmap-refresh", "agent-skill-discovery"],
+  "useCases": [
+    "project-audit",
+    "project-specification",
+    "implementation-plan",
+    "roadmap-refresh",
+    "agent-skill-discovery",
+    "execute-plan",
+    "run-all-project",
+    "resume-execution",
+    "convergence",
+    "environment-blocker-triage"
+  ],
   "prompts": [
     {
       "title": "Audit and plan a project end to end",
@@ -18,6 +50,14 @@
     {
       "title": "Discover skills for every task",
       "text": "Use audit-to-execution from https://github.com/tbachir/bag/tree/main/skills/audit-to-execution after reading BAG root AGENTS.md. Search the open skills ecosystem via find-skills and primary docs, not only BAG. For each actionable TODO task, recommend up to two reviewed skills and a discovery query, distinguishing installed vs suggested. Do not install unreviewed scripts."
+    },
+    {
+      "title": "Execute all feasible tasks without per-task interruptions",
+      "text": "Use audit-to-execution run-all from https://github.com/tbachir/bag/tree/main/skills/audit-to-execution. Read BAG root AGENTS.md and the target repo instructions, then implement all safely feasible tasks in one continuous engagement, preserving dependencies and approvals. Defer noncritical missing environment or hardware checks until the end, continue unrelated work, run real tests and summarize remaining blockers with proofs. No unapproved merge/deploy."
+    },
+    {
+      "title": "Resume a partial multi-agent implementation",
+      "text": "Use audit-to-execution resume + converge from https://github.com/tbachir/bag/tree/main/skills/audit-to-execution. Recheck Git, reviews, TODO, STATUS and EXECUTION-STATE, continue ready waves with minimal task contexts, avoid unsafe overlap and validate current deliverables. Finish with verified evidence and a deferred-only tail."
     }
   ]
 }
