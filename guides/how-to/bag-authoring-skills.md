@@ -12,6 +12,8 @@ BAG is an unrestricted recursive library. Every folder under `inventory/` may be
 | Reference a library or framework | [Author library](../../skill-tree/skills/bag-author-library/SKILL.md) |
 | Choose tags, type or navigation settings | [Author metadata](../../skill-tree/skills/bag-author-metadata/SKILL.md) |
 
+For **repeatable end-to-end audits, project specifications, implementation roadmaps and task skill discovery**, use [audit-to-execution](../../skills/audit-to-execution/README.md). For **creating a new skill** (including README, installation guides, examples and evaluations), use the rebuilt [Skill Factory](../../templates/skills/README.md). The skill belongs in `skills/`; a project audit is not automatically a new skill.
+
 ## Common principles
 
 - A task is a kind of content, never a hardcoded `tasks/` directory. Type metadata is optional and does not yet imply a working task composer.

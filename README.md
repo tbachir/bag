@@ -16,7 +16,7 @@ BAG organizes resources into five core primitives and comprehensive Diátaxis gu
 
 | Primitive | Directory | Purpose |
 | --- | --- | --- |
-| 🛠️ **Skills** | [`skills/`](skills/README.md) | 27 portable agent skills (`SKILL.md`) for Codex, Claude Code, Cursor, Antigravity |
+| 🛠️ **Skills** | [`skills/`](skills/README.md) | portable agent skills (`SKILL.md`) for Codex, Claude Code, Cursor, Antigravity |
 | 🔌 **MCP Hub** | [`mcp/`](mcp/README.md) | Model Context Protocol servers (`bag-mcp`, `supabase`, `context7`, `ui-skills`) & client adapters |
 | 📋 **Recipes** | [`recipes/`](recipes/README.md) | Actionable, multi-step task blueprints with composer manifests (`auth`, `mobile`) |
 | 📦 **Templates** | [`templates/`](templates/README.md) | Clean boilerplates and configuration defaults (`.editorconfig`, `.gitignore`, `fumadocs-starter`) |
@@ -99,7 +99,9 @@ Open http://localhost:3000/docs. `pnpm build` compiles tracked content into stat
 - [Learn how to pack a new item](guides/tutorials/getting-started.md)
 - [Open the item card template](templates/item.md)
 - [Explore AI coding pack](packs/ai-coding/README.md)
-- [Use the skill template](templates/skills/SKILL.md)
+- [Create, validate and install agent skills (complete Skill Factory)](templates/skills/README.md)
+- [Reusable Audit to Execution skill](skills/audit-to-execution/README.md)
+- [Installation guide: Codex, Claude Code, Antigravity and ChatGPT](templates/skills/INSTALL.md)
 - [Inspect the Clean Code skill](skills/clean-code/SKILL.md)
 - [Explore the o2switch Cloud Expert skill](skills/o2switch-cloud/SKILL.md)
 - [Storybook: Fondations & Automatisation IA](guides/how-to/storybook-fondations.md)

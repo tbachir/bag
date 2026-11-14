@@ -16,8 +16,8 @@ function run(...args) {
   return spawnSync(process.execPath, [checker, ...args], {cwd:root, encoding:'utf8'});
 }
 
-test('reviewed fast-changing skills are visible and current on the audit date', () => {
-  const r = run('--json','--date','2026-11-01','--strict');
+test('reviewed fast-changing skills are visible and current at the current baseline date', () => {
+  const r = run('--json','--date','2026-11-14','--strict');
   assert.equal(r.status, 0, r.stderr || r.stdout);
   const parsed = JSON.parse(r.stdout);
   for (const name of audited) {
@@ -27,8 +27,8 @@ test('reviewed fast-changing skills are visible and current on the audit date', 
   }
 });
 
-test('untracked skills remain visible with --all, not silently classified as verified', () => {
-  const r = run('--all','--json','--date','2026-11-01');
+test('untracked skills remain visible with --all at the current baseline date', () => {
+  const r = run('--all','--json','--date','2026-11-14');
   assert.equal(r.status, 0, r.stderr);
   const skills = JSON.parse(r.stdout).skills;
   for (const name of ['addbag','o2switch-cloud']) {

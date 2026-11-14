@@ -27,6 +27,10 @@ A project-scoped skill works only in that project; for calling it in **any** rep
 
 To write or merge the result, the agent must actually have GitHub permissions for **tbachir/bag**. Chat history APIs, memory and cross-chat access vary by client; if earlier messages cannot be read, provide a conversation export or short summary. The skill must not pretend to have reconstructed inaccessible material.
 
+## When to use Audit to Execution instead
+
+Use [audit-to-execution](../audit-to-execution/README.md) when the goal is to **plan a target project's future work** (audit, specs, roadmap, TODO, skills by task). Use **addbag** when the goal is to **curate reusable information from a session into the BAG repository**. The two can complement one another but do not substitute for one another.
+
 ## What it chooses
 
 - Enrich an existing BAG item before creating a duplicate.

@@ -54,6 +54,14 @@ Catalog changes must pass `node packages/cli/bin/bag.mjs validate` and `node --t
 9. Run `node spellbook/scripts/validate.mjs` before committing.
 10. Report exactly what changed and what was or was not verified. Do not claim that external tooling was tested unless it was.
 
+## Portable skill authoring and installation
+
+- For a new Agent Skill, use [templates/skills/README.md](templates/skills/README.md) and its complete starter, evaluation cases, prompts and documented no-overwrite generator. `templates/skills/SKILL.md` is a compatibility pointer, not a finished skill.
+- Verify install directions against [templates/skills/INSTALL.md](templates/skills/INSTALL.md). Codex, Claude Code, Antigravity and ChatGPT do **not** share one universal global directory. ChatGPT local filesystem access is not implied.
+- Every reusable skill README should include a self-contained BAG delegation prompt and a link to the appropriate installation guide; use [templates/skills/PROMPTS.md](templates/skills/PROMPTS.md) for copyable examples. Avoid duplicating long runbooks inside every prompt.
+- Validate new/changed skill structures with `node templates/skills/scripts/validate-skill.mjs <skill-folder>` and `node --test tests/skill-template.test.mjs`, then perform the usual BAG checks. Generator dry-run is default and must never overwrite without an explicit reviewed change.
+- Keep any skill freshness metadata truthful and string-valued; source review, not a documentation edit, is the evidence for `bag-last-verified`.
+
 ## Conventions
 
 - Repository language: English for shared navigation, French welcome in notes and guides.

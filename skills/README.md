@@ -20,6 +20,7 @@ bag skill add addbag -a claude-code
 
 | Skill | Description | Primary File |
 | --- | --- | --- |
+| [audit-to-execution](audit-to-execution/README.md) | Turn an idea or repository into a researched audit, cahier des charges, implementation plan, checkable roadmap/TODO and skills per task | [SKILL.md](audit-to-execution/SKILL.md) |
 | [addbag](addbag/README.md) | Capture valuable discoveries and patterns into BAG | [SKILL.md](addbag/SKILL.md) |
 | [agent-ready-documentation](agent-ready-documentation/README.md) | Make project documentation reliable for AI coding agents | [SKILL.md](agent-ready-documentation/SKILL.md) |
 | [api-documentation-quality](api-documentation-quality/README.md) | Contract-driven API documentation & integration guides | [SKILL.md](api-documentation-quality/SKILL.md) |
@@ -39,6 +40,8 @@ bag skill add addbag -a claude-code
 | [skill-maintainer](skill-maintainer/README.md) | Review and refresh fast-changing skills | [SKILL.md](skill-maintainer/SKILL.md) |
 | [ui-studio](ui-studio/README.md) | Universal UI Studio and prototype generator | [SKILL.md](ui-studio/SKILL.md) |
 | [ui-ux-design-review](ui-ux-design-review/README.md) | Measure UI/UX quality, responsive design & accessibility | [SKILL.md](ui-ux-design-review/SKILL.md) |
+
+For authoring and installing skills across clients, use the rebuilt [Skill Factory](../templates/skills/README.md), its [installation matrix](../templates/skills/INSTALL.md) and [copy-ready prompt library](../templates/skills/PROMPTS.md).
 
 ## Skill Structure
 Each skill directory contains:
