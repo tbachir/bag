@@ -38,6 +38,12 @@ These are **documentation labels**, not automated statuses.
 
 Store knowledge at its primary home. E.g. a TypeScript formatter is **Equipment** when discussing daily developer tooling; a reusable shell wrapper around it is **Spellbook**; an article explaining formatter design is **Maps & Guides**. Link between them without copy-pasting.
 
+## Authoring, testing and distributing Agent Skills
+
+Use the [complete BAG Agent Skill Factory](templates/skills/README.md), not an ad-hoc `SKILL.md` copy. It includes a safe generator, portable skill folder, human documentation, multi-client [installation instructions](templates/skills/INSTALL.md), [ready-to-run prompts](templates/skills/PROMPTS.md), [quality rubric](templates/skills/QUALITY.md) and evaluations. Test positive triggers, non-triggers and permission boundaries; publish only verified outcomes. A skill in BAG is **not automatically installed** in Codex, Claude Code, Antigravity or ChatGPT.
+
+For project audit → spec → plan → roadmap → TODO → skill discovery, reuse [audit-to-execution](skills/audit-to-execution/README.md) rather than creating a near-duplicate.
+
 ## Machine-readable entries
 
 When a resource is ready for agent discovery, add a [catalog item manifest](catalog/README.md) and keep its `source.path` linked to curated local documentation. Use `mode: reference` unless it is a reviewed local template suitable for opt-in copying. Add a loadout manifest only when it refers to existing ready items; avoid duplicate destination paths.
