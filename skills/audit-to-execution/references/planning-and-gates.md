@@ -44,3 +44,9 @@ Recommended sequence: critical safety/data correctness → compatibility/data co
 ## Closure report
 
 Summarize files, changed behavior, checks actually executed, evidence links, unchecked/blocked tasks, next actionable task and PR state. Never say a job, release, or merge happened unless verified through a tool or user-supplied evidence.
+
+## Execution v2: waves are internal, not an interruption requirement
+
+When the user says "finish everything" or "without asking at every step", keep one continuous execution loop across as many dependency-safe waves as can be completed in the active session. A missing simulator, Mac, GPU or external credential **must not halt other independent tasks**; defer it with a recorded category, exact needed precondition, fallback attempted and a final revisit. Never execute dependent tasks prematurely, or mark an incomplete mandatory test as passed. See [the execution engine](execution-engine.md).
+
+For new TODOs, recommend optional `Depends on`, `Files`, `Environment`, `Priority`, `Effort` (1–5), `Impact` (1–5), `Critical` (yes/no) and `Parallel safe` (yes/no) metadata. Without explicit safe ownership, run serially. A marked blocker does not remove the corresponding original TODO checkbox.

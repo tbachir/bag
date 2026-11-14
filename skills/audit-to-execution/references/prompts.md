@@ -79,3 +79,28 @@ Use audit-to-execution to implement the approved documentation plan on a dedicat
 ```text
 Use audit-to-execution as the baseline methodology. Inspect this project's domain constraints and AGENTS.md, then create a narrowly scoped new Agent Skill for its repeatable workflow. Reuse generic templates by reference, design evaluation cases, and keep high-level governance out of every task prompt. Do not duplicate the entire original skill or install anything until reviewed.
 ```
+
+
+## 13. Execute the entire plan in one uninterrupted run (run-all)
+
+```text
+Use audit-to-execution in run-all mode on the current repository. Read AGENTS.md, current branch/STATUS, specs, task dependencies and CI. Execute every safely feasible item end to end without asking me for approval between ordinary tasks or waves. Delegate independent scopes only if supported and useful; give each worker minimal context, integrate, test and address review findings. If an iOS device, macOS, simulator, GPU, external login, paid service or other environment is unavailable, document the precise blocked task and prerequisites, continue ALL dependency-independent work, and retry those deferred items at the END. Never fake a device test, waive security gates, spend money, merge or deploy without authorization. Bound failing retries, check evidence before checking TODO boxes, update STATUS/EXECUTION-STATE as needed, and finish with a verified deliverables summary plus a small explicit deferred tail.
+```
+
+## 14. Resume and converge without re-auditing completed work
+
+```text
+Use audit-to-execution in resume + converge mode. Start from the real Git ref/PR and TODO/STATUS/EXECUTION-STATE, not conversation assumptions. Preserve approved contracts and proofs; select the next ready wave and continue in this same session without a per-task pause. Prioritize critical-path work and finish all independent work before returning to noncritical missing-environment blockers. Test on current code, record actual evidence and open defects for missing acceptance. Stop at true authorization/safety gates; mark anything pending honestly.
+```
+
+## 15. Optimize tokens and delegation without lowering quality
+
+```text
+Use audit-to-execution optimize mode. Analyze actual task dependencies, file ownership and skills costs. Prefer reuse and small vertical slices; design minimal mission packets for parallel workers with disjoint file ownership, a single integration branch, bounded retries and independent verification. Search skills deeply only for the current wave. Compare throughput and acceptance evidence before increasing agent count. Don't invent timing/token/cost metrics.
+```
+
+## 16. Optional Spec Kit integration
+
+```text
+Use audit-to-execution to detect whether GitHub Spec Kit is already configured. If yes, read its active feature/constitution, reconcile the canonical TODO/tasks.md without duplicate checkboxes and reuse its implemented specify/plan/tasks/implement/converge flow to execute the selected features continuously. If not installed, use the native run-all method rather than installing a new dependency. Defer noncritical environment blockers to the end and preserve all mandatory release gates.
+```

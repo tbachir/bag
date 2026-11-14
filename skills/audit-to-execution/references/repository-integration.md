@@ -30,3 +30,7 @@ Never upload secret values, API keys, signing credentials, private user data, or
 ## Continuation after a later session
 
 Read the current `STATUS.md` and roadmap/plan, inspect current main/head and PR reviews, then resolve contradictions. Preserve task IDs and re-check earlier evidence against the new commit. Do not rely on prior conversational memory when repository evidence is available.
+
+## Continuing through noncritical blockers (v2)
+
+Use `docs/EXECUTION-STATE.json` only as a compact, optional transient checkpoint (not a second TODO). Completed tasks remain checked only in canonical `TODO.md` with evidence. An environment blocker in one lane may be deferred until the final pass while other independent work continues in the same run. The project status should distinguish **converged**, **partially complete**, **blocked critically**, and **not verified** without converting absent device testing into success. See [execution engine](execution-engine.md).

@@ -16,3 +16,13 @@ python scripts/validate_project.py --root /path/to/repo --prefix PRJ
 - [validate_skill.py](validate_skill.py): local SKILL.md bundle integrity check.
 
 Never write into an untrusted workspace containing attacker-controlled symlinks; project filesystem permissions and sandboxing remain necessary against concurrent replacement attacks.
+
+## Continuous execution helper (V2)
+
+- [`execution.py`](execution.py): read-only wave forecast from TODO, explicit transient checkpoint, no code execution or PR side effects.
+- Preview: `python scripts/execution.py --root /path/to/project plan --max-parallel 3 --json`.
+- Simulate missing environment: `python scripts/execution.py --root /path/to/project plan --unavailable macos --unavailable ios-device --json`.
+- Save blocker: `python scripts/execution.py --root /path/to/project record --task PRJ-001.2 --status deferred --category environment --reason "No signed device"`.
+- Revisit deferred work at the end: `python scripts/execution.py --root /path/to/project plan --retry-deferred --json`.
+
+The coordinator executes, tests and records proof in TODO/STATUS. This helper never auto-completes tasks or runs code. Use one checkpoint writer at a time.
