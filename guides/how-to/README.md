@@ -13,3 +13,4 @@ Task-oriented guides to accomplish specific goals with BAG.
 - [Resource Exposure](resource-exposure.md): How BAG resources are exposed to CLI, docs, and MCP.
 - [Publishing the CLI](publishing-cli.md): How to package, verify, and publish `@tbachir/bag` to npm.
 - [Storybook: Fondations & Automatisation IA](storybook-fondations.md): Guide pratique pour structurer votre UI et automatiser Storybook avec des agents et MCP.
+- [Vercel deployment hygiene](vercel-deployment-hygiene.md): Skip unaffected apps safely and reduce unnecessary builds.

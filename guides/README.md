@@ -30,6 +30,7 @@ ORIENTED│   (Goal-driven tasks)   │  (Information, schemas  │
    - [Intelligent Catalog & Loadouts](how-to/catalog-and-loadouts.md)
    - [Resource Exposure](how-to/resource-exposure.md)
    - [Storybook: Fondations & Automatisation IA](how-to/storybook-fondations.md)
+   - [Vercel deployment hygiene](how-to/vercel-deployment-hygiene.md)
 
 3. **[🧠 Concepts & Architecture](concepts/README.md)**: Explanations, architectural principles, and foundational protocols.
    - [Agent Delegation Protocol (v1)](concepts/agent-delegation-protocol.md)
