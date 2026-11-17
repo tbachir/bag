@@ -36,4 +36,5 @@ test('Documentation language switch points to localized routes', async ({ page }
   await lang.getByRole('link', { name: 'FR' }).click();
   await expect(page).toHaveURL(new RegExp(`${prefix}/fr/docs/$`));
   await expect(page.getByTestId('site-header')).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'fr');
 });
