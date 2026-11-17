@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import type { BagItem } from '@/lib/drop-bag';
 
 type Props = {
@@ -33,7 +32,7 @@ export function ResourceResults({ items, mode, selected, toggle }: Props) {
                   <input type="checkbox" aria-label={`Select ${item.title}`}
                     checked={selected.includes(item.sourcePath)} onChange={() => toggle(item.sourcePath)} />
                   <div className="min-w-0">
-                    <Link className="block truncate text-sm font-semibold hover:underline" href={item.url}>{item.title}</Link>
+                    <a className="block truncate text-sm font-semibold hover:underline" href={item.url}>{item.title}</a>
                     <code className="block truncate text-xs text-fd-muted-foreground">{item.sourcePath}</code>
                   </div>
                 </div>
@@ -51,7 +50,7 @@ export function ResourceResults({ items, mode, selected, toggle }: Props) {
           className={`flex flex-col justify-between gap-4 rounded-xl border bg-fd-card p-4 transition hover:shadow-sm ${selected.includes(item.sourcePath) ? 'border-fd-primary/70' : 'border-fd-border'}`}>
           <div className="space-y-2">
             <div className="flex items-start justify-between gap-2">
-              <Link href={item.url} className="font-semibold leading-6 hover:text-fd-primary hover:underline">{item.title}</Link>
+              <a href={item.url} className="font-semibold leading-6 hover:text-fd-primary hover:underline">{item.title}</a>
               <input aria-label={`Select ${item.title}`} type="checkbox"
                 className="mt-1 size-4 shrink-0 accent-current"
                 checked={selected.includes(item.sourcePath)} onChange={() => toggle(item.sourcePath)} />
