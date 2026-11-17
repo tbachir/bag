@@ -3,9 +3,16 @@ import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { baseOptions } from '@/lib/layout.shared';
 import { LocaleSwitch } from '@/components/locale-switch';
 
+// Keep the locale-specific page tree, but share the global SiteHeader.
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <DocsLayout tree={source.getPageTree('fr')} {...baseOptions()}>
+    <DocsLayout
+      tree={source.getPageTree('fr')}
+      {...baseOptions()}
+      nav={{ title: 'Documentation' }}
+      searchToggle={{ enabled: false }}
+      themeSwitch={{ enabled: false }}
+    >
       <div className="flex justify-end px-6 pt-3"><LocaleSwitch /></div>
       {children}
     </DocsLayout>
