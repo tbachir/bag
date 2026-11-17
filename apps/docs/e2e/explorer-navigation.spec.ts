@@ -28,7 +28,8 @@ test('Explorer paginates inventory rather than hiding matches past a fixed cap',
   }
 });
 
-test('Drop Bag stays reachable on mobile while browsing inventory', async ({ page }) => {
+test('Drop Bag stays reachable on mobile while browsing inventory', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'Dedicated mobile shortcut');
   await page.goto(url('/explore/'));
   await expect(page.getByRole('link', { name: /Open your Drop Bag/ })).toHaveAttribute('href', '#drop-bag');
   await page.getByRole('link', { name: /Open your Drop Bag/ }).click();
